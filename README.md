@@ -20,10 +20,11 @@ All Meetup Web Platform applications will have 4 main components:
 
 1. A React/Redux application
 2. A browser bundle that will render the React app
-3. A server bundle that will render _some_thing - this repo has a server bundle
-that will also render the React app as well as the surroounding markup that
-will load the browser bundle
-4. A NodeJS-based app server to respond to requests
+3. A server bundle that will render _something_ - this repo uses server-side
+rendering through `meetup-web-platform`'s `server-render` module. The server
+bundle must render markup that includes a script tag for the client bundle.
+4. A NodeJS-based app server to respond to requests - the platform expects to
+run on Hapi, but technically any NodeJS server can be used.
 
 **The `meetup-web-platform` library attempts to help with 2 through 4, but largely
 leaves 1 to app developers.**
@@ -36,7 +37,7 @@ runnable app:
 1. `client.js`: the root script that will run your application in the browser
 2. `server-locale.js`: the rendering script that will run on your app server
 
-Both entry points must be bundled in order to be used on their resepective
+Both entry points must be bundled in order to be used on their respective
 platforms (browser, NodeJS) - the build-related scripts in `scripts/` help make
 this build routine easier to set up, including automatically-versioned client
 bundles.
@@ -53,18 +54,21 @@ Static files _and SCSS_ that you want to bundle with your app
 
 Any generic modules you want to help run your app.
 
-### Build scripts: `scripts/`
+### `scripts/` - build scripts
 
 Most of the basic scripts help with bundling the application, which can be
 challenging to get "right", particularly if you want versioned bundles.
 
-### Utilities: `utils/`
+### `utils/`
 
 Up to you.
 
 ### Config
 
 Most of the files in the root of this repo are configuration files for various
-tools that are used during development - Jest for unit testing, Babel for
-transpiling ES6 code, ESLint to keep code style consistent.
+tools that are used during development
+
+1. Jest for unit testing
+2. Babel for transpiling ES6
+3. ESLint to keep code style consistent
 
