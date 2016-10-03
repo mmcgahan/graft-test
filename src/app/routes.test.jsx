@@ -16,7 +16,7 @@ import routes from './routes';
 const FAKE_STORE = createFakeStore(MOCK_APP_STATE);
 
 describe('base routes', () => {
-	it('renders the Find page at `/`', function(done) {
+	it('renders an Index page at `/`', function(done) {
 		const location = '/';
 		match({ location, routes }, (err, redirectLocation, renderProps) => {
 			const app = TestUtils.renderIntoDocument(
@@ -24,7 +24,7 @@ describe('base routes', () => {
 					<RouterContext {...renderProps} />
 				</Provider>
 			);
-			const indexComponent = findComponentsWithType(app, 'Find');
+			const indexComponent = findComponentsWithType(app, 'PageWrap');
 			expect(indexComponent.length).toBe(1);
 			done();
 		});
