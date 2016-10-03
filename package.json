@@ -16,9 +16,9 @@
     "lint": "eslint . --ext .js,.jsx --fix",
     "modules:clean": "rm -rf node_modules",
     "package": "npm-run-all --parallel coverage build:locales --serial coveralls build:server prune",
+    "prune": "npm prune --production --silent",
     "start": "node build/app-server.js",
     "start:all": "npm-run-all stop build:clean --parallel \"build:locales -- {@}\" \"start:asset -- {@}\" --serial build:server start:app --",
-    "prune": "npm prune --production --silent",
     "start:app": "forever start scripts/forever/app-server.json && npm run start:info",
     "start:asset": "node scripts/forever/asset-server.js",
     "start:info": "node scripts/start-info.js",
@@ -85,6 +85,7 @@
     "http-server": "0.9.0",
     "jest-cli": "15.1.1",
     "minimist": "1.2.0",
-    "npm-run-all": "2.3.0"
+    "npm-run-all": "2.3.0",
+    "react-addons-test-utils": "15.3.0"
   }
 }

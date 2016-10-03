@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import LoginForm from './LoginForm';
+import Button from '../shared/components/Button';
 import { SELF_REF } from '../app/appQuery';
 
 import {
@@ -55,10 +56,10 @@ export class Login extends React.Component {
 							errors={auth.errors}
 							loginAction={handlers.loginPost}
 						/> :
-						<button
+						<Button
 							onClick={handlers.logoutRequest}>
 							{`Logout ${self.name}`}
-						</button>
+						</Button>
 					}
 				</div>
 			</div>

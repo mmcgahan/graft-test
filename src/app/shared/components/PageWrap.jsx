@@ -2,6 +2,8 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router';
 
+import Button from './Button';
+
 /*
  * -- Require base stylesheet --
  * (includes sassquatch2)
@@ -44,10 +46,10 @@ class PageWrap extends React.Component {
 					<li>
 						{ auth.anonymous ?
 							<Link to='/login/' className='text--small'>Login</Link> :
-							<button
+							<Button
 								onClick={onLogout}>
 								{`Logout ${self.name}`}
-							</button>
+							</Button>
 						}
 					</li>
 					<li>
