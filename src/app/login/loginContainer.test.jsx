@@ -54,7 +54,7 @@ describe('LoginContainer', () => {
 				</Provider>
 			);
 
-			const buttonComponent = findComponentsWithType(container, 'Button');
+			const buttonComponent = TestUtils.scryRenderedDOMComponentsWithTag(container, 'button');
 			expect(buttonComponent.length).toBe(1);
 			done();
 		});

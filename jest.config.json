@@ -4,7 +4,7 @@
     "<rootDir>/utils/jestSystemShim.js"
   ],
   "moduleNameMapper": {
-    "^file-loader[!?].+": "EmptyModule",
+    "^file-loader[!?].+": "EmptyModule"
   },
   "moduleFileExtensions": [
     "js",
