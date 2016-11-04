@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import LoginForm from './LoginForm';
-import { SELF_REF } from '../app/appQuery';
+import { SELF_REF } from '../root/appQuery';
 
 import {
 	loginPost,

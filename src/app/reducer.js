@@ -7,7 +7,7 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
 // Assemble reducers from all features here
-import { SELF_REF } from './app/appQuery';
+import { SELF_REF } from './root/appQuery';
 
 /**
  * app state should always have a member object - by default, it will be an
