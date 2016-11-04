@@ -18,7 +18,7 @@ module.exports = {
 	serverEntryPath: path.resolve(repoRoot, 'scripts', 'app-server.js'),
 	serverOutputPath: outPath,
 	serverLocalesModulePath: path.resolve(outPath, 'server-locales', 'serverLocaleMap.js'),
-	serverLocaleEntryPath: path.resolve(appPath, 'server-locale.js'),
+	serverLocaleEntryPath: path.resolve(appPath, 'server-app-entry.js'),
 	serverLocaleOutputPath: path.resolve(outPath, 'server-locales'),
 	serviceWorkerEntryPath: path.resolve(appPath, 'sw.js'),
 	serviceWorkerOutputPath: path.resolve(outPath, 'sw'),
