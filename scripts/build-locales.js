@@ -3,9 +3,9 @@ const path = require('path');
 const minimist = require('minimist');
 const Rx = require('rxjs');
 
-const progressBarUI = require('../utils/progressBarUI.js');
-const { compile$ } = require('../utils/buildUtils.js');
-const { child_process$ } = require('../utils/nodeUtils.js');
+const progressBarUI = require('../util/progressBarUI.js');
+const { compile$ } = require('../util/buildUtils.js');
+const { child_process$ } = require('../util/nodeUtils.js');
 const writeClientLocaleBundle$ = require('./build-client.js');
 const getServerLocaleConfig = require('./webpack/serverLocaleConfig.js');
 const getSWConfig = require('./webpack/swConfig.js');
@@ -101,7 +101,7 @@ if (!module.parent) {
 		buildLocale$(argv.build).subscribe();
 	} else {
 		// this script can also be passed an array of locales to build in parallel
-		const { getLocaleArgs } = require('../utils/nodeUtils.js');
+		const { getLocaleArgs } = require('../util/nodeUtils.js');
 
 		const localeCodes = getLocaleArgs(settings.localeCodes);
 

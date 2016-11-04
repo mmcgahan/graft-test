@@ -23,7 +23,7 @@ module.exports = {
 	serviceWorkerEntryPath: path.resolve(appPath, 'sw.js'),
 	serviceWorkerOutputPath: path.resolve(outPath, 'sw'),
 	trnsPath: path.resolve(appPath, 'trns'),
-	utilsPath: path.resolve(repoRoot, 'utils'),
+	utilsPath: path.resolve(repoRoot, 'util'),
 
 	isDev: process.env.NODE_ENV !== 'production',
 	prodPlugins: [

@@ -1,7 +1,7 @@
 const path = require('path');
 const Rx = require('rxjs');
 
-const { compile$ } = require('../utils/buildUtils.js');
+const { compile$ } = require('../util/buildUtils.js');
 const settings = require('./webpack/settings.js');
 const getClientConfig = require('./webpack/clientConfig.js');
 

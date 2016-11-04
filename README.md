@@ -59,7 +59,7 @@ Any generic modules you want to help run your app.
 Most of the basic scripts help with bundling the application, which can be
 challenging to get "right", particularly if you want versioned bundles.
 
-### `utils/`
+### `util/`
 
 Up to you.
 
