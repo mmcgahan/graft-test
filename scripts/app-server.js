@@ -1,28 +1,72 @@
+import fs from 'fs';
 import Inert from 'inert';
-import startServer from 'meetup-web-platform/server';
-import WebpackConfig from './webpack/appServerConfig.js';
+import { startServer } from 'meetup-web-platform';
+import settings from './webpack/settings.js';
 import serverLocaleMap from '../build/server-locales/serverLocaleMap';
 
-function getRoutes() {
-	/**
-	 * special route for root request for favicon - the file path is written by
-	 * webpack, which will handle versioning and bundling for production
-	 *
-	 * the file handler needs to use output.path instead of output.publicPath,
-	 * so we have to do some string substitution here
-	 */
-	const faviconFilename = require('file-loader?name=[hash].[ext]!../src/assets/favicon.ico');
-	const faviconPath = `${WebpackConfig.output.path}/${faviconFilename}`;
+/**
+ * Route for service worker script at top-level path
+ *
+ * It consumes the assetPublicPath as an argument because that is only
+ * determined at runtime, not at compile time for the service worker.
+ *
+ * The 'bundled' service worker is then used as a template string to render the
+ * script response, replacing the `ASSET_PUBLIC_PAth` with the
+ * `assetPublicPath` string
+ *
+ * @param {String} assetPublicPath
+ * @param {String} swTemplatePath optional path to the bundled service worker
+ * @return {Object} the Hapi route object
+ */
+function getServiceWorkerRoute(
+	assetPublicPath,
+	swTemplatePath=`${settings.serviceWorkerOutputPath.substr(1)}/sw.js`  // build/sw/sw.js
+) {
+	const swTemplate = fs.readFileSync(swTemplatePath).toString();
+	const swScript = swTemplate.replace(
+		/ASSET_PUBLIC_PATH/g,
+		`'${assetPublicPath}'`
+	);
+	return {
+		method: 'GET',
+		path: '/sw.js',  // must match client `serviceWorker.register` call
+		handler: (request, reply) => reply(swScript).type('application/javascript')
+	};
+}
 
-	const faviconRoute = {
+/**
+ * special route for root request for favicon - the file path is written by
+ * webpack, which will handle versioning and bundling for production
+ *
+ * the file handler needs to use output.path instead of output.publicPath,
+ * so we have to do some string substitution here
+ */
+function getFaviconRoute(serverOutputPath=settings.serverOutputPath) {
+	const faviconFilename = require('file-loader?name=[hash].[ext]!../src/assets/favicon.ico');
+	const faviconPath = `${serverOutputPath.substr(1)}/${faviconFilename}`;
+
+	return {
 		method: 'GET',
 		path: '/favicon.ico',
 		handler: {
 			file: faviconPath
 		}
 	};
+}
 
-	return [faviconRoute];
+
+function getRoutes() {
+	// read runtime values
+	const assetHost = process.env.ASSET_SERVER_HOST || '0.0.0.0';
+	const assetPort = process.env.ASSET_SERVER_PORT ?
+		`:${process.env.ASSET_SERVER_PORT}` :
+		'';
+	const assetPublicPath = `//${assetHost}${assetPort}`;
+
+	return [
+		getFaviconRoute(),
+		getServiceWorkerRoute(assetPublicPath),
+	];
 }
 
 /**

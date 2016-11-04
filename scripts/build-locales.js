@@ -8,6 +8,7 @@ const { compile$ } = require('../utils/buildUtils.js');
 const { child_process$ } = require('../utils/nodeUtils.js');
 const writeClientLocaleBundle$ = require('./build-client.js');
 const getServerLocaleConfig = require('./webpack/serverLocaleConfig.js');
+const getSWConfig = require('./webpack/swConfig.js');
 const settings = require('./webpack/settings.js');
 
 /**
@@ -30,17 +31,26 @@ const settings = require('./webpack/settings.js');
  *
  * @link {https://webpack.github.io/docs/node.js-api.html#stats}
  */
-const writeServerLocaleBundle$ = localeCode => stats => {
-	// parse the client bundle stats for the info we need - the client bundle
-	// public path, including hashed filename
-	const { assetsByChunkName } = stats.toJson();
+const writeServerLocaleBundle$ = localeCode => clientFilename => {
 	// create the correct config
-	const config = getServerLocaleConfig(localeCode, assetsByChunkName.client);
+	const config = getServerLocaleConfig(localeCode, clientFilename);
 	// compile it
 	return compile$(config)
 		.do(stats => {
 			const filename = stats.toJson().assetsByChunkName['server-locale'];
-			const fullPath = path.resolve(settings.serverOutputPath, localeCode, filename);
+			const fullPath = path.resolve(settings.serverLocaleOutputPath, localeCode, filename);
+			const relativeBundlePath = path.relative(settings.outPath, fullPath);
+			console.log(`built ${relativeBundlePath}`);
+		});
+};
+
+const writeSWBundle$ = localeCode => (assets, hash) => {
+	const config = getSWConfig(localeCode, assets, hash);
+	// compile it
+	return compile$(config)
+		.do(stats => {
+			const filename = stats.toJson().assetsByChunkName['sw'];
+			const fullPath = path.resolve(settings.serviceWorkerOutputPath, filename);
 			const relativeBundlePath = path.relative(settings.outPath, fullPath);
 			console.log(`built ${relativeBundlePath}`);
 		});
@@ -51,7 +61,11 @@ const writeServerLocaleBundle$ = localeCode => stats => {
  */
 const buildLocale$ = localeCode => writeClientLocaleBundle$(localeCode)
 	.do(stats => console.log('building server locale'))
-  .flatMap(writeServerLocaleBundle$(localeCode)); // Pass the client path to the corresponding server locale bundle config
+	.map(stats => stats.toJson({ hash: true }))
+  .flatMap(stats =>
+		writeServerLocaleBundle$(localeCode)(stats.assetsByChunkName.client)
+			.merge(writeSWBundle$(localeCode)(stats.assets, stats.hash))
+	); // Pass the client path to the corresponding server locale bundle config
 
 function spawnBuild$(localeCode) {
 	// call this script in a sub-process with an argument indicating the localeCode
@@ -65,7 +79,7 @@ function spawnBuild$(localeCode) {
  * This function runs the bundle builds _in parallel_ across multiple CPU cores
  */
 const updateProgress = progressBarUI({
-	total: 5,  // started, building/built client, building/built server locale
+	total: 6,  // started, building/built client, building/built server locale
 	width: 20,
 	blank: ' ',
 });
@@ -96,7 +110,7 @@ if (!module.parent) {
 		// The first step is building an array of localeCode-bundlePath pairs
 		// in the form ['<localeCode>: require(<bundlePath>).default', ...]
 		const codeBundlePairStrings = localeCodes.reduce((acc, localeCode) => {
-			const serverLocalePath = path.resolve(settings.serverOutputPath, localeCode, 'server-locale');
+			const serverLocalePath = path.resolve(settings.serverLocaleOutputPath, localeCode, 'server-locale');
 			const requireString = `require('${serverLocalePath}').default`;
 			acc.push(`'${localeCode}': ${requireString}`);
 			return acc;
@@ -106,7 +120,11 @@ if (!module.parent) {
 		// `require` statements to either be _evaluated_ or treated as a string
 		const serverLocaleMapString = `{${codeBundlePairStrings.join(',')}}`;
 
-		buildLocales$(localeCodes)
+		const build$ = localeCodes.length > 1 ?
+			buildLocales$(localeCodes) :
+			buildLocale$(localeCodes[0]);
+
+		build$
 			.subscribe(
 				null,
 				null,

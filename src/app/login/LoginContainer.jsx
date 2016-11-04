@@ -10,7 +10,7 @@ import { SELF_REF } from '../app/appQuery';
 import {
 	loginPost,
 	logoutRequest
-} from 'meetup-web-platform/actions/authActionCreators';
+} from 'meetup-web-platform/lib/actions/authActionCreators';
 
 const PAGE_TITLE = 'Login';
 

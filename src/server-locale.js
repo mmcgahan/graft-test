@@ -1,4 +1,4 @@
-import makeRenderer from 'meetup-web-platform/renderers/server-render';
+import { makeServerRenderer } from 'meetup-web-platform';
 
 // this variable must be injected by webpack using DefinePlugin
 const clientFilename = WEBPACK_CLIENT_FILENAME;  // eslint-disable-line no-undef
@@ -14,6 +14,6 @@ const reducer = require('./app/reducer').default;
 // the react application with the full HTML response markup, including `<html>`,
 // `<head>` and its contents, and the `<script>` tag required to load the app
 // on the client
-const renderRequest$ = makeRenderer(routes, reducer, clientFilename, assetPublicPath);
+const renderRequest$ = makeServerRenderer(routes, reducer, clientFilename, assetPublicPath);
 export default renderRequest$;
 
