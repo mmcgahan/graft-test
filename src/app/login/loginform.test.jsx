@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import LoginForm from './LoginForm';
-import { hasAttribute, hasRoleAttribute } from '../shared/foundationTestUtils';
 
 describe('LoginForm', () => {
 	it('exists', () => {
@@ -10,21 +9,6 @@ describe('LoginForm', () => {
 		const loginFormNode = ReactDOM.findDOMNode(loginForm);
 		expect(loginFormNode).not.toBeNull();
 	});
-
-	it('applies role="textbox" attributes to all inputs', () => {
-		const loginForm = TestUtils.renderIntoDocument(<LoginForm loginAction={() => {}} />);
-		const loginFormNode = ReactDOM.findDOMNode(loginForm);
-		const loginFormInputArray = Array.prototype.slice.call(loginFormNode.getElementsByTagName('INPUT'));
-		loginFormInputArray.forEach(input => hasRoleAttribute(input, 'textbox'));
-	});
-
-	it('applies aria-readonly attribute to all inputs when disabled', () => {
-		const loginForm = TestUtils.renderIntoDocument(<LoginForm loginAction={() => {}} disabled />);
-		const loginFormNode = ReactDOM.findDOMNode(loginForm);
-		const loginFormInputArray = Array.prototype.slice.call(loginFormNode.getElementsByTagName('INPUT'));
-		loginFormInputArray.forEach(input => hasAttribute(input, 'aria-readonly'));
-	});
-
 
 	it('calls loginAction with email and password values when submit button is clicked', () => {
 		const spyable = {
