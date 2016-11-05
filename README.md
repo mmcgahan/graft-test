@@ -2,11 +2,11 @@
  
 A minimal meetup-web-platform-based application.
 
-This repo can be forked to start a new web application, or you can copy and
-paste the pieces you want. By using this repo, you will start off with an
-application that has the same structure as other 'reference' implementations
-of the platform, which will make it easier for engineers who have worked on
-other applications to get up to speed and use your app
+This repo can be copied to a new repo to start a new web application. By using
+this repo, you will start off with an application that has the same structure
+as other 'reference' implementations of the platform, which will make it easier
+for engineers who have worked on other applications to get up to speed and use
+your app
 
 ## Basic usage
 
