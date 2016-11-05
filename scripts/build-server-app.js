@@ -6,16 +6,16 @@ const Rx = require('rxjs');
 const progressBarUI = require('../util/progressBarUI.js');
 const { compile$ } = require('../util/buildUtils.js');
 const { child_process$ } = require('../util/nodeUtils.js');
-const writeClientLocaleBundle$ = require('./build-client.js');
-const getServerLocaleConfig = require('./webpack/serverLocaleConfig.js');
+const writeBrowserAppBundle$ = require('./build-browser-app.js');
+const getServerAppConfig = require('./webpack/serverAppConfig.js');
 const getSWConfig = require('./webpack/swConfig.js');
 const settings = require('./webpack/settings.js');
 
 /**
- * This module builds the locale-specific bundles for the app, both client and server
+ * This module builds the locale-specific bundles for the app, both browser and server
  *
- * The server locale bundles depend on the client bundle filename, so they cannot be
- * built independently of the client bundles
+ * The server locale bundles depend on the browser bundle filename, so they cannot be
+ * built independently of the browser bundles
  *
  * Usage:
  * node scripts/build-locales.js [<localeCode> [<localeCode>...]]
@@ -26,19 +26,19 @@ const settings = require('./webpack/settings.js');
  */
 
 /**
- * consuming the full webpack compile stats from a client bundle build, plus
+ * consuming the full webpack compile stats from a browser bundle build, plus
  * the associated locale code, to build a corresponding server render bundle
  *
  * @link {https://webpack.github.io/docs/node.js-api.html#stats}
  */
-const writeServerLocaleBundle$ = localeCode => clientFilename => {
+const writeServerLocaleBundle$ = localeCode => browserAppFilename => {
 	// create the correct config
-	const config = getServerLocaleConfig(localeCode, clientFilename);
+	const config = getServerAppConfig(localeCode, browserAppFilename);
 	// compile it
 	return compile$(config)
 		.do(stats => {
-			const filename = stats.toJson().assetsByChunkName['server-locale'];
-			const fullPath = path.resolve(settings.serverLocaleOutputPath, localeCode, filename);
+			const filename = stats.toJson().assetsByChunkName['server-app'];
+			const fullPath = path.resolve(settings.serverAppOutputPath, localeCode, filename);
 			const relativeBundlePath = path.relative(settings.outPath, fullPath);
 			console.log(`built ${relativeBundlePath}`);
 		});
@@ -59,13 +59,13 @@ const writeSWBundle$ = localeCode => (assets, hash) => {
 /**
  * Build a single locale bundle
  */
-const buildLocale$ = localeCode => writeClientLocaleBundle$(localeCode)
+const buildSingleServerLocale$ = localeCode => writeBrowserAppBundle$(localeCode)
 	.do(stats => console.log('building server locale'))
 	.map(stats => stats.toJson({ hash: true }))
   .flatMap(stats =>
-		writeServerLocaleBundle$(localeCode)(stats.assetsByChunkName.client)
+		writeServerLocaleBundle$(localeCode)(stats.assetsByChunkName.app)
 			.merge(writeSWBundle$(localeCode)(stats.assets, stats.hash))
-	); // Pass the client path to the corresponding server locale bundle config
+	); // Pass the browser bundle path to the corresponding server locale bundle config
 
 function spawnBuild$(localeCode) {
 	// call this script in a sub-process with an argument indicating the localeCode
@@ -74,23 +74,23 @@ function spawnBuild$(localeCode) {
 
 /**
  * Export a function that takes an array of localeCodes and spawns a separate
- * child process to make the corresponding client and server-locale bundles
+ * child process to make the corresponding browser and server app bundles
  *
  * This function runs the bundle builds _in parallel_ across multiple CPU cores
  */
 const updateProgress = progressBarUI({
-	total: 6,  // started, building/built client, building/built server locale
+	total: 6,  // started, building/built browser app, building/built server app
 	width: 20,
 	blank: ' ',
 });
-const buildLocales$ = localeCodes => Rx.Observable.from(localeCodes)
+const buildServerApp$ = localeCodes => Rx.Observable.from(localeCodes)
 	.do(updateProgress('started'))
 	.flatMap(localeCode =>
 		spawnBuild$(localeCode)
 			.do(status => updateProgress(status)(localeCode))
 	);
 
-module.exports = buildLocales$;
+module.exports = buildServerApp$;
 
 if (!module.parent) {
 	// looking for a CLI argument(s) indicating the localeCode(s) to build
@@ -98,7 +98,7 @@ if (!module.parent) {
 	// the 'build' argument is a single locale code that will be built immediately
 	if (argv.build) {
 		// do the single-language build
-		buildLocale$(argv.build).subscribe();
+		buildSingleServerLocale$(argv.build).subscribe();
 	} else {
 		// this script can also be passed an array of locales to build in parallel
 		const { getLocaleArgs } = require('../util/nodeUtils.js');
@@ -110,19 +110,19 @@ if (!module.parent) {
 		// The first step is building an array of localeCode-bundlePath pairs
 		// in the form ['<localeCode>: require(<bundlePath>).default', ...]
 		const codeBundlePairStrings = localeCodes.reduce((acc, localeCode) => {
-			const serverLocalePath = path.resolve(settings.serverLocaleOutputPath, localeCode, 'server-locale');
-			const requireString = `require('${serverLocalePath}').default`;
+			const serverAppPath = path.resolve(settings.serverAppOutputPath, localeCode, 'server-app');
+			const requireString = `require('${serverAppPath}').default`;
 			acc.push(`'${localeCode}': ${requireString}`);
 			return acc;
 		}, []);
 		// now inject the pairs into a stringified Object
 		// **note** This doesn't use JSON.stringify because we don't want the
 		// `require` statements to either be _evaluated_ or treated as a string
-		const serverLocaleMapString = `{${codeBundlePairStrings.join(',')}}`;
+		const serverAppMapString = `{${codeBundlePairStrings.join(',')}}`;
 
 		const build$ = localeCodes.length > 1 ?
-			buildLocales$(localeCodes) :
-			buildLocale$(localeCodes[0]);
+			buildServerApp$(localeCodes) :
+			buildSingleServerLocale$(localeCodes[0]);
 
 		build$
 			.subscribe(
@@ -130,8 +130,8 @@ if (!module.parent) {
 				null,
 				() =>
 					fs.writeFileSync(
-						settings.serverLocalesModulePath,
-						`module.exports = ${serverLocaleMapString};`
+						settings.serverAppModulePath,
+						`module.exports = ${serverAppMapString};`
 					)
 			);
 	}

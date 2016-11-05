@@ -38,8 +38,8 @@ function getConfig(localeCode, assets, hash) {
 
 		plugins: [
 			new webpack.DefinePlugin({
-				WEBPACK_CLIENT_BUILD_HASH: JSON.stringify(hash),
-				WEBPACK_CLIENT_ASSET_PATHS: JSON.stringify(assetFilePaths),
+				WEBPACK_BROWSER_BUILD_HASH: JSON.stringify(hash),
+				WEBPACK_BROWSER_ASSET_PATHS: JSON.stringify(assetFilePaths),
 				IS_DEV: settings.isDev,
 				'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
 			}),

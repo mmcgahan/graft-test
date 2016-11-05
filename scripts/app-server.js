@@ -2,7 +2,7 @@ import fs from 'fs';
 import Inert from 'inert';
 import { startServer } from 'meetup-web-platform';
 import settings from './webpack/settings.js';
-import serverLocaleMap from '../build/server-locales/serverLocaleMap';
+import serverAppMap from '../build/server-app/serverAppMap';
 
 /**
  * Route for service worker script at top-level path
@@ -29,7 +29,7 @@ function getServiceWorkerRoute(
 	);
 	return {
 		method: 'GET',
-		path: '/sw.js',  // must match client `serviceWorker.register` call
+		path: '/sw.js',  // must match browser app `serviceWorker.register` call
 		handler: (request, reply) => reply(swScript).type('application/javascript')
 	};
 }
@@ -76,7 +76,7 @@ function main() {
 	const plugins = [Inert];  // for serving the favicon
 	const routes = getRoutes();
 
-	startServer(serverLocaleMap, { routes, plugins })
+	startServer(serverAppMap, { routes, plugins })
 		.catch(err => {  // catch because otherwise Node swallows errors in Promises
 			console.log(err.stack);
 			process.exit();

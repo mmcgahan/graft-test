@@ -1,6 +1,6 @@
 // The cache name needs to update every time there is a new bundle to serve,
-// so we need to inject the client bundle hash as part of the cache name
-const buildHash = WEBPACK_CLIENT_BUILD_HASH;  // eslint-disable-line no-undef
+// so we need to inject the browser bundle hash as part of the cache name
+const buildHash = WEBPACK_BROWSER_BUILD_HASH;  // eslint-disable-line no-undef
 const staticCacheName = `mup-web-${buildHash}`;
 const imgCacheName = 'mup-web-imgs';
 const assetPublicPath = ASSET_PUBLIC_PATH;  // eslint-disable-line no-undef
@@ -18,8 +18,8 @@ const allCaches = [
  * we can get.
  */
 
-const assetFilePaths = WEBPACK_CLIENT_ASSET_PATHS;  // eslint-disable-line no-undef
-const clientBundles = [
+const assetFilePaths = WEBPACK_BROWSER_ASSET_PATHS;  // eslint-disable-line no-undef
+const browserAppBundles = [
 	...assetFilePaths
 ].map(filename =>
 	`${assetPublicPath}${filename}`
@@ -28,7 +28,7 @@ const clientBundles = [
 self.addEventListener('install', e => {
 	e.waitUntil(
 		caches.open(staticCacheName)
-			.then(cache => cache.addAll([ skeletonPath, ...clientBundles ]))
+			.then(cache => cache.addAll([ skeletonPath, ...browserAppBundles ]))
 			.catch(
 				// if caching fails, discard SW
 			)

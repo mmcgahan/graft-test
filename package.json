@@ -7,8 +7,9 @@
   "engine": "node >=6.4.0",
   "scripts": {
     "build:clean": "rm -rf build/",
-    "build:locales": "node scripts/build-locales",
+    "build:locales": "node scripts/build-server-app",
     "build:server": "node scripts/build-server",
+    "clean": "npm run build:clean && rm *.log || true",
     "coverage": "npm run test -- --coverage",
     "coveralls": "cat coverage/lcov.info | coveralls",
     "debug:server": "npm run build:server && node-debug build/server.js",

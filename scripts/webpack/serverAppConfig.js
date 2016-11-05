@@ -7,16 +7,16 @@ const webpack = require('webpack');
 const settings = require('./settings.js');
 
 // Webpack config
-function getConfig(localeCode, clientFilename) {
+function getConfig(localeCode, browserAppFilename) {
 	const publicPath = `/${localeCode}/`;
 	const config = {
 		entry: {
-			'server-locale': [settings.serverLocaleEntryPath]
+			'server-app': [settings.serverAppEntryPath]
 		},
 
 		output: {
 			libraryTarget: 'commonjs2',
-			path: path.join(settings.serverLocaleOutputPath, localeCode),
+			path: path.join(settings.serverAppOutputPath, localeCode),
 			filename: '[name].js',
 			publicPath
 		},
@@ -53,9 +53,9 @@ function getConfig(localeCode, clientFilename) {
 
 		plugins: [
 			new webpack.DefinePlugin({
-				// server bundles must reference _client_ bundle public path
+				// server bundles must reference _browser app_ bundle public path
 				// - inject it as a 'global variable' here
-				WEBPACK_CLIENT_FILENAME: JSON.stringify(clientFilename),
+				WEBPACK_BROWSER_APP_FILENAME: JSON.stringify(browserAppFilename),
 				WEBPACK_ASSET_PUBLIC_PATH: JSON.stringify(publicPath),
 				IS_DEV: settings.isDev,
 				'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),

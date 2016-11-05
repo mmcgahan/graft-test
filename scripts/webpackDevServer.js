@@ -1,14 +1,14 @@
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const settings = require('./webpack/settings.js');
-const getClientConfig = require('./webpack/clientConfig.js');
+const getBrowserAppConfig = require('./webpack/browserAppConfig.js');
 const { getLocaleArgs } = require('../util/nodeUtils.js');
 
 const ASSET_SERVER_PORT = process.env.ASSET_SERVER_PORT || 8001;
 const DEV_HOST = '0.0.0.0';
 
 const localeCodes = getLocaleArgs(settings.localeCodes);
-const configs = localeCodes.map(getClientConfig);
+const configs = localeCodes.map(getBrowserAppConfig);
 const compiler = webpack(configs);
 const options = {
 	hot: true,

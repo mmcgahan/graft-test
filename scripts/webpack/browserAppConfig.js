@@ -16,7 +16,7 @@ function injectHotReloadConfig(config) {
 	const ASSET_SERVER_PORT = process.env.ASSET_SERVER_PORT || 8001;
 	const DEV_HOST = '0.0.0.0';
 
-	config.entry.client.unshift(
+	config.entry.app.unshift(
 		`webpack-dev-server/client?http://${DEV_HOST}:${ASSET_SERVER_PORT}/`,
 		'webpack/hot/dev-server'
 	);
@@ -28,14 +28,14 @@ function injectHotReloadConfig(config) {
 function getConfig(localeCode) {
 	const config = {
 		entry: {
-			client: [settings.clientEntryPath]
+			app: [settings.browserAppEntryPath]
 		},
 
 		output: {
-			path: path.resolve(settings.clientOutputPath, localeCode),
+			path: path.resolve(settings.browserAppOutputPath, localeCode),
 			filename: '[name].[hash].js',
 			// publicPath is set at **runtime** using __webpack_public_path__
-			// in the client entry script
+			// in the browser app entry script
 		},
 
 		devtool: settings.isDev ? 'eval' : 'source-map',
