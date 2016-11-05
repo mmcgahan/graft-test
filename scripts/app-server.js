@@ -58,9 +58,7 @@ function getFaviconRoute(serverOutputPath=settings.serverOutputPath) {
 function getRoutes() {
 	// read runtime values
 	const assetHost = process.env.ASSET_SERVER_HOST || '0.0.0.0';
-	const assetPort = process.env.ASSET_SERVER_PORT ?
-		`:${process.env.ASSET_SERVER_PORT}` :
-		'';
+	const assetPort = `:${process.env.ASSET_SERVER_PORT || 8001}`;
 	const assetPublicPath = `//${assetHost}${assetPort}`;
 
 	return [
