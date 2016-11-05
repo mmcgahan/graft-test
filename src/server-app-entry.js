@@ -3,7 +3,7 @@ import { makeServerRenderer } from 'meetup-web-platform';
 // this variable must be injected by webpack using DefinePlugin
 const browserAppFilename = WEBPACK_BROWSER_APP_FILENAME;  // eslint-disable-line no-undef
 const assetHost = process.env.ASSET_SERVER_HOST || '0.0.0.0';
-const assetPort = process.env.ASSET_SERVER_PORT ? `:${process.env.ASSET_SERVER_PORT}` : '';
+const assetPort = `:${process.env.ASSET_SERVER_PORT || 8001}`;
 const assetPublicPath = `//${assetHost}${assetPort}${WEBPACK_ASSET_PUBLIC_PATH}`;  // eslint-disable-line no-undef
 
 __webpack_public_path__ = assetPublicPath;  // eslint-disable-line no-undef
