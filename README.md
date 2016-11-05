@@ -8,6 +8,28 @@ as other 'reference' implementations of the platform, which will make it easier
 for engineers who have worked on other applications to get up to speed and use
 your app
 
+One way to set up a new copy of the repo is to first clone it and then set up
+a new 'remote' `origin` that you create on GitHub.
+
+1. In GitHub, create a new, _empty_ repository.
+2. On your local machine, clone the starter kit into a directory with the name
+of your new GitHub repo
+
+    ```sh
+    > git clone git@github.com:meetup/web-platform-starter.git my-cool-app
+		> cd my-cool-app
+		```
+3. set the `origin` remote url to your new GitHub repo url
+
+		```sh
+		> git remote set-url origin git@github.com:meetup/my-cool-app.git
+		```
+4. push the code to the new repo and set the upstream tracking branch
+
+		```sh
+		> git push origin -u
+		```
+
 ## Basic usage
 
 1. `npm install`
