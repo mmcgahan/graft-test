@@ -5,37 +5,6 @@ const webpack = require('webpack');
 // Build settings
 const settings = require('./settings.js');
 
-function injectProdPlugins(config) {
-	const prodPlugins = [
-		// Removes duplicate module code (rare, but can happen)
-		new webpack.optimize.DedupePlugin(),
-
-		// Tells loaders to optimize what they can since in minimize mode
-		new webpack.LoaderOptionsPlugin({
-			minimize: true,
-			debug: false,
-			quiet: true
-		}),
-
-		// Removes dead code in conjuction with UglifyJS
-		new webpack.DefinePlugin({
-			'process.env': {
-				NODE_ENV: '"production"',
-			},
-		}),
-
-		new webpack.optimize.UglifyJsPlugin({
-			compress: {
-				warnings: false
-			},
-			output: {
-				comments: false
-			}
-		}),
-	];
-	config.plugins = config.plugins.concat(prodPlugins);
-	return config;
-}
 
 /**
  * When in dev, we need to manually inject some configuration to enable HMR
@@ -47,7 +16,7 @@ function injectHotReloadConfig(config) {
 	const ASSET_SERVER_PORT = process.env.ASSET_SERVER_PORT || 8001;
 	const DEV_HOST = '0.0.0.0';
 
-	config.entry.client.unshift(
+	config.entry.app.unshift(
 		`webpack-dev-server/client?http://${DEV_HOST}:${ASSET_SERVER_PORT}/`,
 		'webpack/hot/dev-server'
 	);
@@ -59,17 +28,17 @@ function injectHotReloadConfig(config) {
 function getConfig(localeCode) {
 	const config = {
 		entry: {
-			client: [settings.clientEntryPath]
+			app: [settings.browserAppEntryPath]
 		},
 
 		output: {
-			path: path.resolve(settings.clientOutputPath, localeCode),
+			path: path.resolve(settings.browserAppOutputPath, localeCode),
 			filename: '[name].[hash].js',
 			// publicPath is set at **runtime** using __webpack_public_path__
-			// in the client entry script
+			// in the browser app entry script
 		},
 
-		devtool: settings.isProduction ? 'source-map' : 'eval',
+		devtool: settings.isDev ? 'eval' : 'source-map',
 
 		module: {
 			preLoaders: [
@@ -86,10 +55,10 @@ function getConfig(localeCode) {
 					test: /\.jsx?$/,
 					include: [
 						settings.appPath,
-						settings.platformPath,
+						settings.webComponentsSrcPath,
 					],
 					loader: 'babel-loader',
-					query: settings.isProduction ? {} : {
+					query: settings.isDev ? {
 						plugins: [['react-transform', {
 							transforms: [{
 								transform: 'react-transform-hmr',
@@ -97,12 +66,18 @@ function getConfig(localeCode) {
 								locals: ['module']
 							}]
 						}]]
-					}
+					} : null
+				},
+				{
+					test: /\.css$/,
+					include: [settings.cssPath],
+					loader: 'style!css'
 				},
 				{
 					test: /\.json$/,
 					include: [
 						settings.appPath,
+						settings.webComponentsSrcPath
 					],
 					loader: 'json'
 				}
@@ -116,17 +91,26 @@ function getConfig(localeCode) {
 		},
 
 		resolve: {
+			alias: {
+				trns: path.resolve(settings.trnsPath, localeCode)
+			},
+
 			// module name extensions
 			extensions: ['.js', '.jsx'],
 		},
 
-		plugins: []
+		plugins: [
+			new webpack.DefinePlugin({
+				IS_DEV: settings.isDev,
+				'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+			}),
+		]
 	};
 
-	if (settings.isProduction) {
-		injectProdPlugins(config);
-	} else {
+	if (settings.isDev) {
 		injectHotReloadConfig(config);
+	} else {
+		config.plugins = config.plugins.concat(settings.prodPlugins);
 	}
 	return config;
 }

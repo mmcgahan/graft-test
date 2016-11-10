@@ -7,21 +7,21 @@ const webpack = require('webpack');
 const settings = require('./settings.js');
 
 // Webpack config
-function getConfig(localeCode, clientFilename) {
+function getConfig(localeCode, browserAppFilename) {
 	const publicPath = `/${localeCode}/`;
-	return {
+	const config = {
 		entry: {
-			'server-locale': [settings.serverLocaleEntryPath]
+			'server-app': [settings.serverAppEntryPath]
 		},
 
 		output: {
 			libraryTarget: 'commonjs2',
-			path: path.join(settings.serverOutputPath, localeCode),
+			path: path.join(settings.serverAppOutputPath, localeCode),
 			filename: '[name].js',
 			publicPath
 		},
 
-		devtool: settings.isProduction ? 'source-map' : 'eval',
+		devtool: 'eval',
 
 		module: {
 			loaders: [
@@ -29,15 +29,22 @@ function getConfig(localeCode, clientFilename) {
 					test: /\.jsx?$/,
 					include: [
 						settings.appPath,
-						settings.platformPath,
+						settings.webComponentsSrcPath,
 					],
 					loader: 'babel-loader',
+				},
+
+				{
+					test: /\.css$/,
+					loader: 'style!css',
+					include: [settings.cssPath]
 				},
 
 				{
 					test: /\.json$/,
 					include: [
 						settings.appPath,
+						settings.webComponentsSrcPath,
 					],
 					loader: 'json'
 				}
@@ -46,10 +53,12 @@ function getConfig(localeCode, clientFilename) {
 
 		plugins: [
 			new webpack.DefinePlugin({
-				// server bundles must reference _client_ bundle public path
+				// server bundles must reference _browser app_ bundle public path
 				// - inject it as a 'global variable' here
-				WEBPACK_CLIENT_FILENAME: JSON.stringify(clientFilename),
+				WEBPACK_BROWSER_APP_FILENAME: JSON.stringify(browserAppFilename),
 				WEBPACK_ASSET_PUBLIC_PATH: JSON.stringify(publicPath),
+				IS_DEV: settings.isDev,
+				'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
 			}),
 		],
 
@@ -57,7 +66,7 @@ function getConfig(localeCode, clientFilename) {
 
 		externals: [ nodeExternals({
 			modulesDir : process.env.NODE_PATH ? process.env.NODE_PATH : null,
-			whitelist: [/^meetup-web-platform/],
+			whitelist: [/^meetup-web-components/],
 		})],
 
 		resolveLoader: {
@@ -67,10 +76,18 @@ function getConfig(localeCode, clientFilename) {
 		},
 
 		resolve: {
+			alias: {
+				trns: path.resolve(settings.trnsPath, localeCode)
+			},
+
 			// module name extensions
 			extensions: ['.js', '.jsx']
 		}
 	};
+	if (!settings.isDev) {
+		config.plugins = config.plugins.concat(settings.prodPlugins);
+	}
+	return config;
 }
 
 // export the config-building function for programmatic consumption

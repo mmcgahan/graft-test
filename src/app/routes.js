@@ -3,8 +3,8 @@
  * @module routes
  **/
 import Error404 from './shared/errors/404';
-import App from './app/AppContainer';
-import { selfQuery } from './app/appQuery';
+import App from './root/AppContainer';
+import { selfQuery } from './root/appQuery';
 
 // Assemble all feature routes here
 import loginRoutes from './login/loginRoutes';

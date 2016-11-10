@@ -1,5 +1,5 @@
 const path = require('path');
-const { compile$ } = require('../utils/buildUtils.js');
+const { compile$ } = require('../util/buildUtils.js');
 const appServerConfig = require('./webpack/appServerConfig.js');
 const settings = require('./webpack/settings.js');
 

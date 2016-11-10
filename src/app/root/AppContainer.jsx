@@ -2,7 +2,7 @@ import React from 'react';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { logoutRequest } from 'meetup-web-platform/actions/authActionCreators';
+import { logoutRequest } from 'meetup-web-platform/lib/actions/authActionCreators';
 
 import PageWrap from '../shared/components/PageWrap';
 

@@ -1,6 +1,6 @@
 const forever = require('forever');
 const settings = require('../webpack/settings.js');
-const { getLocaleArgs } = require('../../utils/nodeUtils.js');
+const { getLocaleArgs } = require('../../util/nodeUtils.js');
 
 const localeCodes = getLocaleArgs(settings.localeCodes);
 

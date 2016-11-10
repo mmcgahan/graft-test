@@ -1,4 +1,5 @@
 // Require modules
+const webpack = require('webpack');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
@@ -13,30 +14,38 @@ module.exports = {
 
 	output: {
 		libraryTarget: 'commonjs2',
-		path: settings.outPath,
+		path: settings.serverOutputPath,
 		filename: '[name].js',
 		// publicPath is set at **runtime** using __webpack_public_path__
 		// in the app-server entry script
 	},
 
-	devtool: settings.isProduction ? 'source-map' : 'eval',
+	// using eval until this is fixed - https://bugs.chromium.org/p/chromium/issues/detail?id=658438
+	// devtool: settings.isDev ? 'eval' : 'eval',
+	devtool: 'eval',
 
 	module: {
 		loaders: [
 			{
 				test: /\.jsx?$/,
-				// need to load meetup-web-platform until it is a standalone module
 				include: [
 					settings.appPath,
-					settings.platformPath,
+					settings.webComponentsSrcPath,
 				],
 				loader: 'babel-loader',
+			},
+
+			{
+				test: /\.css$/,
+				loader: 'style!css',
+				include: [settings.cssPath]
 			},
 
 			{
 				test: /\.json$/,
 				include: [
 					settings.appPath,
+					settings.webComponentsSrcPath
 				],
 				loader: 'json'
 			}
@@ -45,10 +54,16 @@ module.exports = {
 
 	target: 'node',
 
+	plugins: [
+		new webpack.DefinePlugin({
+			IS_DEV: settings.isDev,
+		}),
+	],
+
 	externals: [
 		nodeExternals({
 			modulesDir : process.env.NODE_PATH ? process.env.NODE_PATH : null,
-			whitelist: [/^meetup-web-platform/],
+			whitelist: [/^meetup-web-components/],
 		}),
 		/.*?build\//
 	],
