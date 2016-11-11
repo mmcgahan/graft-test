@@ -23,6 +23,7 @@ const cssHref = require('file-loader?name=[name].[hash:7].css!require-loader!css
 class PageWrap extends React.Component {
 	render() {
 		const {
+			self,
 			auth,
 			onLogout,
 			children,
