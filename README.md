@@ -17,18 +17,20 @@ of your new GitHub repo
 
     ```sh
     > git clone git@github.com:meetup/web-platform-starter.git my-cool-app
-		> cd my-cool-app
-		```
+    > cd my-cool-app
+    ```
+
 3. set the `origin` remote url to your new GitHub repo url
 
-		```sh
-		> git remote set-url origin git@github.com:meetup/my-cool-app.git
-		```
+    ```sh
+    > git remote set-url origin git@github.com:meetup/my-cool-app.git
+    ```
+
 4. push the code to the new repo and set the upstream tracking branch
 
-		```sh
-		> git push origin -u
-		```
+    ```sh
+    > git push origin -u
+    ```
 
 ## Basic usage
 
