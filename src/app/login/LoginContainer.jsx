@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Link } from 'react-router';
+import Link from 'react-router/lib/Link';
 
 import LoginForm from './LoginForm';
 import { SELF_REF } from '../root/appQuery';
