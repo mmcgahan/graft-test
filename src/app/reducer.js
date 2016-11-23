@@ -34,8 +34,7 @@ export const DEFAULT_AUTH_STATE = {};
  * @return {Object}
  */
 export function app(state=DEFAULT_APP_STATE, action={}) {
-	let response,
-		newState;
+	let newState;
 	console.log(action);
 	switch (action.type) {
 	case 'CACHE_SUCCESS':  // fall through - same effect as API success
@@ -43,16 +42,6 @@ export function app(state=DEFAULT_APP_STATE, action={}) {
 			// API_SUCCESS contains an array of responses, but we just need to build a single
 			// object to update state with
 		newState = Object.assign.apply(Object, [{}].concat(action.payload.responses));
-		return { ...state, ...newState };
-	case 'LOGIN_SUCCESS':
-		response = { ...action.payload };
-		console.log(response);
-		newState = {
-			[SELF_REF]: {
-				type: 'member',
-				value: response.value.member
-			},
-		};
 		return { ...state, ...newState };
 	case 'LOGIN_ERROR':
 		newState = {

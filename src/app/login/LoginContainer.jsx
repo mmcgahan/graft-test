@@ -40,6 +40,8 @@ export class Login extends React.Component {
 			handlers,
 		} = this.props;
 
+		const isLoggedOut = self.status === 'prereg';
+
 		return(
 			<div>
 				<Helmet
@@ -47,8 +49,8 @@ export class Login extends React.Component {
 				/>
 
 				<div className='bounds align--center'>
-					<h1 className='text--display1'>{ self.status == 'prereg' ? 'Log in' : 'Log out' }</h1>
-					{ self.status == 'prereg' ?
+					<h1 className='text--display1'>{ isLoggedOut ? 'Log in' : 'Log out' }</h1>
+					{ isLoggedOut ?
 						<LoginForm
 							errors={self.errors}
 							loginAction={handlers.loginPost}

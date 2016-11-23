@@ -24,13 +24,8 @@ function intlRender(component) {
 describe('LoginContainer', () => {
 	it('renders a `LoginForm` when logged out', function (done) {
 		const location = '/login';
-		const self = {
-			type: 'member',
-			value: {
-				status: 'prereg',
-			}
-		};
-		const stateAuthenticated = { ...MOCK_APP_STATE, self };
+
+		const stateAuthenticated = { ...MOCK_APP_STATE };
 		const store = createFakeStore(stateAuthenticated);
 
 		match({location, routes}, (err, redirectLocation, renderProps) => {
@@ -48,14 +43,17 @@ describe('LoginContainer', () => {
 
 	it('renders a log out `Link` when logged in', function(done) {
 		const location = '/login';
-		const self = {
-			type: 'member',
-			value: {
-				id: 1234,
-				status: 'active',
+		const app = {
+			self: {
+				type: 'member',
+				value: {
+					id: 1234,
+					status: 'active',
+				}
 			}
 		};
-		const stateAuthenticated = { ...MOCK_APP_STATE, self };
+
+		const stateAuthenticated = { ...MOCK_APP_STATE, app };
 		const store = createFakeStore(stateAuthenticated);
 
 		match({location, routes}, (err, redirectLocation, renderProps) => {
@@ -65,7 +63,7 @@ describe('LoginContainer', () => {
 				</Provider>
 			);
 
-			const logoutComponent = TestUtils.scryRenderedDOMComponentsWithTag(container, 'Link');
+			const logoutComponent = TestUtils.scryRenderedDOMComponentsWithTag(container, 'a');
 			expect(logoutComponent.length).toBe(1);
 			done();
 		});

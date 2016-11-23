@@ -27,6 +27,8 @@ class PageWrap extends React.Component {
 			children,
 		} = this.props;
 
+		const isLoggedOut = self.status === 'prereg';
+
 		return (
 			<div>
 				<Helmet
@@ -41,7 +43,7 @@ class PageWrap extends React.Component {
 
 				<ul>
 					<li>
-						{ self.status == 'prereg' ?
+						{ isLoggedOut ?
 							<Link to='/login/' className='text--small'>Login</Link> :
 							<Link to='?logout'>
 								{`Logout ${self.name}`}
