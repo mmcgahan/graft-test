@@ -4,12 +4,13 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { Link } from 'react-router';
+
 import LoginForm from './LoginForm';
 import { SELF_REF } from '../root/appQuery';
 
 import {
 	loginPost,
-	logoutRequest
 } from 'meetup-web-platform/lib/actions/authActionCreators';
 
 const PAGE_TITLE = 'Login';
@@ -17,7 +18,6 @@ const PAGE_TITLE = 'Login';
 function mapStateToProps(state) {
 	return {
 		self: (state.app[SELF_REF] || {}).value || {},
-		auth: state.auth || {}
 	};
 }
 
@@ -26,7 +26,6 @@ function mapDispatchToProps(dispatch) {
 	return {
 		handlers: bindActionCreators({
 			loginPost,
-			logoutRequest
 		}, dispatch)
 	};
 }
@@ -38,7 +37,6 @@ export class Login extends React.Component {
 	render() {
 		const {
 			self,
-			auth,
 			handlers,
 		} = this.props;
 
@@ -49,16 +47,15 @@ export class Login extends React.Component {
 				/>
 
 				<div className='bounds align--center'>
-					<h1 className='text--display1'>{ auth.anonymous ? 'Log in' : 'Log out' }</h1>
-					{ auth.anonymous ?
+					<h1 className='text--display1'>{ self.status == 'prereg' ? 'Log in' : 'Log out' }</h1>
+					{ self.status == 'prereg' ?
 						<LoginForm
-							errors={auth.errors}
+							errors={self.errors}
 							loginAction={handlers.loginPost}
 						/> :
-						<button
-							onClick={handlers.logoutRequest}>
+						<Link to='?logout'>
 							{`Logout ${self.name}`}
-						</button>
+						</Link>
 					}
 				</div>
 			</div>
