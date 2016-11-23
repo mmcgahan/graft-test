@@ -35,7 +35,7 @@ export const DEFAULT_AUTH_STATE = {};
  */
 export function app(state=DEFAULT_APP_STATE, action={}) {
 	let newState;
-	console.log(action);
+
 	switch (action.type) {
 	case 'CACHE_SUCCESS':  // fall through - same effect as API success
 	case 'API_SUCCESS':
