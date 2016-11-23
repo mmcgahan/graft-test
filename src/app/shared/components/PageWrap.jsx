@@ -24,10 +24,10 @@ class PageWrap extends React.Component {
 	render() {
 		const {
 			self,
-			auth,
-			onLogout,
 			children,
 		} = this.props;
+
+		const isLoggedOut = self.status === 'prereg';
 
 		return (
 			<div>
@@ -43,12 +43,11 @@ class PageWrap extends React.Component {
 
 				<ul>
 					<li>
-						{ auth.anonymous ?
+						{ isLoggedOut ?
 							<Link to='/login/' className='text--small'>Login</Link> :
-							<button
-								onClick={onLogout}>
+							<Link to='?logout'>
 								{`Logout ${self.name}`}
-							</button>
+							</Link>
 						}
 					</li>
 					<li>

@@ -9,7 +9,7 @@ import {
 } from 'meetup-web-platform/lib/util/testUtils';
 import {
 	MOCK_APP_STATE,
-} from 'meetup-web-platform/lib/util/mocks/app';
+} from 'meetup-web-mocks/lib/app';
 
 import routes from './routes';
 

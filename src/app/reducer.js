@@ -23,9 +23,7 @@ export const DEFAULT_APP_STATE = {
 	}
 };
 
-export const DEFAULT_AUTH_STATE = {
-	anonymous: true
-};
+export const DEFAULT_AUTH_STATE = {};
 
 /**
  * The primary reducer for the app-specific branch of state. It updates the
@@ -36,8 +34,7 @@ export const DEFAULT_AUTH_STATE = {
  * @return {Object}
  */
 export function app(state=DEFAULT_APP_STATE, action={}) {
-	let response,
-		newState;
+	let newState;
 
 	switch (action.type) {
 	case 'CACHE_SUCCESS':  // fall through - same effect as API success
@@ -46,13 +43,14 @@ export function app(state=DEFAULT_APP_STATE, action={}) {
 			// object to update state with
 		newState = Object.assign.apply(Object, [{}].concat(action.payload.responses));
 		return { ...state, ...newState };
-	case 'LOGIN_SUCCESS':
-		response = { ...action.payload };
+	case 'LOGIN_ERROR':
 		newState = {
 			[SELF_REF]: {
 				type: 'member',
-				value: response.value.member
-			},
+				value: {
+					errors: [ ...action.payload ],
+				},
+			}
 		};
 		return { ...state, ...newState };
 	case 'LOGOUT_REQUEST':
@@ -63,25 +61,13 @@ export function app(state=DEFAULT_APP_STATE, action={}) {
 	}
 }
 
-export function auth(state=DEFAULT_AUTH_STATE, action={}) {
-	let errors;
-	switch (action.type) {
-	case 'LOGIN_ERROR':
-		errors = [ ...action.payload ];
-		return { ...state, errors };
-	case 'LOGOUT_REQUEST':
-		return DEFAULT_AUTH_STATE;
-	case 'CONFIGURE_AUTH':
-		return action.payload;
-	default:
-		return state;
-	}
-}
-
 export function config(state={}, action) {
-	let apiUrl;
+	let apiUrl, csrf;
 
 	switch(action.type) {
+	case 'API_SUCCESS':
+		csrf = action.meta.csrf;
+		return { ...state, csrf };
 	case 'CONFIGURE_API_URL':
 		apiUrl = action.payload;
 		return { ...state, apiUrl };
@@ -108,7 +94,6 @@ const routing = routerReducer;
 
 const reducer = combineReducers({
 	app,
-	auth,
 	config,
 	preRenderChecklist,
 	routing
