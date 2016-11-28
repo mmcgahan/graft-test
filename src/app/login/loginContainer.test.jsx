@@ -7,11 +7,10 @@ import routes from './loginRoutes';
 import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import { MOCK_APP_STATE } from 'meetup-web-mocks/lib/app';
-
 import {
 	findComponentsWithType,
 	createFakeStore,
-} from 'meetup-web-platform/lib/util/testUtils';
+} from 'meetup-web-mocks/lib/testUtils';
 
 function intlRender(component) {
 	return TestUtils.renderIntoDocument(

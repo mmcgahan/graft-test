@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import {
 	findComponentsWithType,
 	createFakeStore,
-} from 'meetup-web-platform/lib/util/testUtils';
+} from 'meetup-web-mocks/lib/testUtils';
 import {
 	MOCK_APP_STATE,
 } from 'meetup-web-mocks/lib/app';
