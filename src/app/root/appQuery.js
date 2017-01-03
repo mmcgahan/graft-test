@@ -14,7 +14,7 @@ export const SELF_REF = 'self';
 export function selfQuery({ location, params }) {
 	return {
 		type: 'member',
-		endpoint: '2/member/self',
+		endpoint: 'members/self',
 		params: {},
 		ref: SELF_REF,
 	};
