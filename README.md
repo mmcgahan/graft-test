@@ -214,6 +214,16 @@ Node API in `webpack/webpackDevServer.js`.
 - An ESLint-aware editor plugin
 	- vim
 		- [syntastic](https://github.com/scrooloose/syntastic) + [eslint_d](https://github.com/mantoni/eslint_d.js) for vim
+			- Install eslint_d: `npm install -g eslint_d`
+			- Configure vim plugins, e.g. with Vundle:
+			```vim
+			Plugin 'scrooloose/syntastic'
+			" ...
+			let g:syntastic_javascript_checkers = ['eslint']
+			let g:syntastic_javascript_eslint_exec = 'eslint_d'
+			```
+			
+			
 
 ### NPM Dependencies
 
