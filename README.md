@@ -222,6 +222,11 @@ Node API in `webpack/webpackDevServer.js`.
 			let g:syntastic_javascript_checkers = ['eslint']
 			let g:syntastic_javascript_eslint_exec = 'eslint_d'
 			```
+		- Fix lint problems with custom command `L`
+		```vim
+		command L execute('silent !eslint_d --fix %')
+		\ | execute 'e|redraw!'
+		```
 			
 			
 
