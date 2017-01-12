@@ -200,6 +200,7 @@ Node API in `webpack/webpackDevServer.js`.
 
 ### Recommended Dev Tools
 
+- Node Version Manager - https://github.com/creationix/nvm
 - React Developer Tools (browser plugin) - https://github.com/facebook/react-devtools
 - local-npm - local npm registry for faster `npm install`
   - OS X - https://github.com/nolanlawson/local-npm-launch-agent
