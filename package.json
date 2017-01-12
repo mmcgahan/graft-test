@@ -10,7 +10,7 @@
     "build:locales": "node scripts/build-server-app",
     "build:server": "node scripts/build-server",
     "clean": "npm run build:clean && rm *.log || true",
-    "coverage": "npm run test -- --coverage",
+    "coverage": "npm run test:unit -- --coverage",
     "coveralls": "cat coverage/lcov.info | coveralls",
     "debug:server": "npm run build:server && node-debug build/server.js",
     "install-silent": "npm install --silent",
