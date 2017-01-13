@@ -56,7 +56,7 @@
     "inert": "4.1.0",
     "json-loader": "0.5.4",
     "meetup-web-components": "0.1.138",
-    "meetup-web-mocks": "0.1.40",
+    "meetup-web-mocks": "0.1.41",
     "meetup-web-platform": "0.11.564",
     "node-fetch": "1.6.3",
     "node-sass": "4.3.0",
