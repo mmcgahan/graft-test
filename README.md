@@ -202,9 +202,6 @@ Node API in `webpack/webpackDevServer.js`.
 
 - Node Version Manager - https://github.com/creationix/nvm
 - React Developer Tools (browser plugin) - https://github.com/facebook/react-devtools
-- local-npm - local npm registry for faster `npm install`
-  - OS X - https://github.com/nolanlawson/local-npm-launch-agent
-  - all others - https://github.com/nolanlawson/local-npm/
 - Redux Dev Tools ([Chrome browser 
   extension](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd))
 - ES6 + JSX syntax highlighting/linting plugin for your editor
@@ -236,6 +233,8 @@ Node API in `webpack/webpackDevServer.js`.
 - Use `npm install <packagename> --save` to install npm packages required for production.
 - Use `npm install <packagename> --save-dev` to install npm packages required only for dev (e.g.
 	testing).
+- Use `npm install --cache-min 9999999` to cache installed dependencies (make installing faster)
+
 
 ### Testing
 
