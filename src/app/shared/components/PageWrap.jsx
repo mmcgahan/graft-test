@@ -39,6 +39,12 @@ class PageWrap extends React.Component {
 							href: cssHref
 						}
 					]}
+					meta={[
+						{
+							name: 'viewport',
+							content: 'width=device-width, initial-scale=1'
+						}
+					]}
 				/>
 
 				<ul>
