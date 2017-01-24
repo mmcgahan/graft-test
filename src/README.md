@@ -26,8 +26,8 @@ bundles.
          ├── shared/
               ├── components/
               ├── errors/
-				 ├── reducer.js
-				 ├── routes.js
+         ├── reducer.js
+         ├── routes.js
     ├── assets/
     ├── sw/
     ├── util/
@@ -36,8 +36,8 @@ bundles.
 #### `app/`
 
 Each high-level 'feature' will get its own directory here. In general,
-features follow routes, so the `app/` directory will look similar
-to the site map, e.g. `app/group/events/` will correspond to the
+features follow routes, so the `feature/` directory will look similar
+to the site map, e.g. `feature/group/events/` will correspond to the
 'events' feature accessible at `/:urlname/events/`. There are a few
 conventions to follow when creating a feature:
 
@@ -53,7 +53,10 @@ conventions to follow when creating a feature:
 	 because they have a predictable structure and behavior that will be
 	 tested during integration testing.
 
-Two core features are already implemented: `login` and `root`.
+Using `yarn run generate` will provide you with a set of prompts that
+automatically create templated feature files for you in this directory.
+
+Two core features are already implemented in the `app` directory: `login` and `root`.
 
 `root` provides the basic application shell - it loads 'global' data from the
 API like the current member info and provides the i18n and routing context.

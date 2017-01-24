@@ -102,7 +102,8 @@ terminal session environment.
 1. Start dev app and asset servers with `yarn run start` - URL will be shown in the
 terminal once the servers are running ([http://localhost:8000](http://localhost:8000))
 2. Run `yarn run tail` to view logs.
-3. When you make code changes you will need run `yarn start` again to bounce the
+3. In a separate screen, run `yarn run generate` if you wish to start on a new feature.
+4. When you make code changes you will need run `yarn start` again to bounce the
 server
 
 > Want to run multiple instances of mup-web on the same machine? Make another
@@ -154,6 +155,11 @@ should use `yarn start` or `yarn run start:app` in development)
 - `yarn run start:asset`: Start the dev asset server as a background process
   - accepts localeCode arguments, e.g. `yarn run start:asset -- en-US es`
 - `yarn run stop`: Stop all app and asset servers started by `yarn run start:all`
+
+### Tools
+
+- `yarn run generate`: Utility that sets up a new feature with its corresponding
+files in the `src/app/` directory.
 
 ## App features
 

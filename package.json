@@ -1,9 +1,9 @@
 {
-  "name": "YOUR-APP-NAME",
+  "name": "web-platform-starter",
   "version": "0.1.0",
   "license": "UNLICENSED",
   "private": true,
-  "description": "",
+  "description": "Meetup Web Starter Repo",
   "engine": "node >=6.4.0",
   "scripts": {
     "build:clean": "rm -rf build/",
@@ -13,6 +13,7 @@
     "coverage": "yarn run test:unit -- --coverage",
     "coveralls": "cat coverage/lcov.info | coveralls",
     "debug:server": "yarn run build:server && node-debug build/server.js",
+    "generate": "node util/generate.js",
     "lint": "yarn run lint:base -- --fix",
     "lint:base": "eslint . --ext .js,.jsx",
     "modules:clean": "rm -rf node_modules",
@@ -30,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.dev.meetup.com/meetup/mup-web.git"
+    "url": "https://github.com/meetup/web-platform-starter.git"
   },
   "dependencies": {
     "babel-cli": "6.22.2",
@@ -83,9 +84,9 @@
     "forever": "0.15.3",
     "glob": "7.1.1",
     "http-server": "0.9.0",
+    "inquirer": "2.0.0",
     "jest-cli": "18.1.0",
     "minimist": "1.2.0",
-    "npm-run-all": "4.0.1",
-    "react-addons-test-utils": "15.4.1"
+    "npm-run-all": "4.0.1"
   }
 }
