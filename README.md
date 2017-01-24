@@ -1,5 +1,5 @@
 # web-platform-starter
- 
+
 A minimal meetup-web-platform-based application.
 
 This repo can be copied to a new repo to start a new web application. By using
@@ -62,15 +62,22 @@ typically require a Docker-based CI configuration.
 	have reported challenges getting the Homebrew configuration to work.
 2. Confirm you are running `node` v6.7.0 or higher
 
-    ```sh
-    $ node -v
-    ```
-
-2. Install all the `npm` dependencies (`npm` is included with the `node`
-	 installation)
+		```sh
+		$ node -v
+		```
+3. Install [yarn](https://yarnpkg.com/en/docs/install). For macOS, the
+best way to install is with Homebrew. *DO NOT* install with `npm`,the
+installation is unreliable. `Yarn` is required, and though `npm` will
+continue to work, it should not be used.
 
 		```sh
-		$ npm install
+		brew update
+		brew install yarn
+		```
+2. Install all the `package.json` dependencies using `yarn`
+
+		```sh
+		$ yarn install
 		```
 
 ## Environment config
@@ -92,20 +99,20 @@ terminal session environment.
 
 ## Quick start
 
-1. Start dev app and asset servers with `npm start` - URL will be shown in the
+1. Start dev app and asset servers with `yarn run start` - URL will be shown in the
 terminal once the servers are running ([http://localhost:8000](http://localhost:8000))
-2. Run `npm run tail` to view logs.
-3. When you make code changes you will need run `npm start` again to bounce the
+2. Run `yarn run tail` to view logs.
+3. When you make code changes you will need run `yarn start` again to bounce the
 server
 
 > Want to run multiple instances of mup-web on the same machine? Make another
-> clone of the repo and set the `DEV_SERVER_PORT` inline with the `npm start`
+> clone of the repo and set the `DEV_SERVER_PORT` inline with the `yarn run start`
 > command:
-> `DEV_SERVER_PORT=8123 npm start`
+> `DEV_SERVER_PORT=8123 yarn run start`
 
-## Available npm commands
+## Available yarn commands
 
-In general, you should just use `npm start` to get everything built
+In general, you should just use `yarn run start` to get everything built
 and running in development - it will coordinate all of the build + start tasks
 in an optimal order.
 
@@ -119,7 +126,7 @@ slower. See [example below](#start-commands)
 
 ### Build commands
 
-You can `npm run` the following commands:
+You can `yarn run` the following commands:
 
 - `build:clean`: Completely remove all build artifacts
 - `build:locales`: Build both the _client_ and _server_ locale-specific bundles
@@ -131,22 +138,22 @@ bundles created by `build:locales`
 
 ### Start commands
 
-- `npm start`: Build en-US server and client bundles and start up the app
+- `yarn run start`: Build en-US server and client bundles and start up the app
 and dev asset server.
-- `npm run start:prod`: Start the bundled app server (used in production - in general you
-should use `npm start` or `npm run start:app` in development)
-- `npm run start:all`: Same as `npm start`, but builds all locales.
+- `yarn run start:prod`: Start the bundled app server (used in production - in general you
+should use `yarn start` or `yarn run start:app` in development)
+- `yarn run start:all`: Same as `yarn start`, but builds all locales.
   Optionally, you can optionally pass localeCodes as CLI arguments
   to build/run a subset of locales.
 
-  ```sh
-	npm run start:all -- en-US es  # build only US English and Spanish
+	```sh
+	yarn run start:all -- en-US es  # build only US English and Spanish
 	```
 
-- `npm run start:app`: Start the dev app server as a background process
-- `npm run start:asset`: Start the dev asset server as a background process
-  - accepts localeCode arguments, e.g. `npm run start:asset -- en-US es`
-- `npm run stop`: Stop all app and asset servers started by `npm run start:all`
+- `yarn run start:app`: Start the dev app server as a background process
+- `yarn run start:asset`: Start the dev asset server as a background process
+  - accepts localeCode arguments, e.g. `yarn run start:asset -- en-US es`
+- `yarn run stop`: Stop all app and asset servers started by `yarn run start:all`
 
 ## App features
 
@@ -202,7 +209,7 @@ Node API in `webpack/webpackDevServer.js`.
 
 - Node Version Manager - https://github.com/creationix/nvm
 - React Developer Tools (browser plugin) - https://github.com/facebook/react-devtools
-- Redux Dev Tools ([Chrome browser 
+- Redux Dev Tools ([Chrome browser
   extension](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd))
 - ES6 + JSX syntax highlighting/linting plugin for your editor
 	- vim
@@ -225,15 +232,16 @@ Node API in `webpack/webpackDevServer.js`.
 		command L execute('silent !eslint_d --fix %')
 		\ | execute 'e|redraw!'
 		```
-			
-			
 
-### NPM Dependencies
 
-- Use `npm install <packagename> --save` to install npm packages required for production.
-- Use `npm install <packagename> --save-dev` to install npm packages required only for dev (e.g.
-	testing).
-- Use `npm install --cache-min 9999999` to cache installed dependencies (make installing faster)
+
+### Yarn & package.json Dependencies
+
+- Available [yarn commands](https://yarnpkg.com/en/docs/cli/)
+- Anytime you update `package.json` and run `yarn install`,
+yarn will automatically generate/update a `yarn.lock` file. When you run
+`yarn install`, all the versions of dependencies specified in the lock
+file are the ones installed.
 
 
 ### Testing
@@ -243,10 +251,10 @@ files, just make sure the test scripts end with `.test.js`. We use
 [Jest](https://facebook.github.io/jest/) for testing, which is just a wrapper around
 standard [Jasmine](http://jasmine.github.io/) tests.
 
-Run `npm test` to run all tests
+Run `yarn run test` to run all tests
 
 ```sh
-$ npm test
+$ yarn run test
 ```
 
 All tests will be run for every pull request opened on GitHub.
@@ -309,7 +317,7 @@ services like [Coveralls.io](https://coveralls.io). The simplest way to use it
 is to run the command
 
 ```sh
-$ npm run coverage
+$ yarn run coverage
 ```
 
 This will run `jest --coverage`, which runs the unit tests and prints an ASCII
@@ -331,7 +339,7 @@ but new code should not be allowed to significantly decrease coverage.
 To manually lint your code
 
 ```sh
-$ npm run lint
+$ yarn run lint
 ```
 
 Whitespace issues will be fixed automatically - just remember to commit
