@@ -3932,9 +3932,9 @@ meetup-web-mocks@0.1.51:
     redux "3.6.0"
     rxjs "5.0.3"
 
-meetup-web-platform@0.11.655:
-  version "0.11.655"
-  resolved "https://registry.yarnpkg.com/meetup-web-platform/-/meetup-web-platform-0.11.655.tgz#62386533902a538af43ada94df9752d3064088a1"
+meetup-web-platform@0.11.663:
+  version "0.11.663"
+  resolved "https://registry.yarnpkg.com/meetup-web-platform/-/meetup-web-platform-0.11.663.tgz#1c83a1bb675d9f4e18b0b7ce0cc7b8f1d4747b16"
   dependencies:
     accepts "^1.3.3"
     avsc "4.1.11"
