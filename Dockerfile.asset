@@ -1,0 +1,4 @@
+FROM nginx:1.11.4
+COPY nginx_asset.conf /etc/nginx/nginx.conf
+COPY build/browser-app /usr/share/nginx/html/
+
