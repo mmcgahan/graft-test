@@ -3915,9 +3915,9 @@ meetup-swatches@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/meetup-swatches/-/meetup-swatches-3.1.1.tgz#71d150983deab5f353c77367c6935e126614919e"
 
-meetup-web-components@0.1.201:
-  version "0.1.201"
-  resolved "https://registry.yarnpkg.com/meetup-web-components/-/meetup-web-components-0.1.201.tgz#6af6077f00a4f02fda812016154f6781c508a0ce"
+meetup-web-components@0.1.205:
+  version "0.1.205"
+  resolved "https://registry.yarnpkg.com/meetup-web-components/-/meetup-web-components-0.1.205.tgz#3b5abe717e11f1adf8f70a31925ee756917055cf"
 
 meetup-web-mocks@0.1.51:
   version "0.1.51"
@@ -3932,9 +3932,9 @@ meetup-web-mocks@0.1.51:
     redux "3.6.0"
     rxjs "5.0.3"
 
-meetup-web-platform@0.11.651:
-  version "0.11.651"
-  resolved "https://registry.yarnpkg.com/meetup-web-platform/-/meetup-web-platform-0.11.651.tgz#01a20d18b95180e8832f03be8c9b6f6accad6144"
+meetup-web-platform@0.11.653:
+  version "0.11.653"
+  resolved "https://registry.yarnpkg.com/meetup-web-platform/-/meetup-web-platform-0.11.653.tgz#8cbd87ebed6b13b3420b126170e8e12fe948e4c5"
   dependencies:
     accepts "^1.3.3"
     avsc "4.1.11"
