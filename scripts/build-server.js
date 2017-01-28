@@ -12,6 +12,8 @@ const settings = require('./webpack/settings.js');
  * but it _is_ necessary that the server render bundles are _all_ complete
  *
  * Just compile and log, no fuss
+ *
+ * @return {Observable} emits the stats of the successful build
  */
 function writeServerBundle$() {
 	return compile$(appServerConfig)
