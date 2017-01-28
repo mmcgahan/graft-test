@@ -10,6 +10,9 @@ const Rx = require('rxjs');
 /**
  * Need to run a child process and stream its stdout output in an observable?
  * This is the Observable-creating function for you.
+ * @param {String} cmd the command-line command to run
+ * @param {Array} args an array of arguments to pass to the command
+ * @return {Observable} emits the 'data' event data (stdout output)
  */
 const child_process$ = (cmd, args) => {
 	const child = child_process.spawn(cmd, args);
@@ -30,6 +33,9 @@ const child_process$ = (cmd, args) => {
  * Check for any CLI arguments corresponding to valid localeCodes,
  * and return those. If no valid localeCodes passed in, return
  * all possible localeCodes
+ *
+ * @param {Array} validLocaleCodes an array of allowed 'xx-XX' locale codes
+ * @return {Array} the locale codes specified by command line arguments to this script
  */
 const getLocaleArgs = validLocaleCodes => {
 	const argv = minimist(process.argv.slice(2));
