@@ -17,7 +17,7 @@ class Error404 extends React.Component {
 		return (
 			<div>
 				<h1>Oh nooooo!</h1>
-				<p>There is no route defined for {this.props.location.pathname}</p>
+				<p>There is no route defined for this URL</p>
 			</div>
 		);
 	}
