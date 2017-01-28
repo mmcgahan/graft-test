@@ -14,7 +14,7 @@ import serverAppMap from '../build/server-app/serverAppMap';
  * script response, replacing the `ASSET_PUBLIC_PAth` with the
  * `assetPublicPath` string
  *
- * @param {String} assetPublicPath
+ * @param {String} assetPublicPath the full URL to the static asset server
  * @param {String} swTemplatePath optional path to the bundled service worker
  * @return {Object} the Hapi route object
  */
@@ -29,7 +29,10 @@ function getServiceWorkerRoute(
 	);
 	return {
 		method: 'GET',
-		path: '/sw.js',  // must match browser app `serviceWorker.register` call
+		path: '/sw.js',  // must match client `serviceWorker.register` call
+		config: {
+			auth: false,
+		},
 		handler: (request, reply) => reply(swScript).type('application/javascript')
 	};
 }
@@ -40,6 +43,9 @@ function getServiceWorkerRoute(
  *
  * the file handler needs to use output.path instead of output.publicPath,
  * so we have to do some string substitution here
+ *
+ * @param {String} serverOutputPath the file path to the server build
+ * @return {Object} the route for the favicon
  */
 function getFaviconRoute(serverOutputPath=settings.serverOutputPath) {
 	const faviconFilename = require('file-loader?name=[hash].[ext]!../src/assets/favicon.ico');
@@ -48,42 +54,64 @@ function getFaviconRoute(serverOutputPath=settings.serverOutputPath) {
 	return {
 		method: 'GET',
 		path: '/favicon.ico',
+		config: {
+			auth: false,
+		},
 		handler: {
 			file: faviconPath
 		}
 	};
 }
 
+function getDevStaticRoute(assetPath) {
+	return {
+		method: 'GET',
+		path: `${assetPath}/{param*}`,
+		config: {
+			auth: false,
+		},
+		handler: {
+			directory: {
+				path: 'build/browser-app/',
+				listing: false
+			}
+		}
+	};
+}
 
 function getRoutes() {
 	// read runtime values
 	const assetHost = process.env.ASSET_SERVER_HOST || '0.0.0.0';
-	const assetPort = `:${process.env.ASSET_SERVER_PORT || 8001}`;
-	const assetPublicPath = `//${assetHost}${assetPort}`;
+	const assetPort = process.env.ASSET_SERVER_PORT ? `:${process.env.ASSET_SERVER_PORT}` : '';
+	const assetPath = process.env.ASSET_PATH ? `/${process.env.ASSET_PATH}` : '/static';
+	const assetPublicPath = `//${assetHost}${assetPort}${assetPath}`;
 
-	return [
+	const routes = [
 		getFaviconRoute(),
-		getServiceWorkerRoute(assetPublicPath),
+		getServiceWorkerRoute(assetPublicPath)
 	];
+
+	// this is only used when the webpackDevServer isn't being used
+	if (settings.isDev) {
+		routes.push(getDevStaticRoute(assetPath));
+	}
+
+	return routes;
 }
 
 /**
  * The actual configure-and-start function
+ *
+ * @param {Function} getConfig a function that returns a config object in a Promise
+ * @return {Promise} a Promise that returns the started server
  */
-function main() {
+export default function main(getConfig) {
 	const plugins = [Inert];  // for serving the favicon
 	const routes = getRoutes();
 
-	startServer(serverAppMap, { routes, plugins })
+	return startServer(serverAppMap, { routes, plugins }, getConfig)
 		.catch(err => {  // catch because otherwise Node swallows errors in Promises
-			console.log(err.stack);
-			process.exit();
+			throw err;
 		});
-}
-
-if (!module.parent) {
-	// If the module has no parent, it is being run directly by node - go ahead
-	// and start it up
-	main();
 }
 
