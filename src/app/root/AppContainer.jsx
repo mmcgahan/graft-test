@@ -2,9 +2,8 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import PageWrap from '../shared/components/PageWrap';
-
 import { SELF_REF } from './appQuery';
+import PageWrap from '../shared/components/PageWrap';
 
 function mapStateToProps(state) {
 	return {
@@ -16,6 +15,9 @@ function mapStateToProps(state) {
  * @module AppContainer
  */
 class AppContainer extends React.Component {
+	/**
+	 * @return {React.element} the app-wrapping component
+	 */
 	render() {
 		const {
 			self,
@@ -26,9 +28,7 @@ class AppContainer extends React.Component {
 			<PageWrap
 				self={self}
 			>
-
 				{children}
-
 			</PageWrap>
 		);
 	}
