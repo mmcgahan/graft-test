@@ -1,5 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import { Link } from 'react-router';
 
 import getBrowserPolyfill from '../../../util/browserPolyfill';
 
@@ -44,13 +45,13 @@ class PageWrap extends React.Component {
 	renderChildren() {
 		const {
 			self,
-			localeCode,
-			location
+			location,
+			children,
 		} = this.props;
 
-		return React.Children.map(
-			this.props.children,
-			(child, key) => React.cloneElement(child, { self, localeCode, location, key })
+		return children && React.Children.map(
+			children,
+			(child, key) => React.cloneElement(child, { self, location, key })
 		);
 	}
 
@@ -58,7 +59,9 @@ class PageWrap extends React.Component {
 	 * @return {React.element} the page wrapping component
 	 */
 	render() {
-		const { localeCode } = this.props;
+		const {
+			self,
+		} = this.props;
 
 		return (
 			<div id='root'
@@ -84,10 +87,22 @@ class PageWrap extends React.Component {
 						}
 					]}
 					script={[
-						getBrowserPolyfill(localeCode)
+						getBrowserPolyfill()
 					]} />
 
 				<div style={iconSpriteStyle} dangerouslySetInnerHTML={{__html: iconSprite}} />
+
+				<ul>
+					<li>
+						{ self && self.name ?
+							<Link to='?logout'>{`Logout ${self.name}`}</Link> :
+							<Link to='/login/' className='text--small'>Login</Link>
+						}
+					</li>
+					<li>
+						<Link to='/' className='text--small'>Home</Link>
+					</li>
+				</ul>
 
 				{this.renderChildren()}
 			</div>

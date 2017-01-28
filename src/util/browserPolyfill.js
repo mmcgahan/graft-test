@@ -1,13 +1,10 @@
 /**
- * @param {Object} localeCode configuration object
  * @return {Object} the `src` and `type` for a `script` tag in React Helmet
  */
-export default function getBrowserPolyfill(localeCode) {
+export default function getBrowserPolyfill() {
 	const features = [
 		'fetch',  // IE, Safari
 		'Promise',
-		'Intl',
-		`Intl.~locale.${localeCode}`,
 	];
 	const flags = [
 		'gated',  // use feature detection in addition to user agent test
