@@ -28,6 +28,7 @@ class AppContainer extends React.Component {
 			<PageWrap
 				self={self}
 			>
+				<h1>This is the app container</h1>
 				{children}
 			</PageWrap>
 		);
