@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { SELF_REF } from './appQuery';
-import PageWrap from '../shared/components/PageWrap';
+import PageWrap from '../../components/PageWrap';
 
 function mapStateToProps(state) {
 	return {

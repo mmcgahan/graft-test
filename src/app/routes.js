@@ -2,7 +2,7 @@
  * The root level router for the app.
  * @module routes
  **/
-import Error404 from './shared/errors/404';
+import Error404 from '../components/errors/404';
 import App from './root/AppContainer';
 import { selfQuery } from './root/appQuery';
 
