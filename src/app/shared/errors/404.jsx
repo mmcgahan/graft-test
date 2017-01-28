@@ -10,6 +10,9 @@ function mapStateToProps(state) {
  * @class Error404
  */
 class Error404 extends React.Component {
+	/**
+	 * @return {React.element} the error element
+	 */
 	render() {
 		return (
 			<div>
