@@ -7,7 +7,7 @@ const webpack = require('webpack');
 const settings = require('./settings.js');
 
 // Webpack config
-function getConfig(localeCode, browserAppFilename) {
+function getConfig(localeCode, clientFilename) {
 	const publicPath = `/${localeCode}/`;
 	const config = {
 		entry: {
@@ -24,7 +24,7 @@ function getConfig(localeCode, browserAppFilename) {
 		devtool: 'eval',
 
 		module: {
-			loaders: [
+			rules: [
 				{
 					test: /\.jsx?$/,
 					include: [
@@ -36,7 +36,7 @@ function getConfig(localeCode, browserAppFilename) {
 
 				{
 					test: /\.css$/,
-					loader: 'style!css',
+					loader: 'style-loader!css-loader',
 					include: [settings.cssPath]
 				},
 
@@ -46,16 +46,17 @@ function getConfig(localeCode, browserAppFilename) {
 						settings.appPath,
 						settings.webComponentsSrcPath,
 					],
-					loader: 'json'
-				}
+					loader: 'json-loader'
+				},
 			]
 		},
 
 		plugins: [
 			new webpack.DefinePlugin({
-				// server bundles must reference _browser app_ bundle public path
+				// server bundles must reference _client_ bundle public path
 				// - inject it as a 'global variable' here
-				WEBPACK_BROWSER_APP_FILENAME: JSON.stringify(browserAppFilename),
+				WEBPACK_BROWSER_APP_FILENAME: JSON.stringify(clientFilename),
+				WEBPACK_BASE_URL: JSON.stringify(`/${localeCode === 'en-US' ? '' : localeCode}`),
 				WEBPACK_ASSET_PUBLIC_PATH: JSON.stringify(publicPath),
 				IS_DEV: settings.isDev,
 				'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
@@ -76,10 +77,6 @@ function getConfig(localeCode, browserAppFilename) {
 		},
 
 		resolve: {
-			alias: {
-				trns: path.resolve(settings.trnsPath, localeCode)
-			},
-
 			// module name extensions
 			extensions: ['.js', '.jsx']
 		}
