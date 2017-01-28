@@ -7,6 +7,7 @@ import routes from './loginRoutes';
 import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import { MOCK_APP_STATE } from 'meetup-web-mocks/lib/app';
+
 import {
 	findComponentsWithType,
 	createFakeStore,
@@ -23,9 +24,8 @@ function intlRender(component) {
 describe('LoginContainer', () => {
 	it('renders a `LoginForm` when logged out', function (done) {
 		const location = '/login';
-
-		const stateAuthenticated = { ...MOCK_APP_STATE };
-		const store = createFakeStore(stateAuthenticated);
+		const stateAnonymous = { ...MOCK_APP_STATE };
+		const store = createFakeStore(stateAnonymous);
 
 		match({location, routes}, (err, redirectLocation, renderProps) => {
 			const container = intlRender(
@@ -40,19 +40,16 @@ describe('LoginContainer', () => {
 		});
 	});
 
-	it('renders a log out `Link` when logged in', function(done) {
+	it('renders a log out `Button` when logged in', function(done) {
 		const location = '/login';
-		const app = {
-			self: {
-				type: 'member',
-				value: {
-					id: 1234,
-					status: 'active',
-				}
+		const self = {
+			type: 'member',
+			value: {
+				id: 1234,
+				status: 'active',
 			}
 		};
-
-		const stateAuthenticated = { ...MOCK_APP_STATE, app };
+		const stateAuthenticated = { ...MOCK_APP_STATE, self };
 		const store = createFakeStore(stateAuthenticated);
 
 		match({location, routes}, (err, redirectLocation, renderProps) => {
@@ -62,8 +59,8 @@ describe('LoginContainer', () => {
 				</Provider>
 			);
 
-			const logoutComponent = TestUtils.scryRenderedDOMComponentsWithTag(container, 'a');
-			expect(logoutComponent.length).toBe(1);
+			const buttonComponent = findComponentsWithType(container, 'Button');
+			expect(buttonComponent.length).toBe(1);
 			done();
 		});
 
