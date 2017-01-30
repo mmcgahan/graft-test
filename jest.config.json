@@ -1,18 +1,25 @@
 {
+  "collectCoverageFrom": [
+    "**/*.{js,jsx}",
+    "!**/{node_modules,build,coverage,scripts,templates}/**",
+    "!util/**"
+  ],
   "coverageDirectory": "<rootDir>/coverage",
   "setupFiles": [
     "<rootDir>/util/jestSystemShim.js"
   ],
   "moduleNameMapper": {
-    "^file-loader[!?].+": "EmptyModule"
+    "^(file-loader[!?].+|trns$|raw-loader[!?].+)": "EmptyModule"
   },
   "moduleFileExtensions": [
     "js",
     "jsx",
-    "node"
+    "node",
+    "json"
   ],
-  "preprocessorIgnorePatterns": [
-    "node_modules(?!\/meetup-web-platform)"
-  ],
-  "testRegex": "(src|util)/.*\\.test\\.jsx?$"
+  "testRegex": "(src|util|scripts)/.*\\.test\\.jsx?$",
+  "transformIgnorePatterns": [
+    "node_modules(?!\/meetup-web-components)"
+  ]
 }
+

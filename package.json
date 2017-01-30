@@ -11,13 +11,14 @@
     "build:server": "node scripts/build-server",
     "clean": "yarn run build:clean && rm *.log || true",
     "coverage": "yarn run test:unit -- --coverage",
-    "coveralls": "cat coverage/lcov.info | coveralls",
-    "debug:server": "yarn run build:server && node-debug build/server.js",
+    "coveralls": "if [ \"${TRAVIS_PULL_REQUEST}\" = \"false\" ] && [ \"${COVERALLS_REPO_TOKEN}\" != \"\" ]; then cat coverage/lcov.info | coveralls; fi",
+    "debug:server": "yarn run build:server && node --inspect --debug-brk build/app-server.js",
     "generate": "node util/generate.js",
     "lint": "yarn run lint:base -- --fix",
     "lint:base": "eslint . --ext .js,.jsx",
     "modules:clean": "rm -rf node_modules",
-    "package": "npm-run-all --parallel coverage build:locales --serial coveralls build:server prune",
+    "precommit": "git status --porcelain | awk 'match($1, \"[ACM]\"){print $2}' | grep '[js|jsx]$' | xargs eslint",
+    "package": "npm-run-all --parallel lint:base build:locales test:coverage --serial coveralls build:server test:integration",
     "start": "yarn run start:all -- en-US",
     "start:all": "npm-run-all stop build:clean --parallel \"build:locales -- {@}\" \"start:asset -- {@}\" --serial build:server start:app --",
     "start:app": "forever start scripts/forever/app-server.json && yarn run start:info",
@@ -27,7 +28,9 @@
     "stop": "forever stopall",
     "tail": "tail -f ./*.log",
     "test": "npm-run-all --parallel lint:base test:unit",
-    "test:unit": "jest --silent --config jest.config.json"
+    "test:coverage": "yarn run test:unit -- --coverage --runInBand",
+    "test:unit": "jest --silent --config jest.config.json",
+    "test:integration": "jest --config jest.int.config.json"
   },
   "repository": {
     "type": "git",
@@ -91,3 +94,4 @@
     "npm-run-all": "4.0.1"
   }
 }
+
