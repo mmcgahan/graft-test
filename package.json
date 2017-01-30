@@ -61,7 +61,7 @@
     "meetup-web-mocks": "0.1.51",
     "meetup-web-platform": "0.11.663",
     "node-fetch": "1.6.3",
-    "node-sass": "4.3.0",
+    "node-sass": "4.4.0",
     "react": "15.4.2",
     "react-addons-test-utils": "15.4.1",
     "react-dom": "15.4.2",
