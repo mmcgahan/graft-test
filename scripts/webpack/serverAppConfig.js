@@ -7,7 +7,7 @@ const webpack = require('webpack');
 const settings = require('./settings.js');
 
 // Webpack config
-function getConfig(localeCode, clientFilename) {
+function getConfig(localeCode, browserAppFilename) {
 	const publicPath = `/${localeCode}/`;
 	const config = {
 		entry: {
@@ -44,9 +44,9 @@ function getConfig(localeCode, clientFilename) {
 
 		plugins: [
 			new webpack.DefinePlugin({
-				// server bundles must reference _client_ bundle public path
+				// server bundles must reference _browser_ bundle public path
 				// - inject it as a 'global variable' here
-				WEBPACK_BROWSER_APP_FILENAME: JSON.stringify(clientFilename),
+				WEBPACK_BROWSER_APP_FILENAME: JSON.stringify(browserAppFilename),
 				WEBPACK_BASE_URL: JSON.stringify(`/${localeCode === 'en-US' ? '' : localeCode}`),
 				WEBPACK_ASSET_PUBLIC_PATH: JSON.stringify(publicPath),
 				IS_DEV: settings.isDev,
