@@ -6,6 +6,24 @@ const webpack = require('webpack');
 const settings = require('./settings.js');
 
 
+/**
+ * When in dev, we need to manually inject some configuration to enable HMR
+ *
+ * @param {Object} config webpack config object
+ * @returns {Object} HMR-ified config
+ */
+function injectHotReloadConfig(config) {
+	const ASSET_SERVER_PORT = process.env.ASSET_SERVER_PORT || 8001;
+	const DEV_HOST = '0.0.0.0';
+
+	config.entry.app.unshift(
+		`webpack-dev-server/client?http://${DEV_HOST}:${ASSET_SERVER_PORT}/`,
+		'webpack/hot/dev-server'
+	);
+	config.plugins.push(new webpack.HotModuleReplacementPlugin());
+	return config;
+}
+
 // Webpack config
 function getConfig(localeCode) {
 	const config = {
@@ -17,22 +35,20 @@ function getConfig(localeCode) {
 			path: path.resolve(settings.browserAppOutputPath, localeCode),
 			filename: '[name].[hash].js',
 			// publicPath is set at **runtime** using __webpack_public_path__
-			// in the browser app entry script
+			// in the browserApp entry script
 		},
 
 		devtool: settings.isDev ? 'eval' : 'source-map',
 
 		module: {
-			preLoaders: [
+			rules: [
 				{
 					test: /\.jsx?$/,
 					loader: 'eslint-loader?{fix:true}',
 					include: [settings.appPath],
-					exclude: settings.assetPath
-				}
-			],
-
-			loaders: [
+					exclude: settings.assetPath,
+					enforce: 'pre',
+				},
 				{
 					test: /\.jsx?$/,
 					include: [
@@ -40,11 +56,20 @@ function getConfig(localeCode) {
 						settings.webComponentsSrcPath,
 					],
 					loader: 'babel-loader',
+					options: settings.enableHMR ? {
+						plugins: [['react-transform', {
+							transforms: [{
+								transform: 'react-transform-hmr',
+								imports: ['react'],
+								locals: ['module']
+							}]
+						}]]
+					} : undefined
 				},
 				{
 					test: /\.css$/,
 					include: [settings.cssPath],
-					loader: 'style!css'
+					loader: 'style-loader!css-loader'
 				},
 				{
 					test: /\.json$/,
@@ -52,7 +77,11 @@ function getConfig(localeCode) {
 						settings.appPath,
 						settings.webComponentsSrcPath
 					],
-					loader: 'json'
+					loader: 'json-loader'
+				},
+				{
+					test: /\.po$/,
+					loader: 'json-loader!po-loader'
 				}
 			]
 		},
@@ -65,11 +94,11 @@ function getConfig(localeCode) {
 
 		resolve: {
 			alias: {
-				trns: path.resolve(settings.trnsPath, localeCode)
+				trns: path.resolve(settings.trnsPath, `${localeCode}.po`)
 			},
 
 			// module name extensions
-			extensions: ['.js', '.jsx'],
+			extensions: ['.js', '.jsx', '.po'],
 		},
 
 		plugins: [
@@ -80,6 +109,9 @@ function getConfig(localeCode) {
 		]
 	};
 
+	if (settings.enableHMR) {
+		injectHotReloadConfig(config);
+	}
 	if (!settings.isDev) {
 		config.plugins = config.plugins.concat(settings.prodPlugins);
 	}

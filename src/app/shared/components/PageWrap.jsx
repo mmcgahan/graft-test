@@ -2,8 +2,11 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router';
 
+import getBrowserPolyfill from '../../../util/browserPolyfill';
+
+
 /*
- * -- Require base stylesheet --
+ * -- Require base stylesheets --
  * (includes sassquatch2)
  *
  * Use 4 webpack loaders to build the css file and get the bundled filename
@@ -15,29 +18,67 @@ import { Link } from 'react-router';
  * 4. file-loader - write the css string to a file and return the filename for
  *    use in this script (name of input file + 7-digit hash + .css)
  */
-const cssHref = require('file-loader?name=[name].[hash:7].css!require-loader!css!sass!../../../assets/scss/main.scss');
+const baseCSSHref = require('file-loader?name=[name].[hash:7].css!require-loader!css-loader!sass-loader!../../../assets/scss/main.scss');
+const webfontCSSHref = require('file-loader?name=[name].[hash:7].css!require-loader!css-loader!../../../assets/graphik.css');
+
+
+/*
+ * -- Inline SVG icon sprite --
+ *
+ * raw SVG sprite from `swarm-icons`
+ */
+const iconSpriteStyle = { display: 'none' };
+const iconSprite = require('raw-loader!swarm-icons/dist/sprite/sprite.inc');
+
 
 /**
  * @module PageWrap
  */
 class PageWrap extends React.Component {
-	render() {
+	/**
+	 * This method ensures important app state props passed
+	 * from `AppContainer` are passed to children (feature containers)
+	 *
+	 * @method renderChildren
+	 * @returns {Array} Children with mapped props
+	 */
+	renderChildren() {
 		const {
 			self,
+			location,
 			children,
 		} = this.props;
 
-		const isLoggedOut = self.status === 'prereg';
+		return children && React.Children.map(
+			children,
+			(child, key) => React.cloneElement(child, { self, location, key })
+		);
+	}
+
+	/**
+	 * @return {React.element} the page wrapping component
+	 */
+	render() {
+		const {
+			self,
+		} = this.props;
 
 		return (
-			<div>
+			<div id='root'
+				className='column'
+				style={{ minHeight:'100vh' }}>
 				<Helmet
 					link={[
 						{
 							rel: 'stylesheet',
 							type: 'text/css',
-							href: cssHref
-						}
+							href: webfontCSSHref
+						},
+						{
+							rel: 'stylesheet',
+							type: 'text/css',
+							href: baseCSSHref
+						},
 					]}
 					meta={[
 						{
@@ -45,15 +86,17 @@ class PageWrap extends React.Component {
 							content: 'width=device-width, initial-scale=1'
 						}
 					]}
-				/>
+					script={[
+						getBrowserPolyfill()
+					]} />
+
+				<div style={iconSpriteStyle} dangerouslySetInnerHTML={{__html: iconSprite}} />
 
 				<ul>
 					<li>
-						{ isLoggedOut ?
-							<Link to='/login/' className='text--small'>Login</Link> :
-							<Link to='?logout'>
-								{`Logout ${self.name}`}
-							</Link>
+						{ self && self.name ?
+							<Link to='?logout'>{`Logout ${self.name}`}</Link> :
+							<Link to='/login/' className='text--small'>Login</Link>
 						}
 					</li>
 					<li>
@@ -61,14 +104,11 @@ class PageWrap extends React.Component {
 					</li>
 				</ul>
 
-				<main id='mupMain' role='main'>
-					<h1>Hello, world</h1>
-					{children}
-				</main>
-
+				{this.renderChildren()}
 			</div>
 		);
 	}
 }
 
 export default PageWrap;
+

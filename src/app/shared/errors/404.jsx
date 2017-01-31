@@ -10,11 +10,14 @@ function mapStateToProps(state) {
  * @class Error404
  */
 class Error404 extends React.Component {
+	/**
+	 * @return {React.element} the error element
+	 */
 	render() {
 		return (
 			<div>
 				<h1>Oh nooooo!</h1>
-				<p>There is no route defined for {this.props.location.pathname}</p>
+				<p>There is no route defined for this URL</p>
 			</div>
 		);
 	}

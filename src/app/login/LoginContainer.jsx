@@ -1,16 +1,15 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-
+import LoginForm from 'meetup-web-components/src/LoginForm';
+import LogoutLink from 'meetup-web-platform/lib/components/LogoutLink';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Link from 'react-router/lib/Link';
-
-import LoginForm from './LoginForm';
 import { SELF_REF } from '../root/appQuery';
 
 import {
 	loginPost,
+	logoutRequest
 } from 'meetup-web-platform/lib/actions/authActionCreators';
 
 const PAGE_TITLE = 'Login';
@@ -26,6 +25,7 @@ function mapDispatchToProps(dispatch) {
 	return {
 		handlers: bindActionCreators({
 			loginPost,
+			logoutRequest
 		}, dispatch)
 	};
 }
@@ -34,14 +34,16 @@ function mapDispatchToProps(dispatch) {
  * @class Login
  */
 export class Login extends React.Component {
+	/**
+	 * @return {React.element} the app-wrapping component
+	 */
 	render() {
 		const {
 			self,
 			handlers,
 		} = this.props;
 
-		const isLoggedOut = self.status === 'prereg';
-
+		const isLoggedOut = self.status === 'prereg' || !self.name;
 		return(
 			<div>
 				<Helmet
@@ -55,9 +57,9 @@ export class Login extends React.Component {
 							errors={self.errors}
 							loginAction={handlers.loginPost}
 						/> :
-						<Link to='?logout'>
+						<LogoutLink>
 							{`Logout ${self.name}`}
-						</Link>
+						</LogoutLink>
 					}
 				</div>
 			</div>

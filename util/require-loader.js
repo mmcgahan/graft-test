@@ -9,8 +9,10 @@ const path = require('path');
  *   exports = module.exports = require("./../../../node_modules/css-loader/lib/css-base.js")();
  *   exports.push([module.id, "foo {\n  bar: 100; }\n", ""]);
  *   ```
+ *
+ * @return {String} the results of evaluating the source script
  */
-module.exports = function(source, map) {
+module.exports = function(source) {
 	this.cacheable && this.cacheable();
 	/*
 	 * We need to 'run' the module in its current state, which means `eval`ing

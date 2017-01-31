@@ -4,6 +4,6 @@
   "append": true,
   "outFile": "./app-server.log",
   "errFile": "./app-server.log",
-  "script": "./build/app-server.js"
+  "script": "./scripts/runServer.js"
 }
 

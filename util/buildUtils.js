@@ -8,6 +8,8 @@ module.exports = {
 	 * completes
 	 *
 	 * @link {https://webpack.github.io/docs/node.js-api.html#stats}
+	 * @param {Object} config a webpack compilation configuration
+	 * @return {Observable} emits the compilation stats
 	 */
 	compile$: function(config) {
 		const compiler = webpack(config);

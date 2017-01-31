@@ -25,7 +25,7 @@ module.exports = {
 	devtool: 'eval',
 
 	module: {
-		loaders: [
+		rules: [
 			{
 				test: /\.jsx?$/,
 				include: [
@@ -37,7 +37,7 @@ module.exports = {
 
 			{
 				test: /\.css$/,
-				loader: 'style!css',
+				loader: 'style-loader!css-loader',
 				include: [settings.cssPath]
 			},
 
@@ -47,7 +47,7 @@ module.exports = {
 					settings.appPath,
 					settings.webComponentsSrcPath
 				],
-				loader: 'json'
+				loader: 'json-loader'
 			}
 		]
 	},

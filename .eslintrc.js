@@ -16,7 +16,8 @@ const config = {
 		"es6": true
 	},
 	"plugins": [
-		"react"
+		"react",
+		"meetup"
 	],
 	"rules": {
 		"array-callback-return": 2,
@@ -45,7 +46,9 @@ const config = {
 		"require-jsdoc": [2, {
 			"require": {
 				"FunctionDeclaration":false,
-				"ClassDeclaration": true
+				"ClassDeclaration": true,
+				"MethodDefinition": true,
+				"ArrowFunctionExpression": false,
 			}
 		}],
 		"react/jsx-no-undef": 0,
@@ -60,10 +63,12 @@ const config = {
 		"react/jsx-no-duplicate-props": 2,
 		"react/jsx-pascal-case": 2,
 		"react/jsx-uses-react": 2,
+		"meetup/trn": 2,
 		"semi": 2,
 		"space-in-parens": [2, "never"],
 		"spaced-comment": [2, "always"],
 		"strict": 0,
+		"valid-jsdoc": 1,
 	}
 };
 
