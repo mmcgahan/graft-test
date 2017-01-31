@@ -2,7 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router';
 
-import getBrowserPolyfill from '../../../util/browserPolyfill';
+import getBrowserPolyfill from '../util/browserPolyfill';
 
 
 /*
@@ -18,8 +18,8 @@ import getBrowserPolyfill from '../../../util/browserPolyfill';
  * 4. file-loader - write the css string to a file and return the filename for
  *    use in this script (name of input file + 7-digit hash + .css)
  */
-const baseCSSHref = require('file-loader?name=[name].[hash:7].css!require-loader!css-loader!sass-loader!../../../assets/scss/main.scss');
-const webfontCSSHref = require('file-loader?name=[name].[hash:7].css!require-loader!css-loader!../../../assets/graphik.css');
+const baseCSSHref = require('file-loader?name=[name].[hash:7].css!require-loader!css-loader!sass-loader!../assets/scss/main.scss');
+const webfontCSSHref = require('file-loader?name=[name].[hash:7].css!require-loader!css-loader!../assets/graphik.css');
 
 
 /*
