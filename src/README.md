@@ -36,8 +36,8 @@ bundles.
 #### `app/`
 
 Each high-level 'feature' will get its own directory here. In general,
-features follow routes, so the `feature/` directory will look similar
-to the site map, e.g. `feature/group/events/` will correspond to the
+features follow routes, so the `app/` directory will look similar
+to the site map, e.g. `app/group/events/` will correspond to the
 'events' feature accessible at `/:urlname/events/`. There are a few
 conventions to follow when creating a feature:
 
@@ -230,7 +230,7 @@ pluralization and handling translations.
 [IntlProvider](https://github.com/yahoo/react-intl/wiki/Components#intlprovider) is a React-Intl
 component used to set up the i18n context. It accepts a localeCode and an object of translated messages.
 
-Refer to `src/features/shared/pageWrap/pageWrapContainer.jsx` for IntlProvider usage in mup-web.
+Refer to `src/components/PageWrap.jsx` for IntlProvider usage in mup-web.
 
 ## Determing app locale
 Refer to `src/util/localizationUtils.js` for code on how we determine the app locale.
@@ -246,7 +246,7 @@ TRN extraction and builds are handled by the `babel-plugin-react-intl` plugin. S
 Any TRN defined in JS will be extracted to `/build/trn/` directory, which is gitignored.
 The files are component-level files
 
-Language-specific JSON translation files currently live in `src/features/trns/` directory
+Language-specific JSON translation files currently live in `src/app/trns/` directory
 These files are also component-level translated files.
 
 ## Creating TRNs
@@ -297,7 +297,7 @@ Provide at least the `id` and `defaultMessage` params to the react-intl
 ## How to create localized components
 
 Each component is responsible for requiring it's own component-level translated messages
-json file (see `src/features/trns/`), and passing it along to an `<IntlProvider>`.
+json file (see `src/app/trns/`), and passing it along to an `<IntlProvider>`.
 
 (t.b.d. --- fill this out with examples once process finalized)
 

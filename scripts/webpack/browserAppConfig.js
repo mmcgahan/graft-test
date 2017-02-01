@@ -79,10 +79,6 @@ function getConfig(localeCode) {
 					],
 					loader: 'json-loader'
 				},
-				{
-					test: /\.po$/,
-					loader: 'json-loader!po-loader'
-				}
 			]
 		},
 
