@@ -82,7 +82,7 @@
     "jest-cli": "18.1.0",
     "meetup-web-mocks": "0.1.51",
     "mkdirp": "0.5.1",
-    "node-sass": "4.3.0",
+    "node-sass": "4.5.0",
     "npm-run-all": "4.0.1",
     "raw-loader": "0.5.1",
     "react-addons-test-utils": "15.4.2",
