@@ -54,13 +54,13 @@ useful to set this repo as an additional `upstream` remote:
 You can run starter-based apps locally in Node v7. Deployment will
 typically require a Docker-based CI configuration.
 
-1. Install the latest version of Node (v6.7.0 or higher). If you
+1. Install Node v7. If you
 	you don't have Node installed already, use the [current package
 	installer](https://nodejs.org/en/download/current/) for your system.
 	If you already have Node installed using a package manager like
 	Homebrew, you can use that to update the install, although some people
 	have reported challenges getting the Homebrew configuration to work.
-2. Confirm you are running `node` v6.7.0 or higher
+2. Confirm you are running `node` v7
 
 		```sh
 		$ node -v
