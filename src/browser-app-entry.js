@@ -2,7 +2,6 @@ import 'rxjs';  // enables all RxJS operators in dependencies
 import makeBrowserRenderer from 'meetup-web-platform/lib/renderers/browser-render';
 import makeRootReducer from 'meetup-web-platform/lib/reducers/platform';
 import activateSW from './sw/activateSW';
-import { directPolyfill } from './util/browserPolyfill';
 
 // --- app reducers ---
 import appReducers from './app/reducer';
@@ -23,9 +22,6 @@ function getRenderer() {
 	return makeBrowserRenderer(routes, reducer, [], window.APP_RUNTIME.baseUrl);
 }
 
-directPolyfill()
-	.then(getRenderer)
-	.then(render => render());
-
+getRenderer();
 activateSW();
 
