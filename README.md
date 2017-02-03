@@ -51,7 +51,7 @@ useful to set this repo as an additional `upstream` remote:
 
 ## Runtime
 
-You can run starter-based apps locally in Node v6.7.0. Deployment will
+You can run starter-based apps locally in Node v7. Deployment will
 typically require a Docker-based CI configuration.
 
 1. Install the latest version of Node (v6.7.0 or higher). If you
