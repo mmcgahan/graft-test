@@ -2,11 +2,9 @@
  * @param {String} localeCode the 'xx-XX' language code for the app
  * @return {String} the polyfill.io cdn string
  */
-export function polyfillServiceUrl(localeCode) {
+export function polyfillServiceUrl() {
 	const features = [
 		'fetch',  // IE, Safari
-		'Intl',
-		`Intl.~locale.${localeCode}`,
 		'Promise',
 		'URL',
 	];
