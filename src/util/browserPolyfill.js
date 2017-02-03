@@ -1,17 +1,18 @@
 /**
- * @return {Object} the `src` and `type` for a `script` tag in React Helmet
+ * @param {String} localeCode the 'xx-XX' language code for the app
+ * @return {String} the polyfill.io cdn string
  */
-export default function getBrowserPolyfill() {
+export function polyfillServiceUrl(localeCode) {
 	const features = [
 		'fetch',  // IE, Safari
+		'Intl',
+		`Intl.~locale.${localeCode}`,
 		'Promise',
+		'URL',
 	];
 	const flags = [
 		'gated',  // use feature detection in addition to user agent test
 	];
-	return {
-		src: `https://cdn.polyfill.io/v2/polyfill.min.js?features=${features.join()}&flags=${flags.join()}`,
-		type: 'text/javascript'
-	};
+	return `https://cdn.polyfill.io/v2/polyfill.min.js?features=${features.join()}&flags=${flags.join()}`;
 }
 
