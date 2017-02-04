@@ -1,4 +1,4 @@
-# Meetup Web Platform appliction
+# Meetup Web Platform application
 
 ## Installation
 
