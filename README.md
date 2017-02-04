@@ -1,58 +1,6 @@
-# web-platform-starter
+# Meetup Web Platform appliction
 
-A minimal meetup-web-platform-based application.
-
-This repo can be copied to a new repo to start a new web application. By using
-this repo, you will start off with an application that has the same structure
-as other 'reference' implementations of the platform, which will make it easier
-for engineers who have worked on other applications to get up to speed and use
-your app
-
-# Installation - setting up a new app repo
-
-One way to set up a new copy of the repo is to first clone it and then set up
-a new 'remote' `origin` that you create on GitHub.
-
-1. In GitHub, create a new, _empty_ repository.
-2. On your local machine, clone the starter kit into a directory with the name
-of your new GitHub repo
-
-    ```sh
-    > git clone git@github.com:meetup/web-platform-starter.git my-cool-app
-    > cd my-cool-app
-    ```
-
-3. set the `origin` remote url to your new GitHub repo url
-
-    ```sh
-    > git remote set-url origin git@github.com:meetup/my-cool-app.git
-    ```
-
-4. push the code to the new repo and set the upstream tracking branch
-
-    ```sh
-    > git push origin -u
-    ```
-
-5. In general, you will probably want to have the option of pulling updates
-to the starter repo into your own copy - these updates might include build
-improvements, dependency updates, and React application helpers. It's therefore
-useful to set this repo as an additional `upstream` remote:
-
-    ```sh
-    > git remote add upstream git@github.com:meetup/meetup-web-starter.git
-    ```
-
-		To pull updates:
-
-    ```sh
-    > git pull upstream master
-    ```
-
-## Runtime
-
-You can run starter-based apps locally in Node v7. Deployment will
-typically require a Docker-based CI configuration.
+## Installation
 
 1. Install Node v7. If you
 	you don't have Node installed already, use the [current package
@@ -60,40 +8,80 @@ typically require a Docker-based CI configuration.
 	If you already have Node installed using a package manager like
 	Homebrew, you can use that to update the install, although some people
 	have reported challenges getting the Homebrew configuration to work.
-2. Confirm you are running `node` v7
+
+  Confirm you are running `node` v7
 
 		```sh
 		$ node -v
 		```
-3. Install [yarn](https://yarnpkg.com/en/docs/install). For macOS, the
-best way to install is with Homebrew. *DO NOT* install with `npm`,the
-installation is unreliable. `Yarn` is required, and though `npm` will
+
+2. Clone this repo
+
+		```sh
+		$ git clone git@github.com:meetup/web-platform-starter.git
+		```
+
+3. Install [`yarn`](https://yarnpkg.com/en/docs/install). For macOS, the
+best way to install is with Homebrew. *DO NOT* install with `npm` - the
+installation is unreliable. Yarn is required, and though `npm` will
 continue to work, it should not be used.
 
 		```sh
 		brew update
 		brew install yarn
 		```
-2. Install all the `package.json` dependencies using `yarn`
+
+4. Install the package dependencies
 
 		```sh
 		$ yarn install
 		```
 
+5. Configure your environment
+
 ## Environment config
 
-In addition to the [web platform environment
-variables](https://github.com/meetup/meetup-web-platform#environment-config),
-your app should also contain app-specific coverage reporting with coveralls.io.
+Configuration is read from environment variables, which must be
+declared in `.mupweb.config` in your home directory (i.e.
+`$HOME/.mupweb.config`) in the following format:
 
 ```
+API_HOST=api.meetup.com
+API_PROTOCOL=https
 COVERALLS_REPO_TOKEN=<set up a new coveralls repo at https://coveralls.io/github/meetup/>
 COVERALLS_SERVICE_NAME=<your username>
+DEV_SERVER_PORT=8000
+ASSET_SERVER_HOST=0.0.0.0
+ASSET_SERVER_PORT=8001
+OAUTH_AUTH_URL=https://secure.meetup.com/oauth2/authorize
+OAUTH_ACCESS_URL=https://secure.meetup.com/oauth2/access
+MUPWEB_OAUTH_KEY=<check with an admin>
+MUPWEB_OAUTH_SECRET=<check with an admin>
+PHOTO_SCALER_SALT='<check with admin>'  # single quotes are required
+CSRF_SECRET='<any random string over 32 characters long>'
+```
+
+**Note**: you _can_ use `dev.meetup.com` URLs for `API_HOST`, `OAUTH_AUTH_URL`,
+and `OAUTH_ACCESS_URL`, but you will need to ensure that your devbox is up and
+running with a recent build of Meetup classic.
+
+To automatically add these env variables into your terminal session,
+`source` the config file in your `.bashrc` or `.zshrc`:
+
+```
+set -a  # auto-export all subequent env variable assignments
+source $HOME/.mupweb.config
+set +a  # turn off auto-export of env variables
 ```
 
 If you run the application in Docker, these environment variables will
 be read directly from `$HOME/.mupweb.config` rather than from the
 terminal session environment.
+
+## Usage
+
+You can run this application locally in Node v7. Deployment is handled by
+Travis CI using a Docker container.
 
 # Usage
 
@@ -111,7 +99,30 @@ server
 > command:
 > `DEV_SERVER_PORT=8123 yarn run start`
 
-## Available yarn commands
+## Running in Docker (optional)
+
+In addition to running locally in Node, you can also run the application in
+Docker.
+
+1. Install Docker
+
+[Get Docker](https://www.docker.com/) - version 1.9 or above (this can
+be installed on the Meetup Dev boxes)
+
+Direct download link for Mac - https://download.docker.com/mac/stable/Docker.dmg
+
+2. Run in Docker
+
+`make package` will build the app server and asset server Docker images
+and run associated tests. This is primarily useful for troubleshooting
+problems seen in Travis build logs.
+
+`make run-local` will run the app server container and start a bash command line
+for local debugging
+
+`make run-local-asset` will run the asset server container for local debugging
+
+## Available `yarn` commands
 
 In general, you should just use `yarn run start` to get everything built
 and running in development - it will coordinate all of the build + start tasks
@@ -156,10 +167,49 @@ should use `yarn start` or `yarn run start:app` in development)
   - accepts localeCode arguments, e.g. `yarn run start:asset -- en-US es`
 - `yarn run stop`: Stop all app and asset servers started by `yarn run start:all`
 
-### Tools
+### Generating code with `yarn run generate`
 
-- `yarn run generate`: Utility that sets up a new feature with its corresponding
-files in the `src/app/` directory.
+You can generate the boilerplate files for `"features"` (using a single
+Container modules assigned to its own route) and
+`"components"` (React components not tied to specific features) using `yarn
+run generate`.
+
+The command will prompt you for a 'type' (select from the list of
+options), and a 'name'. For features, you will also be prompted for a
+'route' (url pattern) and a 'unique key' to access the data in state.
+
+For 'features', it
+
+1. creates a new directory in `src/features/`
+2. generates
+  - `xContainer.jsx` module
+  - `xActionCreators.js` module
+  - `x.test.jsx` script
+  - `xQuery.js` module
+  - `xRoutes.js` module
+
+For 'components', it generates the following files in
+`src/components/`:
+
+1. `x.jsx` Component JSX module
+2. `x.test.jsx` script
+
+**Note:** Most components will live in the [meetup-web-components](https://github.com/meetup/meetup-web-components)
+component repo, unless they are specifically for use in the
+mup-web application. If unsure, ask any repo maintainers
+for recommendations.
+
+## Hot reloading
+
+Most React components should be able to "hot reload" while you edit them during
+development - the component updates should appear in your browser almost
+instantly when you save the file in your editor. However, not all code changes
+can be hot reloaded, which may require re-building (`yarn start`) to see the
+effect in the app.
+
+To disable Hot Module Reloading (HMR), set `DISABLE_HMR=true` as an env var and
+re-start the server. _Note_: this env var needs to be `export`ed so that it is
+available to the background process that runs the server.
 
 ## App features
 
@@ -354,4 +404,22 @@ the changes. Other style issues will log errors.
 Our `.eslintrc` configuration is based on the 'recommended' preset, with
 a number of additional rules that have been requested by the dev team. It's a
 'living' standard, however, so please feel free to send PRs with updates!
+
+## Production
+
+Our production build is delivered as a containerized application. We use
+**Docker** to define and build the container images, **Kubernetes** for
+deploying, scaling, and managing our containers, and **Google Cloud Platform**
+for hosting and serving our application to the public.
+
+To serve our application over **https**, we use a SSL/TLS termination proxy to
+handle all requests over the secure protocol.
+
+You will not need to configure SSL for your local development environment, as
+the local app server works over both http and https protocols, and we have
+implemented a `/static/*` route (in dev) which will serve those requests from
+your local `build` directory.
+
+For a complete overview of our production infrastructure, please reference our
+documentation on our [Kubernetes implementation](./training/kubernetes.md).
 
