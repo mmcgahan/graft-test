@@ -1,5 +1,18 @@
 # Production Infrastructure Overview
 
+Our production build is delivered as a containerized application. We use
+**Docker** to define and build the container images, **Kubernetes** for
+deploying, scaling, and managing our containers, and **Google Cloud Platform**
+for hosting and serving our application to the public.
+
+To serve our application over **https**, we use a SSL/TLS termination proxy to
+handle all requests over the secure protocol.
+
+You will not need to configure SSL for your local development environment, as
+the local app server works over both http and https protocols, and we have
+implemented a `/static/*` route (in dev) which will serve those requests from
+your local `build` directory.
+
 We use [Kubernetes](http://kubernetes.io) to handle deployment and scaling for all related containers.
 
 If you are new to Kubernetes, it's worth reading their documentation to familiarize yourself with the various resource types we use in our application (particularly [Deployments](http://kubernetes.io/docs/user-guide/deployments/), but we also use [Services](http://kubernetes.io/docs/user-guide/services/), [ConfigMaps](http://kubernetes.io/docs/user-guide/configmap/), and [Secrets](http://kubernetes.io/docs/user-guide/secrets/)).
@@ -31,7 +44,6 @@ It runs on port 8001 in the production cluster, and is not accessible externally
 The SSL/TLS termination proxy responsible for serving `mup-web` and `mup-web-asset` over a secure protocol.
 
 It listens to traffic on ports 80 and 443, but will redirect all requests over `http` to be served via `https` (see `ssl-proxy-config` below).
-
 
 ## Additional Resources
 
