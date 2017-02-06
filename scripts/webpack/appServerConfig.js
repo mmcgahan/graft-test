@@ -40,15 +40,6 @@ module.exports = {
 				loader: 'style-loader!css-loader',
 				include: [settings.cssPath]
 			},
-
-			{
-				test: /\.json$/,
-				include: [
-					settings.appPath,
-					settings.webComponentsSrcPath
-				],
-				loader: 'json-loader'
-			}
 		]
 	},
 
