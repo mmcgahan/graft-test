@@ -3964,9 +3964,9 @@ meetup-swatches@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/meetup-swatches/-/meetup-swatches-3.1.1.tgz#71d150983deab5f353c77367c6935e126614919e"
 
-meetup-web-components@0.1.219:
-  version "0.1.219"
-  resolved "https://registry.yarnpkg.com/meetup-web-components/-/meetup-web-components-0.1.219.tgz#b5d32b522be0297f12ee8932b7f0e7ebadabe441"
+meetup-web-components@0.1.230:
+  version "0.1.230"
+  resolved "https://registry.yarnpkg.com/meetup-web-components/-/meetup-web-components-0.1.230.tgz#0d395d3150e43f23a12b85e861ea136b0da37925"
 
 meetup-web-mocks@0.1.51:
   version "0.1.51"
