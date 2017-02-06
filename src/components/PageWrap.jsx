@@ -2,7 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router';
 
-import getBrowserPolyfill from '../util/browserPolyfill';
+import { polyfillServiceUrl } from '../util/browserPolyfill';
 
 
 /*
@@ -87,7 +87,7 @@ class PageWrap extends React.Component {
 						}
 					]}
 					script={[
-						getBrowserPolyfill()
+						{ src: polyfillServiceUrl(), type: 'text/javascript' }
 					]} />
 
 				<div style={iconSpriteStyle} dangerouslySetInnerHTML={{__html: iconSprite}} />

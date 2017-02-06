@@ -26,6 +26,7 @@ module.exports = {
 	utilsPath: path.resolve(repoRoot, 'util'),
 
 	isDev: process.env.NODE_ENV !== 'production',
+	enableHMR: process.env.NODE_ENV !== 'production' && !process.env.DISABLE_HMR,
 	prodPlugins: [
 		// Removes duplicate module code (rare, but can happen)
 		new webpack.optimize.DedupePlugin(),

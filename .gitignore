@@ -23,15 +23,13 @@ build
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
 
-# JSDocs documentation directory
-src/assets/docs
-
 .DS_Store
 lib
 npm-debug.log
 .vagrant
 .swo
 .swp
+.*.swp
 
 # Generated icon library file
 iconLibrary.story.jsx

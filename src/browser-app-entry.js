@@ -11,10 +11,26 @@ import appReducers from './app/reducer';
 // to the start of script execution, which means they cannot be used here.
 __webpack_public_path__ = window.APP_RUNTIME.assetPublicPath;  // eslint-disable-line no-undef
 
-const routes = require('./app/routes').default;
-const reducer = makeRootReducer(appReducers);
+/**
+ * Get the function that will render the application. This is set up as a
+ * Promise so that any synchronous code that prepares the environment will
+ * complete before rendering happens, e.g. polyfills
+ *
+ * @return {Promise} a Promise that resolve with the renderer
+ */
+function getRenderer() {
+	const routes = require('./app/routes').default;
+	const reducer = makeRootReducer(appReducers);
+	const renderer = makeBrowserRenderer(
+		routes,
+		reducer,
+		[],
+		window.APP_RUNTIME.baseUrl
+	);
 
-const render = makeBrowserRenderer(routes, reducer, [], window.APP_RUNTIME.baseUrl);
-render();
+	return Promise.resolve(renderer);
+}
+
+getRenderer().then(renderer => renderer());
 activateSW();
 
