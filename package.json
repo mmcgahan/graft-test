@@ -91,7 +91,7 @@
     "sassquatch2": "2.4.4",
     "style-loader": "0.13.1",
     "transifex": "git+https://github.com/mattkime/node-transifex.git#push_translations",
-    "webpack": "2.2.0",
+    "webpack": "2.2.1",
     "webpack-dev-server": "2.3.0",
     "webpack-node-externals": "1.5.4"
   }
