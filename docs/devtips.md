@@ -27,6 +27,12 @@
 		command L execute('silent !eslint_d --fix %')
 		\ | execute 'e|redraw!'
 		```
+	- Atom
+		- [linter-eslint](https://github.com/AtomLinter/linter-eslint) is a plugin to add eslint notifications in Atom. It can be installed via the package manager in the editor or `apm` on the command line.
+		```text
+			$ apm install linter-eslint
+		```
+		The default config should detect the `eslint` version used by the local project.
 
 ## Yarn & package.json Dependencies
 
