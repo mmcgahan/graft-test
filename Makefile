@@ -102,6 +102,6 @@ run-local-asset:
 	docker run \
 	--rm \
 	-it \
-	-p $(ASSET_SERVER_PORT):80 \
+	-p $(ASSET_SERVER_PORT):8001 \
 	$(PUBLISH_TAG_ASSET)
 
