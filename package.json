@@ -87,7 +87,7 @@
     "react-dom": "15.4.2",
     "react-transform-catch-errors": "1.0.2",
     "react-transform-hmr": "1.0.4",
-    "sass-loader": "5.0.1",
+    "sass-loader": "6.0.0",
     "sassquatch2": "2.4.6",
     "style-loader": "0.13.1",
     "transifex": "git+https://github.com/mattkime/node-transifex.git#push_translations",
