@@ -265,4 +265,4 @@ Node API in `webpack/webpackDevServer.js`.
 
 The Dockerfile is based off a `meetup/node-yarn` - `https://github.com/meetup/node-yarn/`
 
-To update this image, tag and push from your local machine. Talk to Engineering Effectiveness about permission to push to the `meetup` docker hub account.
+See notes in `node-yarn` repo regarding how to update.
