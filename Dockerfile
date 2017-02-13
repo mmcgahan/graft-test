@@ -1,4 +1,4 @@
-FROM node:7.5
+FROM meetup/node-yarn:7.5.0-0.19.1
 
 RUN useradd --user-group --create-home --shell /bin/false mup
 
@@ -14,17 +14,13 @@ ARG TRAVIS_COMMIT
 ARG TRAVIS_JOB_ID
 ARG TRAVIS_PULL_REQUEST=FALSE
 
-# install yarn
-# yarn installs in $HOME dir, so need be mup user not root
-USER mup
-RUN curl -o- -L https://yarnpkg.com/install.sh | bash
-
 # cache builds
 # only rebuild if package.json or yarn.lock has changed
 WORKDIR /home/mup/
 COPY package.json yarn.lock /home/mup/
 
 # install packages, don't generate a lockfile
+USER mup
 RUN yarn --pure-lockfile && yarn cache clean
 EXPOSE 8000
 
