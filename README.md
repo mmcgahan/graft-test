@@ -261,3 +261,8 @@ in development is provided by the Webpack dev server, which is run from its
 Node API in `webpack/webpackDevServer.js`.
 
 
+## Base Dockerfile
+
+The Dockerfile is based off a `meetup/node-yarn` - `https://github.com/meetup/node-yarn/`
+
+The to update this image tag and push from your local machine. Talk to Engineering Effectiveness about permission to push to the `meetup` docker hub account.
