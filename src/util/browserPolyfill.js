@@ -7,7 +7,7 @@ export function polyfillServiceUrl() {
 		'fetch',  // IE, Safari
 		'Promise',
 		'URL',
-		'Array.prototype.find', //IE
+		'Array.prototype.find', // IE
 	];
 	const flags = [
 		'gated',  // use feature detection in addition to user agent test
