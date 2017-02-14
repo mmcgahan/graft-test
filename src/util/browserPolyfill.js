@@ -7,7 +7,7 @@ export function polyfillServiceUrl() {
 		'fetch',  // IE, Safari
 		'Promise',
 		'URL',
-		'Array.prototype.find', //IE
+		'Array.prototype.find', // IE
 		'Array.from' // IE
 	];
 	const flags = [
