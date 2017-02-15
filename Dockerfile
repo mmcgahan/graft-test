@@ -36,6 +36,7 @@ RUN chown -R mup:mup /home/mup/web-platform-starter
 USER mup
 
 # build, test, coveralls, remove dev dependencies
+ENV NODE_ENV=production
 RUN yarn run package
 
 CMD ["yarn","run","start:prod"]
