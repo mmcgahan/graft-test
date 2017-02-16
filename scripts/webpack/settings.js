@@ -50,13 +50,5 @@ module.exports = {
 
 	localeCodes: [
 		'en-US',
-		'en-AU',
-		'de-DE',
-		'fr-FR',
-		'ja-JP',
-		'it-IT',
-		'pt-BR',
-		'es-ES',
-		'es'
 	]
 };
