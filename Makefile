@@ -1,4 +1,3 @@
-SHELL=bash
 PROJECT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 TARGET_DIR=$(PROJECT_DIR)target
 
@@ -100,7 +99,7 @@ prep:
 	@node --version
 	@echo
 	@echo "=== Checking yarn"
-	@yarn version
+	@yarn --version
 	@echo
 	@echo "=== Checking homebrew"
 	@brew --version
