@@ -30,6 +30,15 @@ Start the mocked server in the current terminal window
 $ yarn run start:mock
 ```
 
+When you start the server, the console will print a URI that you can open in
+Chrome that will allow devtools to monitor the server, including console logs
+_code execution profiles_, and breakpoint-based debugging.
+
+```
+To start debugging, open the following URL in Chrome:
+    chrome-devtools://devtools/bundled/inspector.html?experiments=true&v8only=true&ws=127.0.0.1:9229/e7fea70f-4cd8-4df4-848b-c660c9208a55
+```
+
 ### Start the mock API server
 
 In a new terminal window
