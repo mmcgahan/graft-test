@@ -10,8 +10,15 @@ $ yarn run start:mock
 
 to start the mocked server in the current terminal window.
 
+The command to perform the minimal required build is
+
+```sh
+$ yarn run build:locales en-US && yarn run build:server
+```
+
 Load testing can be done simply with Apache Bench, which provides a CLI called
-`ab` that should be run in a separate terminal window. The main flags to use
+`ab` that should be run in a separate terminal window - it is installed by
+default in most \*NIX systems. The main flags to use
 are `-c` to define the number of concurrent connections and `-n` to set the
 total number of HTTP requests to make.
 
