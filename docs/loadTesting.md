@@ -6,13 +6,7 @@ building the server once, you can run
 
 ## Setup
 
-### Set config
-
-The main configuration is in `tests/mockConfig.js` - you can tweak the
-performance characteristics of the mock system to test different response
-time scenarios.
-
-### Build the app server application
+### Step 0: Build the app server application
 
 The command to perform the minimal required build is
 
@@ -22,7 +16,47 @@ $ yarn run build:locales en-US && yarn run build:server
 
 _This is not necessary if you've run `yarn start` recently_
 
-### Start the mock app server
+### Set config
+
+The main configuration is in `tests/mockConfig.js` - you can tweak the
+performance characteristics of the mock system to test different response
+time scenarios.
+
+### The easy way to test
+
+```sh
+$ node scripts/loadTest.js
+```
+
+This script will give you output that looks like this:
+
+```sh
+Open the following link in Chrome to inspect the server
+chrome-devtools://devtools/bundled/inspector.html?experiments=true&v8only=true&ws=127.0.0.1:9229/30d322c2-3022-4c4a-9739-f62a0c766b59
+
+Running tests...
+concurrency 10:
+  27.99req/s
+  357.218ms mean RT
+
+concurrency 20:
+  49.18req/s
+  406.641ms mean RT
+
+concurrency 50:
+  66.84req/s
+  747.999ms mean RT
+
+concurrency 100:
+  70.53req/s
+  1417.761ms mean RT
+
+Tests complete - type ^C to shut down mock servers and exit
+```
+
+### Manual setup
+
+#### Start the mock app server
 
 Start the mocked server in the current terminal window
 
@@ -39,7 +73,7 @@ To start debugging, open the following URL in Chrome:
     chrome-devtools://devtools/bundled/inspector.html?experiments=true&v8only=true&ws=127.0.0.1:9229/e7fea70f-4cd8-4df4-848b-c660c9208a55
 ```
 
-### Start the mock API server
+#### Start the mock API server
 
 In a new terminal window
 
@@ -47,7 +81,7 @@ In a new terminal window
 $ yarn run start:mockApi
 ```
 
-## Run the load test
+#### Run the load test
 
 Load testing can be done simply with Apache Bench, which provides a CLI called
 `ab` that should be run in a separate terminal window - it is installed by
@@ -104,5 +138,5 @@ Percentage of the requests served within a certain time (ms)
 2. Vary the response times so that each set of concurrent requests don't all
   start and end at the same time
 3. Use `forever` to make it easier to start & stop the two servers
-4. Script everything, including `ab`, possibly with an interactive command line
+4. Interactive command line for `loadTest.js`
 
