@@ -4,6 +4,7 @@
 
 - [Forking a platform application repo](docs/forking.md)
 - [Production server management with Kubernetes](docs/kubernetes.md)
+- [Load testing](docs/loadTesting.md)
 
 ## Installation
 
@@ -266,3 +267,4 @@ Node API in `webpack/webpackDevServer.js`.
 The Dockerfile is based off a `meetup/node-yarn` - `https://github.com/meetup/node-yarn/`
 
 See notes in `node-yarn` repo regarding how to update.
+
