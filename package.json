@@ -24,7 +24,7 @@
     "start:app": "forever start scripts/forever/app-server.json && yarn run start:info",
     "start:asset": "node scripts/forever/asset-server.js",
     "start:info": "node scripts/start-info.js",
-    "start:load": "yarn stop && node --inspect tests/runServer-mockExternal.js",
+    "start:mock": "yarn stop && node --inspect tests/runServer-mockExternal.js",
     "start:prod": "node scripts/runServer.js",
     "stop": "forever stopall",
     "tail": "tail -f ./*.log",
