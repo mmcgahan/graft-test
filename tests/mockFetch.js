@@ -1,3 +1,4 @@
+const config = require('./mockConfig');
 const nodeFetch = require('node-fetch');
 const fetchResponse = (mockResponseValue={}, headers={}, delay=0) =>
 	new Promise((resolve, reject) =>
@@ -20,15 +21,19 @@ const fetchResponse = (mockResponseValue={}, headers={}, delay=0) =>
  * @return {Response} a WHATWG Response object (or Promise-based mock)
  */
 const mockFetch = (url, options) => {
+	// oauth auth endpoint
 	if (url.startsWith(process.env.OAUTH_AUTH_URL)) {
 		console.warn('MOCK fetch auth code');
-		return fetchResponse({ code: 'code_foo' }, {}, 250);
+		return fetchResponse({ code: 'code_foo' }, {}, config.OAUTH_AUTH_DELAY);
 	}
+	// oauth access endpoint
 	if (url.startsWith(process.env.OAUTH_ACCESS_URL)) {
 		console.warn('MOCK fetch access_token');
-		return fetchResponse({ access_token: 'access_bar' }, {}, 250);
+		return fetchResponse({ access_token: 'access_bar' }, {}, config.OAUTH_ACCESS_DELAY);
 	}
+	// internal route
 	if (url.startsWith('http://beta2.dev')) {
+		// do an actual fetch
 		return nodeFetch(url, options);
 	}
 	console.warn(`MOCK fetch ${url}`);

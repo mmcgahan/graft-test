@@ -1,4 +1,6 @@
+const Hapi = require('hapi');
 const api = require('meetup-web-mocks/lib/api');
+const config = require('./mockConfig');
 
 const makeDelayedHandler = delay => payload => (request, reply) => {
 	setTimeout(() => reply(payload), delay);
@@ -16,26 +18,25 @@ const getDefaultRoute = getDelayedHandler => ({
 	handler: getDelayedHandler({})
 });
 
-const getRoutes = options => {
-	const getDelayedHandler = makeDelayedHandler(options.delay);
+const getRoutes = config => {
+	const getDelayedHandler = makeDelayedHandler(config.API_DELAY);
 	return [
 		...getGroupRoutes(getDelayedHandler),
 		getDefaultRoute(getDelayedHandler)
 	];
 };
 
-const PORT = 8001;
-const connect = (server, options) => {
-	options = options || {};
-	options.delay = options.delay || 200;
+const main = () => {
+	const server = new Hapi.Server();
+
 	const apiConnection = server.connection({
-		port: PORT,
+		port: config.API_PORT,
 	});
-	return apiConnection.route(getRoutes(options));
+	apiConnection.route(getRoutes(config));
+	return server.start()
+		.then(() => console.log(`Mock API server running on ${server.info.uri}...`))
+		.then(() => server);
 };
 
-module.exports = {
-	connect,
-	PORT
-};
+main();
 

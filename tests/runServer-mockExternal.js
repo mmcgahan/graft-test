@@ -1,4 +1,4 @@
-const mockApiServer = require('./mockApiServer');
+const mockConfig = require('./mockConfig');
 const mockFetch = require('./mockFetch');
 const getConfig = require('meetup-web-platform/lib/util/config').default;
 //
@@ -13,14 +13,8 @@ console.log(process.pid);
 const config = () => getConfig({
 	API_PROTOCOL: 'http',
 	API_HOST: 'beta2.dev.meetup.com',
-	API_SERVER_ROOT_URL: `http://localhost:${mockApiServer.PORT}`
+	API_SERVER_ROOT_URL: `http://localhost:${mockConfig.API_PORT}`
 });
 
-runServer(config)
-	.then(server =>
-		server.stop()
-			.then(() => mockApiServer.connect(server, { delay: 200 }))
-			.then(() => server.start())
-			.then(() => server)
-	);
+runServer(config);
 
