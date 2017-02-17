@@ -70,3 +70,13 @@ Percentage of the requests served within a certain time (ms)
   99%   1833
  100%   1834 (longest request)
 ```
+
+## TODO
+
+1. Change setup so that mock API server runs in a separate process that can be killed
+
+  The current setup uses two connections on a single Hapi instance to simulate
+  the app server and the REST API server, which probably reduces performance
+
+2. Expand mock API server with more endpoints and more accurate responses
+
