@@ -5,13 +5,6 @@ RUN useradd --user-group --create-home --shell /bin/false mup
 ENV NODE_PATH=/home/mup/node_modules \
 	PATH=/home/mup/node_modules/.bin/:/home/mup/.yarn/bin/:$PATH
 
-ARG NEW_RELIC_LICENSE_KEY=0000000000000000000000000000000000000000
-ARG NEW_RELIC_APP_NAME=MUP-WEB-DEV
-
-# can be moved to argument / secrets? ...does this need to be a secret?
-ENV NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
-ENV NEW_RELIC_APP_NAME=${NEW_RELIC_APP_NAME}
-
 # cache builds
 # only rebuild if package.json or yarn.lock has changed
 WORKDIR /home/mup/

@@ -12,7 +12,7 @@ PUBLISH_TAG_ASSET ?= "mup.cr/webplatform/web-platform-starter-asset:$(CI_BUILD_N
 
 TRAVIS_PULL_REQUEST ?= "FALSE"
 
-PRODUCTION_DOMAIN = "meetup.computer"
+# PRODUCTION_DOMAIN = "meetup.computer"
 
 # lists all available targets
 list:
