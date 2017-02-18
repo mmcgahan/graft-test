@@ -72,7 +72,7 @@ transifex:
 # called by Travis and prod build
 package: prepackage __package __package-asset __package-test postpackage
 
-postpackage: coveralls transifex
+postpackage: coveralls
 
 prepackage: ;
 
