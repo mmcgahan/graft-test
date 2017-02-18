@@ -10,7 +10,9 @@ CI_WORKDIR ?= $(shell pwd)
 PUBLISH_TAG_APP ?= "mup.cr/webplatform/web-platform-starter:$(CI_BUILD_NUMBER)"
 PUBLISH_TAG_ASSET ?= "mup.cr/webplatform/web-platform-starter-asset:$(CI_BUILD_NUMBER)"
 
-# PRODUCTION_DOMAIN = "meetup.computer"
+TRAVIS_PULL_REQUEST ?= "FALSE"
+
+PRODUCTION_DOMAIN = "meetup.computer"
 
 # lists all available targets
 list:
@@ -32,14 +34,7 @@ no_op__:
 # 	$(eval LOAD_BALANCER_IP=104.196.98.37)
 
 __package:
-	docker build \
-		--build-arg COVERALLS_REPO_TOKEN=$(COVERALLS_REPO_TOKEN) \
-		--build-arg TRAVIS=$(TRAVIS) \
-		--build-arg TRAVIS_BRANCH=$(TRAVIS_BRANCH) \
-		--build-arg TRAVIS_COMMIT=$(TRAVIS_COMMIT) \
-		--build-arg TRAVIS_JOB_ID=$(TRAVIS_JOB_ID) \
-		--build-arg TRAVIS_PULL_REQUEST=$(TRAVIS_PULL_REQUEST) \
-		-t $(PUBLISH_TAG_APP) .
+	docker build -t $(PUBLISH_TAG_APP) .
 	mkdir -p build
 	docker run \
 		--rm \
@@ -51,8 +46,35 @@ __package:
 __package-test:
 	@echo 'no component/integration/other tests'
 
+coveralls:
+	docker run \
+		--rm \
+		-e COVERALLS_SERVICE_NAME=travis-pro \
+		-e COVERALLS_REPO_TOKEN=$(COVERALLS_REPO_TOKEN) \
+		-e TRAVIS=$(TRAVIS) \
+		-e TRAVIS_BRANCH=$(TRAVIS_BRANCH) \
+		-e TRAVIS_COMMIT=$(TRAVIS_COMMIT) \
+		-e TRAVIS_JOB_ID=$(TRAVIS_JOB_ID) \
+		-e TRAVIS_PULL_REQUEST=$(TRAVIS_PULL_REQUEST) \
+		$(PUBLISH_TAG_APP) \
+		yarn run coveralls
+
+transifex:
+	docker run \
+		--rm \
+		-e TRAVIS_BRANCH=$(TRAVIS_BRANCH) \
+		-e TRAVIS_PULL_REQUEST=$(TRAVIS_PULL_REQUEST) \
+		-e TRANSIFEX_USER=$(TRANSIFEX_USER) \
+		-e TRANSIFEX_PW=$(TRANSIFEX_PW) \
+		$(PUBLISH_TAG_APP) \
+		npm-run-all tx:push tx:pushTxMaster
+
 # called by Travis and prod build
-package: __package __package-asset __package-test
+package: prepackage __package __package-asset __package-test postpackage
+
+postpackage: coveralls transifex
+
+prepackage: ;
 
 version:
 	@echo $(CI_BUILD_NUMBER)

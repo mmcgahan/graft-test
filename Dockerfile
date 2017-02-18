@@ -2,17 +2,15 @@ FROM meetup/node-yarn:7.5.0-0.20.3
 
 RUN useradd --user-group --create-home --shell /bin/false mup
 
-ENV API_PROTOCOL=https
-ENV COVERALLS_SERVICE_NAME=travis-pro
-ENV NODE_PATH=/home/mup/node_modules
-ENV PATH=/home/mup/node_modules/.bin/:/home/mup/.yarn/bin/:$PATH
+ENV NODE_PATH=/home/mup/node_modules \
+	PATH=/home/mup/node_modules/.bin/:/home/mup/.yarn/bin/:$PATH
 
-ARG COVERALLS_REPO_TOKEN
-ARG TRAVIS
-ARG TRAVIS_BRANCH
-ARG TRAVIS_COMMIT
-ARG TRAVIS_JOB_ID
-ARG TRAVIS_PULL_REQUEST=FALSE
+ARG NEW_RELIC_LICENSE_KEY=0000000000000000000000000000000000000000
+ARG NEW_RELIC_APP_NAME=MUP-WEB-DEV
+
+# can be moved to argument / secrets? ...does this need to be a secret?
+ENV NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
+ENV NEW_RELIC_APP_NAME=${NEW_RELIC_APP_NAME}
 
 # cache builds
 # only rebuild if package.json or yarn.lock has changed
@@ -35,8 +33,9 @@ RUN chown -R mup:mup /home/mup/web-platform-starter
 # switch back to mup for yarn
 USER mup
 
-# build, test, coveralls, remove dev dependencies
+# need to set this after installing modules otherwise no npm-run-all
 ENV NODE_ENV=production
+# build & test
 RUN yarn run package
 
 CMD ["yarn","run","start:prod"]
