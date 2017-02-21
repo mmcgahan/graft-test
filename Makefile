@@ -90,6 +90,44 @@ __get-credentials:
 __get-creds-deploy: __get-credentials __deploy-only
 deploy-prod: __set-prod __get-creds-deploy
 
+set-ns: ## Set namespace for current kubectl context.
+	# kubectl config set-context $$(kubectl config current-context) \
+	# --namespace webplatform
+
+prep:
+	@echo "=== Checking node"
+	@node --version
+	@echo
+	@echo "=== Checking yarn"
+	@yarn --version
+	@echo
+	@echo "=== Checking homebrew"
+	@brew --version
+	@echo
+	@echo "=== You're ready for web-platform development!"
+
+prep-deploy:
+	@echo "=== Checking docker"
+	@docker --version
+	@docker pull hello-world
+	@docker run hello-world
+	@echo
+	@echo "=== Checking gcloud"
+	@gcloud version
+	@echo
+	@echo "=== Checking kubectl"
+	@kubectl version
+	@echo
+	@echo "=== Checking python"
+	@which python
+	@python --version
+	@if [ `which python` != "/usr/local/bin/python" ]; then echo "if running macOS, \`brew install python\` to avoid permission conflicts when pip installing"; fi
+	@echo
+	@echo "=== Checking envtpl"
+	@type envtpl || (echo; echo "envtpl not found... Try:"; echo "  pip install envtpl"; echo; false)
+	@echo
+	@echo "=== You're ready for web-platform deployment work!"
+
 run-local:
 	docker run \
 	--rm \
