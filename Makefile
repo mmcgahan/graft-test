@@ -10,7 +10,7 @@ CI_WORKDIR ?= $(shell pwd)
 PUBLISH_TAG_APP ?= "mup.cr/webplatform/web-platform-starter:$(CI_BUILD_NUMBER)"
 PUBLISH_TAG_ASSET ?= "mup.cr/webplatform/web-platform-starter-asset:$(CI_BUILD_NUMBER)"
 
-TRAVIS_PULL_REQUEST ?= "FALSE"
+TRAVIS_PULL_REQUEST ?= "false"
 
 # PRODUCTION_DOMAIN = "meetup.computer"
 
@@ -58,16 +58,6 @@ coveralls:
 		-e TRAVIS_PULL_REQUEST=$(TRAVIS_PULL_REQUEST) \
 		$(PUBLISH_TAG_APP) \
 		yarn run coveralls
-
-transifex:
-	docker run \
-		--rm \
-		-e TRAVIS_BRANCH=$(TRAVIS_BRANCH) \
-		-e TRAVIS_PULL_REQUEST=$(TRAVIS_PULL_REQUEST) \
-		-e TRANSIFEX_USER=$(TRANSIFEX_USER) \
-		-e TRANSIFEX_PW=$(TRANSIFEX_PW) \
-		$(PUBLISH_TAG_APP) \
-		npm-run-all tx:push tx:pushTxMaster
 
 # called by Travis and prod build
 package: prepackage __package __package-asset __package-test postpackage
