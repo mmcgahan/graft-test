@@ -70,7 +70,7 @@
     "babel-register": "6.18.0",
     "coveralls": "2.11.16",
     "css-loader": "0.26.1",
-    "eslint": "3.15.0",
+    "eslint": "3.16.0",
     "eslint-loader": "1.6.1",
     "eslint-plugin-meetup": "git+https://github.com/meetup/eslint-plugin-meetup.git",
     "eslint-plugin-react": "6.8.0",
