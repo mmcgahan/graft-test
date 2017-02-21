@@ -2,8 +2,8 @@ FROM meetup/node-yarn:7.5.0-0.20.3
 
 RUN useradd --user-group --create-home --shell /bin/false mup
 
-ENV NODE_PATH=/home/mup/node_modules \
-	PATH=/home/mup/node_modules/.bin/:/home/mup/.yarn/bin/:$PATH
+ENV NODE_PATH=/home/mup/node_modules
+ENV PATH=/home/mup/node_modules/.bin/:/home/mup/.yarn/bin/:$PATH
 
 # cache builds
 # only rebuild if package.json or yarn.lock has changed
