@@ -2678,9 +2678,9 @@ globule@^1.0.0:
     lodash "~4.16.4"
     minimatch "~3.0.2"
 
-good-console@6.2.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/good-console/-/good-console-6.2.0.tgz#b385098aa5c0fd3b36d9067b68a35cfc494fc9ea"
+good-console@6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/good-console/-/good-console-6.4.0.tgz#7294c9d90c4c9f059a082e180625495966d2ba59"
   dependencies:
     hoek "4.x.x"
     joi "8.1.x"
@@ -3994,9 +3994,9 @@ meetup-web-mocks@0.1.53:
     redux "3.6.0"
     rxjs "5.0.3"
 
-meetup-web-platform@1.0.734:
-  version "1.0.734"
-  resolved "https://registry.yarnpkg.com/meetup-web-platform/-/meetup-web-platform-1.0.734.tgz#2feb69e84853688aadc0e50b54405120ded58ffd"
+meetup-web-platform@1.0.741:
+  version "1.0.741"
+  resolved "https://registry.yarnpkg.com/meetup-web-platform/-/meetup-web-platform-1.0.741.tgz#1dde31f4b489378496e97ba6b4d2babeffcc7e45"
   dependencies:
     accepts "^1.3.3"
     avsc "4.1.11"
@@ -4006,7 +4006,7 @@ meetup-web-platform@1.0.734:
     electrode-csrf-jwt "1.2.1"
     escape-html "1.0.3"
     good "7.1.0"
-    good-console "6.2.0"
+    good-console "6.4.0"
     good-squeeze "5.0.1"
     hapi "16.1.0"
     history "3.2.1"
@@ -4016,7 +4016,7 @@ meetup-web-platform@1.0.734:
     node-fetch "1.6.3"
     qs "6.3.0"
     react-dom "15.4.2"
-    react-router-redux "4.0.7"
+    react-router-redux "4.0.8"
     react-side-effect "1.0.2"
     redbox-react "1.3.3"
     redux-observable "0.12.2"
@@ -5162,9 +5162,9 @@ react-redux@5.0.2:
     lodash-es "^4.2.0"
     loose-envify "^1.1.0"
 
-react-router-redux@4.0.7:
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/react-router-redux/-/react-router-redux-4.0.7.tgz#9b1fde4e70106c50f47214e12bdd888cfb96e2a6"
+react-router-redux@4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/react-router-redux/-/react-router-redux-4.0.8.tgz#227403596b5151e182377dab835b5d45f0f8054e"
 
 react-router@3.0.2:
   version "3.0.2"
