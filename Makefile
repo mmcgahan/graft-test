@@ -121,7 +121,7 @@ prep-deploy:
 	@echo "=== Checking python"
 	@which python
 	@python --version
-	@if [ `which python` != "/usr/local/bin/python" ]; then echo "if running os x, \`brew install python\` to avoid permission conflicts when pip installing"; fi
+	@if [ `which python` != "/usr/local/bin/python" ]; then echo "if running macOS, \`brew install python\` to avoid permission conflicts when pip installing"; fi
 	@echo
 	@echo "=== Checking envtpl"
 	@type envtpl || (echo; echo "envtpl not found... Try:"; echo "  pip install envtpl"; echo; false)
