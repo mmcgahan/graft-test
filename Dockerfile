@@ -1,4 +1,4 @@
-FROM meetup/node-yarn:7.5.0-0.20.3
+FROM meetup/node-yarn:7.6-0.20
 
 RUN useradd --user-group --create-home --shell /bin/false mup
 
