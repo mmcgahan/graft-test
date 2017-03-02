@@ -10,10 +10,10 @@ export default (name) => {
 /**
  * @param {Object}
  */
-export default function(${nameLcase}) {
+export default function exampleAction(payload) {
 	return {
-		type: '${name.toUpperCase()}_REQUEST',
-		payload: ${nameLcase}
+		type: 'EXAMPLE_ACTION',
+		payload,
 	};
 }
 `;
