@@ -29,7 +29,7 @@ USER mup
 # need to set this after installing modules otherwise no npm-run-all
 ENV NODE_ENV=production
 # build & test
-RUN yarn run package
+RUN npm run package
 
 CMD ["yarn","run","start:prod"]
 
