@@ -59,12 +59,15 @@ coveralls:
 		$(PUBLISH_TAG_APP) \
 		yarn run coveralls
 
+run-flow:
+	docker run -it -v $(CI_WORKDIR):/app meetup/node-flow:0.39.0
+
 # called by Travis and prod build
 package: prepackage __package __package-asset __package-test postpackage
 
 postpackage: coveralls
 
-prepackage: ;
+prepackage: run-flow
 
 version:
 	@echo $(CI_BUILD_NUMBER)
@@ -154,4 +157,3 @@ run-local-asset:
 	-it \
 	-p $(ASSET_SERVER_PORT):8001 \
 	$(PUBLISH_TAG_ASSET)
-

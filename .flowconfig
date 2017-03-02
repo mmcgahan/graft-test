@@ -1,0 +1,15 @@
+[ignore]
+.*/node_modules/react-side-effect/*
+.*/node_modules/fbjs/*
+.*/node_modules/jest-validate/*
+.*/build/*
+.*/coverage/*
+.*/infrastructure/*
+
+[include]
+
+[libs]
+
+[options]
+module.name_mapper='^file-loader.*' -> '<PROJECT_ROOT>/flow/stub/file-loader.js'
+module.name_mapper='^raw-loader.*' -> '<PROJECT_ROOT>/flow/stub/raw-loader.js'
