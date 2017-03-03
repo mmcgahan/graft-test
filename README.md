@@ -260,11 +260,3 @@ The configuration for the Webpack builds are created by node-runnable scripts in
 and produce a corresponding Webpack configuration object. Hot module reloading
 in development is provided by the Webpack dev server, which is run from its
 Node API in `webpack/webpackDevServer.js`.
-
-
-## Base Dockerfile
-
-The Dockerfile is based off a `meetup/node-yarn` - `https://github.com/meetup/node-yarn/`
-
-See notes in `node-yarn` repo regarding how to update.
-
