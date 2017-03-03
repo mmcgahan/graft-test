@@ -1,4 +1,3 @@
-import 'rxjs';  // enables all RxJS operators in dependencies
 import makeBrowserRenderer from 'meetup-web-platform/lib/renderers/browser-render';
 import makeRootReducer from 'meetup-web-platform/lib/reducers/platform';
 import activateSW from './sw/activateSW';
