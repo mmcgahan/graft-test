@@ -3954,13 +3954,19 @@ media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
 
+meetup-swatches@3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/meetup-swatches/-/meetup-swatches-3.1.1.tgz#71d150983deab5f353c77367c6935e126614919e"
+
 meetup-swatches@3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/meetup-swatches/-/meetup-swatches-3.1.2.tgz#3a7e83c5549e372dbb263b336e8aa79317a47ce2"
 
-meetup-web-components@0.1.317:
-  version "0.1.317"
-  resolved "https://registry.yarnpkg.com/meetup-web-components/-/meetup-web-components-0.1.317.tgz#094569a528ad46a874fd0889e594f97a4ebf98fa"
+meetup-web-components@1.0.335:
+  version "1.0.335"
+  resolved "https://registry.yarnpkg.com/meetup-web-components/-/meetup-web-components-1.0.335.tgz#c6fec1e83365b3bd1ee6192231fac9b7b4c1485b"
+  dependencies:
+    swarm-sasstools "1.0.6"
 
 meetup-web-mocks@0.1.68:
   version "0.1.68"
@@ -6023,6 +6029,13 @@ svgo@^0.7.0:
 "swarm-icons@git+https://github.com/meetup/swarm-icons":
   version "0.0.1"
   resolved "git+https://github.com/meetup/swarm-icons#55a8945a303c64eceffedae8f92e18fcf088d81e"
+
+swarm-sasstools@1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/swarm-sasstools/-/swarm-sasstools-1.0.6.tgz#8e9a2e364f0e40d24877e24bfa752ef715e6666e"
+  dependencies:
+    bourbon "4.2.3"
+    meetup-swatches "3.1.1"
 
 symbol-observable@^1.0.1, symbol-observable@^1.0.2:
   version "1.0.4"
