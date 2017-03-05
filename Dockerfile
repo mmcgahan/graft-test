@@ -1,4 +1,4 @@
-FROM meetup/node-yarn:7.6-0.21
+FROM node:7.7.1
 
 RUN useradd --user-group --create-home --shell /bin/false mup
 
@@ -29,7 +29,7 @@ USER mup
 # need to set this after installing modules otherwise no npm-run-all
 ENV NODE_ENV=production
 # build & test
-RUN yarn run package
+RUN npm run package
 
 CMD ["yarn","run","start:prod"]
 

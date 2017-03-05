@@ -3,7 +3,6 @@ const path = require('path');
 const minimist = require('minimist');
 const Rx = require('rxjs');
 
-const progressBarUI = require('../util/progressBarUI.js');
 const { compile$ } = require('../util/buildUtils.js');
 const { child_process$ } = require('../util/nodeUtils.js');
 const writeBrowserAppBundle$ = require('./build-browser-app.js');
@@ -84,16 +83,11 @@ function spawnBuild$(localeCode) {
  *
  * This function runs the bundle builds _in parallel_ across multiple CPU cores
  */
-const updateProgress = progressBarUI({
-	total: 6,  // started, building/built browser bundler, building/built server bundle
-	width: 20,
-	blank: ' ',
-});
 const buildServerApp$ = localeCodes => Rx.Observable.from(localeCodes)
-	.do(updateProgress('started'))
+	.do(console.log('started'))
 	.flatMap(localeCode =>
 		spawnBuild$(localeCode)
-			.do(status => updateProgress(status)(localeCode))
+			.do(status => console.log(`${localeCode} - ${status}`))
 	);
 
 module.exports = buildServerApp$;
