@@ -18,7 +18,7 @@
     "lint:base": "eslint . --ext .js,.jsx",
     "modules:clean": "rm -rf node_modules",
     "precommit": "git status --porcelain | awk 'match($1, \"[ACM]\"){print $2}' | grep '[js|jsx]$' | xargs eslint",
-    "package": "npm-run-all --parallel lint:base build:locales test:coverage --serial build:server test:integration",
+    "package": "npm-run-all --parallel lint:base build:locales test:coverage --serial build:server test:integration && yarn check",
     "start": "rm -f *.log && yarn run start:all -- en-US",
     "start:all": "npm-run-all stop build:clean --parallel \"build:locales -- {@}\" \"start:asset -- {@}\" --serial build:server start:app --",
     "start:app": "forever start scripts/forever/app-server.json && yarn run start:info",
@@ -40,7 +40,7 @@
     "url": "https://github.com/meetup/web-platform-starter.git"
   },
   "dependencies": {
-    "chalk": "1.1.3",
+    "chalk": "1.1.2",
     "classnames": "2.2.5",
     "html-entities": "1.2.0",
     "inert": "4.1.0",
