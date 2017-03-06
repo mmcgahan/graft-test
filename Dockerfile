@@ -30,6 +30,7 @@ USER mup
 ENV NODE_ENV=production
 # build & test
 RUN npm run package
+RUN (cd /home/mup/; yarn check)
 
 CMD ["yarn","run","start:prod"]
 
