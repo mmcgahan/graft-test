@@ -12,7 +12,7 @@ COPY package.json yarn.lock /home/mup/
 
 # install packages, don't generate a lockfile
 USER mup
-RUN yarn --pure-lockfile && yarn cache clean
+RUN yarn --pure-lockfile && yarn cache clean && yarn check
 EXPOSE 8000
 
 # copy app code to container
@@ -30,7 +30,6 @@ USER mup
 ENV NODE_ENV=production
 # build & test
 RUN npm run package
-RUN (cd /home/mup/; yarn check)
 
 CMD ["yarn","run","start:prod"]
 
