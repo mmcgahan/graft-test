@@ -65,9 +65,9 @@ run-flow:
 # called by Travis and prod build
 package: prepackage __package __package-asset __package-test postpackage
 
-postpackage: coveralls
+postpackage: run-flow coveralls
 
-prepackage: run-flow
+prepackage: ;
 
 version:
 	@echo $(CI_BUILD_NUMBER)
