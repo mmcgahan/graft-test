@@ -1,5 +1,8 @@
 const config = {
-	"extends": "eslint:recommended",
+	"parser": "babel-eslint",
+	"extends": [
+		"eslint:recommended"
+	],
 	"parserOptions": {
 		"ecmaVersion": 6,
 		"ecmaFeatures": {
@@ -74,4 +77,3 @@ const config = {
 };
 
 module.exports = config;
-
