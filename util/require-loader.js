@@ -34,7 +34,7 @@ module.exports = function(source) {
 	 * and 	node_modules` is on the NODE_PATH for this loader, we can strip out
 	 * the relative path to `node_modules/`
 	 */
-	const relativeNodePath = new RegExp(`\\.\\${path.sep}(?:\\.{2}\\${path.sep})*node_modules\\${path.sep}`);
+	const relativeNodePath = new RegExp(`\\..?\\${path.sep}(?:\\.{2}\\${path.sep})*node_modules\\${path.sep}`);
 	const nodeSource = source.replace(relativeNodePath, '');
 
 	// EVAL - safe because we are eval'ing webpack modules, not user content
