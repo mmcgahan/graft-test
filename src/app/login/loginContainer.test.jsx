@@ -11,7 +11,7 @@ import { MOCK_APP_STATE } from 'meetup-web-mocks/lib/app';
 import {
 	findComponentsWithType,
 	createFakeStore,
-} from 'meetup-web-mocks/lib/testUtils';
+} from '../../util/testUtils';
 
 function intlRender(component) {
 	return TestUtils.renderIntoDocument(

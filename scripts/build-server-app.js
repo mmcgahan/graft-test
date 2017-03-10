@@ -79,9 +79,11 @@ function spawnBuild$(localeCode) {
 
 /**
  * Export a function that takes an array of localeCodes and spawns a separate
- * child process to make the corresponding browser and server bundles
- *
+ * child process to make the corresponding browser and server bundles.
  * This function runs the bundle builds _in parallel_ across multiple CPU cores
+ *
+ * @param {Array} localeCodes an array of string locale codes to build apps for
+ * @return {Observable} an observable that emits the build status output after
  */
 const buildServerApp$ = localeCodes => Rx.Observable.from(localeCodes)
 	.do(console.log('started'))

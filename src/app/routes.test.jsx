@@ -2,16 +2,16 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import RouterContext from 'react-router/lib/RouterContext';
 import match from 'react-router/lib/match';
+
 import { Provider } from 'react-redux';
+import { MOCK_APP_STATE } from 'meetup-web-mocks/lib/app';
+
+import routes from './routes';
+
 import {
 	findComponentsWithType,
 	createFakeStore,
-} from 'meetup-web-mocks/lib/testUtils';
-import {
-	MOCK_APP_STATE,
-} from 'meetup-web-mocks/lib/app';
-
-import routes from './routes';
+} from '../util/testUtils';
 
 const FAKE_STORE = createFakeStore(MOCK_APP_STATE);
 
