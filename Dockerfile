@@ -12,7 +12,7 @@ COPY package.json yarn.lock /home/mup/
 
 # install packages, don't generate a lockfile
 USER mup
-RUN yarn --pure-lockfile && yarn cache clean && yarn check
+RUN yarn --pure-lockfile && yarn cache clean
 EXPOSE 8000
 
 # copy app code to container
