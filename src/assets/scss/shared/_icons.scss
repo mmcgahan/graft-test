@@ -1,0 +1,38 @@
+/**
+* Icon styles
+* -----------------
+* supports `swarm-icons` SVG icon lib
+*
+* See also:
+* [Icon list](https://meetup.github.io/swarm-icons/)
+* [React Icon component](https://github.com/meetup/meetup-web-components/blob/master/src/Icon.jsx)
+*/
+
+@mixin _iconColor( $color, $invertedColor ) {
+	@include color-svg($color);
+	.inverted & {
+		@include color-svg($invertedColor);
+	}
+}
+
+.svg { // SVG wrapping span
+	display: inline-block;
+}
+
+.svg-icon { // SVG element
+	@include _iconColor( inherit, $C_textPrimaryInverted );
+	@include display(inline-flex);
+	vertical-align: bottom;
+	font-size: 0;
+
+	// click handling on svg elements
+	// (ensures the entire element is clickable, not just the drawn bits
+	position: relative;
+
+	use { pointer-events: none; }
+}
+
+// limit svg height for pagination arrows
+.page-label .svg {
+	max-height: $font-size * 2;
+}

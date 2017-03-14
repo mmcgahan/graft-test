@@ -46,7 +46,7 @@
     "html-entities": "1.2.0",
     "inert": "4.1.0",
     "meetup-web-components": "1.0.343",
-    "meetup-web-platform": "1.0.869",
+    "meetup-web-platform": "1.0.871",
     "node-fetch": "1.6.3",
     "react": "15.4.2",
     "react-helmet": "4.0.0",
@@ -85,7 +85,7 @@
     "husky": "0.13.2",
     "inquirer": "3.0.6",
     "jest-cli": "19.0.2",
-    "loader-utils": "1.0.3",
+    "loader-utils": "1.0.4",
     "meetup-web-mocks": "0.1.79",
     "mkdirp": "0.5.1",
     "node-sass": "4.5.0",
@@ -96,11 +96,11 @@
     "react-transform-catch-errors": "1.0.2",
     "react-transform-hmr": "1.0.4",
     "sass-loader": "6.0.3",
-    "sassquatch2": "2.4.6",
     "style-loader": "0.13.2",
+    "swarm-sasstools": "1.0.9",
     "transifex": "git+https://github.com/mattkime/node-transifex.git#push_translations",
     "webpack": "2.2.1",
-    "webpack-dev-server": "2.4.1",
+    "webpack-dev-server": "2.4.2",
     "webpack-node-externals": "1.5.4"
   }
 }
