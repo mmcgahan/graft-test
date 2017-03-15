@@ -1,25 +1,17 @@
 import React from 'react';
-import TestUtils from 'react-addons-test-utils';
 import RouterContext from 'react-router/lib/RouterContext';
 import match from 'react-router/lib/match';
 import routes from './loginRoutes';
 
 import { Provider } from 'react-redux';
-import { IntlProvider } from 'react-intl';
 import { MOCK_APP_STATE } from 'meetup-web-mocks/lib/app';
 
 import {
+	intlRender,
 	findComponentsWithType,
 	createFakeStore,
 } from '../../util/testUtils';
 
-function intlRender(component) {
-	return TestUtils.renderIntoDocument(
-		<IntlProvider locale='en-US'>
-			{component}
-		</IntlProvider>
-	);
-}
 
 describe('LoginContainer', () => {
 	it('renders a `LoginForm` when logged out', function (done) {

@@ -5,8 +5,14 @@ import match from 'react-router/lib/match';
 
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
-
 import { MOCK_APP_STATE } from 'meetup-web-mocks/lib/app';
+
+export const intlRender = (component) =>
+	TestUtils.renderIntoDocument(
+		<IntlProvider defaultLocale='en-US' locale='en-US'>
+			{component}
+		</IntlProvider>
+	);
 
 export const findComponentsWithType = (tree, typeString) =>
 	TestUtils.findAllInRenderedTree(
