@@ -97,7 +97,7 @@
     "react-transform-hmr": "1.0.4",
     "sass-loader": "6.0.3",
     "style-loader": "0.13.2",
-    "swarm-sasstools": "1.0.9",
+    "swarm-sasstools": "1.2.10",
     "transifex": "1.4.6",
     "webpack": "2.2.1",
     "webpack-dev-server": "2.4.2",
