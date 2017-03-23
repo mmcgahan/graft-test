@@ -231,11 +231,17 @@ leaves 1 to app developers.**
 
 ## Additional Features
 
-1. Components Library: We have an extensive and growing library of components that are used across *-web sites. This library also contains many foundational layout components that are used to build pages within mup-web. Refer to [`meetup-web-components`](https://github.com/meetup/meetup-web-components) for additional docs
+1. Components Library: We have an extensive and growing library of components that
+are used across *-web sites. This library also contains many foundational layout
+components that are used to build pages within mup-web. Refer to
+[`meetup-web-components`](https://github.com/meetup/meetup-web-components) for additional docs
 
-2. Design: We also heavily rely on [`swarm-sasstools`](https://meetup.github.io/swarm-sasstools/) to provide styles Sass tools (mixins, functions, placeholders, vars, and utility classes) for Swarm Design System used in mup-web
+2. Design: We also heavily rely on [`swarm-sasstools`](https://meetup.github.io/swarm-sasstools/)
+to provide styles Sass tools (mixins, functions, placeholders, vars, and utility classes) for
+Swarm Design System used in mup-web
 
-3. Icons Library: mup-web integrates the [`swarm-icons`](https://github.com/meetup/swarm-icons) library for any svg icons used within the site
+3. Icons Library: mup-web integrates the [`swarm-icons`](https://github.com/meetup/swarm-icons) 
+library for any svg icons used within the site
 
 ### Application source
 
