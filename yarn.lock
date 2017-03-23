@@ -4034,11 +4034,9 @@ meetup-swatches@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/meetup-swatches/-/meetup-swatches-3.1.1.tgz#71d150983deab5f353c77367c6935e126614919e"
 
-meetup-web-components@1.0.343:
-  version "1.0.343"
-  resolved "https://registry.yarnpkg.com/meetup-web-components/-/meetup-web-components-1.0.343.tgz#f66ef0f89c73861a8e6b4a51ab4ae14c44fe8f13"
-  dependencies:
-    swarm-sasstools "1.0.6"
+meetup-web-components@1.0.482:
+  version "1.0.482"
+  resolved "https://registry.yarnpkg.com/meetup-web-components/-/meetup-web-components-1.0.482.tgz#bb93fa63a9bc7c91395455205d2631d3e763f5d2"
 
 meetup-web-mocks@1.0.82:
   version "1.0.82"
@@ -6128,13 +6126,6 @@ svgo@^0.7.0:
 "swarm-icons@git+https://github.com/meetup/swarm-icons":
   version "0.1.0"
   resolved "git+https://github.com/meetup/swarm-icons#4fc81bde19026de79068cece0d66f1b2bec90222"
-
-swarm-sasstools@1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/swarm-sasstools/-/swarm-sasstools-1.0.6.tgz#8e9a2e364f0e40d24877e24bfa752ef715e6666e"
-  dependencies:
-    bourbon "4.2.3"
-    meetup-swatches "3.1.1"
 
 swarm-sasstools@1.2.10:
   version "1.2.10"
