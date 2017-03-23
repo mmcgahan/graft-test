@@ -7,7 +7,7 @@ import { polyfillServiceUrl } from '../util/browserPolyfill';
 
 /*
  * -- Require base stylesheets --
- * (includes sassquatch2)
+ * (includes swarm-sasstools)
  *
  * Use 4 webpack loaders to build the css file and get the bundled filename
  * 1. sass-loader - parse Sass to CSS
