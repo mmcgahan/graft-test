@@ -1,3 +1,5 @@
+SHELL = /bin/bash
+
 PROJECT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 TARGET_DIR=$(PROJECT_DIR)target
 
