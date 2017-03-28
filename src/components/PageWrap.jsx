@@ -67,28 +67,12 @@ class PageWrap extends React.Component {
 			<div id='root'
 				className='column'
 				style={{ minHeight:'100vh' }}>
-				<Helmet
-					link={[
-						{
-							rel: 'stylesheet',
-							type: 'text/css',
-							href: webfontCSSHref
-						},
-						{
-							rel: 'stylesheet',
-							type: 'text/css',
-							href: baseCSSHref
-						},
-					]}
-					meta={[
-						{
-							name: 'viewport',
-							content: 'width=device-width, initial-scale=1'
-						}
-					]}
-					script={[
-						{ src: polyfillServiceUrl(), type: 'text/javascript' }
-					]} />
+				<Helmet>
+					<link rel='stylesheet' type='text/css' href={webfontCSSHref} />
+					<link rel='stylesheet' type='text/css' href={baseCSSHref} />
+					<meta name='viewport' content='width=device-width, initial-scale=1' />
+					<script type='text/javascript' src={polyfillServiceUrl()} />
+				</Helmet>
 
 				<div style={iconSpriteStyle} dangerouslySetInnerHTML={{__html: iconSprite}} />
 

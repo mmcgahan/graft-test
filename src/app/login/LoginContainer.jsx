@@ -46,9 +46,9 @@ export class Login extends React.Component {
 		const isLoggedOut = self.status === 'prereg' || !self.name;
 		return(
 			<div>
-				<Helmet
-					title={PAGE_TITLE}
-				/>
+				<Helmet>
+					<title>{PAGE_TITLE}</title>
+				</Helmet>
 
 				<div className='bounds align--center'>
 					<h1 className='text--display1'>{ isLoggedOut ? 'Log in' : 'Log out' }</h1>

@@ -46,9 +46,9 @@ export class ${containerName} extends React.Component {
 
 		return(
 			<div>
-				<Helmet
-					title={PAGE_TITLE}
-				/>
+				<Helmet>
+					<title>{PAGE_TITLE}</title>
+				</Helmet>
 				<div className='bounds'>
 					<h1>${name} Container</h1>
 				</div>
