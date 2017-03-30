@@ -1,9 +1,6 @@
 import { makeServerRenderer } from 'meetup-web-platform';
 import makeRootReducer from 'meetup-web-platform/lib/reducers/platform';
 
-// --- app reducers ---
-import appReducers from './app/reducer';
-
 // this variable must be injected by webpack using DefinePlugin
 const browserAppFilename = WEBPACK_BROWSER_APP_FILENAME;  // eslint-disable-line no-undef
 const assetHost = process.env.ASSET_SERVER_HOST || '0.0.0.0';
@@ -12,6 +9,7 @@ const assetPath = process.env.ASSET_PATH ? `/${process.env.ASSET_PATH}` : '/stat
 const assetPublicPath = `//${assetHost}${assetPort}${assetPath}${WEBPACK_ASSET_PUBLIC_PATH}`;  // eslint-disable-line no-undef
 
 __webpack_public_path__ = assetPublicPath;  // eslint-disable-line no-undef
+const appReducers = require('./app/reducer').default;
 const routes = require('./app/routes').default;
 const reducer = makeRootReducer(appReducers);
 
