@@ -101,7 +101,6 @@
     "sass-loader": "6.0.3",
     "style-loader": "0.13.2",
     "swarm-sasstools": "1.2.11",
-    "transifex": "1.4.6",
     "webpack": "2.3.3",
     "webpack-dev-server": "2.4.2",
     "webpack-node-externals": "1.5.4"
