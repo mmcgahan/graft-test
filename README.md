@@ -89,8 +89,12 @@ Travis CI using a Docker container.
 
 ## Quick start
 
+0. Add this mapping to your `/etc/hosts/` file:
+```
+127.0.0.1	 beta2.dev.meetup.com
+```
 1. Start dev app and asset servers with `yarn run start` - URL will be shown in the
-terminal once the servers are running ([http://localhost:8000](http://localhost:8000))
+terminal once the servers are running ([http://http://beta2.dev.meetup.com:8000/](http://beta2.dev.meetup.com:8000/))
 2. Run `yarn run tail` to view logs.
 3. In a separate screen, run `yarn run generate` if you wish to start on a new feature.
 4. When you make code changes you will need run `yarn start` again to bounce the
