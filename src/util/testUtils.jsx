@@ -1,10 +1,8 @@
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
-import RouterContext from 'react-router/lib/RouterContext';
-import match from 'react-router/lib/match';
-
+import StaticRouter from 'react-router-dom/StaticRouter';
+import PlatformApp from 'meetup-web-platform/lib/components/PlatformApp';
 import { IntlProvider } from 'react-intl';
-import { Provider } from 'react-redux';
 import { MOCK_APP_STATE } from 'meetup-web-mocks/lib/app';
 
 export const intlRender = (component) =>
@@ -43,16 +41,19 @@ export const createFakeStore = fakeData => ({
  * ```
  */
 export const routeRenderer = routes => (location, state=MOCK_APP_STATE) =>
-	new Promise((resolve, reject) =>
-		match({ location, routes }, (err, redirectLocation, renderProps) => {
-			const FAKE_STORE = createFakeStore(state);
-			const app = TestUtils.renderIntoDocument(
-				<IntlProvider locale='en'>
-					<Provider store={FAKE_STORE}>
-						<RouterContext {...renderProps} />
-					</Provider>
-				</IntlProvider>
-			);
-			resolve(app);
-		})
-	);
+	new Promise((resolve, reject) => {
+		const FAKE_STORE = createFakeStore(state);
+		const context = {};
+		const app = TestUtils.renderIntoDocument(
+			<IntlProvider locale='en'>
+				<StaticRouter
+					location={location}
+					context={context}
+				>
+					<PlatformApp store={FAKE_STORE} routes={routes} />
+				</StaticRouter>
+			</IntlProvider>
+		);
+		return resolve(app, context);
+	});
+

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import NotFound from 'meetup-web-platform/lib/components/NotFound';
 
 function mapStateToProps(state) {
 	return { appState: state };
@@ -15,10 +16,12 @@ class Error404 extends React.Component {
 	 */
 	render() {
 		return (
-			<div>
-				<h1>Oh nooooo!</h1>
-				<p>There is no route defined for this URL</p>
-			</div>
+			<NotFound>
+				<div>
+					<h1>Oh nooooo!</h1>
+					<p>There is no route defined for this URL</p>
+				</div>
+			</NotFound>
 		);
 	}
 }

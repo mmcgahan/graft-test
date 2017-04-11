@@ -1,8 +1,8 @@
 import Login from './LoginContainer';
 
-const routes = {
-	path: 'login',
+const route = {
+	path: '/login',
 	component: Login
 };
 
-export default routes;
+export default route;
