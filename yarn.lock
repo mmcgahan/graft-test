@@ -266,6 +266,10 @@ autoprefixer@^6.3.1:
     postcss "^5.2.15"
     postcss-value-parser "^3.2.3"
 
+autosize@3.0.20:
+  version "3.0.20"
+  resolved "https://registry.yarnpkg.com/autosize/-/autosize-3.0.20.tgz#e343ea7c5603834738169420f0349dc953e62a9e"
+
 avsc@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/avsc/-/avsc-5.0.0.tgz#779a24073e39298ba898ea161c235098a8f8c6d7"
@@ -2489,6 +2493,10 @@ flatpickr@2.4.7:
   version "2.4.7"
   resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-2.4.7.tgz#3b5b9c2b820aea302339e2cceed00d243932fa54"
 
+flatpickr@2.4.8:
+  version "2.4.8"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-2.4.8.tgz#152136c6657089ebb7c6af8cd969054c55bd3dd4"
+
 flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
@@ -4060,12 +4068,13 @@ meetup-swatches@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/meetup-swatches/-/meetup-swatches-3.1.1.tgz#71d150983deab5f353c77367c6935e126614919e"
 
-meetup-web-components@1.0.606:
-  version "1.0.606"
-  resolved "https://registry.yarnpkg.com/meetup-web-components/-/meetup-web-components-1.0.606.tgz#8c4b845b9b5e33bab36360aee1a530116b02dcc2"
+meetup-web-components@1.0.760:
+  version "1.0.760"
+  resolved "https://registry.yarnpkg.com/meetup-web-components/-/meetup-web-components-1.0.760.tgz#eb5de00a05eddfc9a547712bc51bd32cd2eaed86"
   dependencies:
+    autosize "3.0.20"
     base64-image-loader "1.2.0"
-    flatpickr "2.4.7"
+    flatpickr "2.4.8"
 
 meetup-web-mocks@1.0.84:
   version "1.0.84"
