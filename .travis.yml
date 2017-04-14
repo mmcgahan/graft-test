@@ -1,10 +1,9 @@
 sudo: required
 language: bash
 
-# exclude tags
 branches:
-  except:
-    - /^\d+$/
+  only:
+    - master  # (PRs to master, master merges, master pushes)
 
 services:
   - docker
