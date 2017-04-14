@@ -36,7 +36,7 @@
     "test:coverage": "yarn run test:unit -- --coverage --runInBand",
     "test:integration": "jest --config jest.int.config.json",
     "test:base": "jest --config jest.config.json",
-    "test:unit": "yarn run test:base --silent",
+    "test:unit": "yarn run test:base -- --silent",
     "test:watch": "yarn run test:base -- --watch --verbose"
   },
   "repository": {
