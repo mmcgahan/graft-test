@@ -66,8 +66,9 @@ continue to work, it should not be used.
   ```
 
   **Note**: you _can_ use `dev.meetup.com` URLs for `API_HOST`, `OAUTH_AUTH_URL`,
-  and `OAUTH_ACCESS_URL`, but you will need to ensure that your devbox is up and
-  running with a recent build of Meetup classic.
+  and `OAUTH_ACCESS_URL`, but you will need to ensure that your devbox is up and running with a recent build of Meetup classic.
+
+6. Add `.mupweb.config` to your bash file
 
   To automatically add these env variables into your terminal session,
   `source` the config file in your `.bashrc` or `.zshrc`:
@@ -231,6 +232,20 @@ run on Hapi, but technically any NodeJS server can be used.
 
 **The `meetup-web-platform` library attempts to help with 2 through 4, but largely
 leaves 1 to app developers.**
+
+## Additional Features
+
+1. Components Library: We have an extensive and growing library of components that
+are used across *-web sites. This library also contains many foundational layout
+components that are used to build pages within mup-web. Refer to
+[`meetup-web-components`](https://github.com/meetup/meetup-web-components) for additional docs
+
+2. Design: We also heavily rely on [`swarm-sasstools`](https://meetup.github.io/swarm-sasstools/)
+to provide styles Sass tools (mixins, functions, placeholders, vars, and utility classes) for
+Swarm Design System used in mup-web
+
+3. Icons Library: mup-web integrates the [`swarm-icons`](https://github.com/meetup/swarm-icons) 
+library for any svg icons used within the site
 
 ### Application source
 
