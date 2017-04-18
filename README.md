@@ -234,11 +234,11 @@ run on Hapi, but technically any NodeJS server can be used.
 **The `meetup-web-platform` library attempts to help with 2 through 4, but largely
 leaves 1 to app developers.**
 
-## Additional Features
+## Additional features
 
 1. Components Library: We have an extensive and growing library of components that
-are used across *-web sites. This library also contains many foundational layout
-components that are used to build pages within mup-web. Refer to
+are used across `*-web` sites. This library also contains many foundational layout
+components that are used to build pages within `mup-web`. Refer to
 [`meetup-web-components`](https://github.com/meetup/meetup-web-components) for additional docs
 
 2. Design: We also heavily rely on [`swarm-sasstools`](https://meetup.github.io/swarm-sasstools/)
