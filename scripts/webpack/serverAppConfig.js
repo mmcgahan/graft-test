@@ -47,7 +47,7 @@ function getConfig(localeCode, browserAppFilename) {
 				// server bundles must reference _browser_ bundle public path
 				// - inject it as a 'global variable' here
 				WEBPACK_BROWSER_APP_FILENAME: JSON.stringify(browserAppFilename),
-				WEBPACK_BASE_URL: JSON.stringify(`/${localeCode === 'en-US' ? '' : localeCode}`),
+				WEBPACK_BASE_URL: JSON.stringify(localeCode === 'en-US' ? '' : `/${localeCode}/`),
 				WEBPACK_ASSET_PUBLIC_PATH: JSON.stringify(publicPath),
 				IS_DEV: settings.isDev,
 				'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),

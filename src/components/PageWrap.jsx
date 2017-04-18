@@ -1,6 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import { Link } from 'react-router';
+import Link from 'react-router-dom/Link';
 
 import { polyfillServiceUrl } from '../util/browserPolyfill';
 
@@ -79,8 +79,8 @@ class PageWrap extends React.Component {
 				<ul>
 					<li>
 						{ self && self.name ?
-							<Link to='?logout'>{`Logout ${self.name}`}</Link> :
-							<Link to='/login/' className='text--small'>Login</Link>
+							<Link to='?logout'>this won't work {`Logout ${self.name}`}</Link> :
+							<Link to='/login' className='text--small'>Login</Link>
 						}
 					</li>
 					<li>

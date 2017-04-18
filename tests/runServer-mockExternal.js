@@ -13,7 +13,7 @@ console.log(process.pid);
 const config = () => getConfig({
 	API_PROTOCOL: 'http',
 	API_HOST: 'beta2.dev.meetup.com',
-	API_SERVER_ROOT_URL: `http://localhost:${mockConfig.API_PORT}`
+	API_SERVER_ROOT_URL: `http://beta2.dev.meetup.com:${mockConfig.API_PORT}`
 });
 
 runServer(config);

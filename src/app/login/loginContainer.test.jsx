@@ -1,39 +1,27 @@
-import React from 'react';
-import RouterContext from 'react-router/lib/RouterContext';
-import match from 'react-router/lib/match';
-import routes from './loginRoutes';
+import TestUtils from 'react-addons-test-utils';
 
-import { Provider } from 'react-redux';
+import Button from 'meetup-web-components/lib/forms/Button';
+import LoginForm from 'meetup-web-components/lib/LoginForm';
+
 import { MOCK_APP_STATE } from 'meetup-web-mocks/lib/app';
+import { routeRenderer } from 'src/util/testUtils';
 
-import {
-	intlRender,
-	findComponentsWithType,
-	createFakeStore,
-} from '../../util/testUtils';
-
+import route from './loginRoute';
 
 describe('LoginContainer', () => {
-	it('renders a `LoginForm` when logged out', function (done) {
-		const location = '/login';
+	const renderLocation = routeRenderer(route);
+
+	it('renders a `LoginForm` when logged out', function () {
 		const stateAnonymous = { ...MOCK_APP_STATE };
-		const store = createFakeStore(stateAnonymous);
 
-		match({location, routes}, (err, redirectLocation, renderProps) => {
-			const container = intlRender(
-				<Provider store={store}>
-					<RouterContext {...renderProps} />
-				</Provider>
-			);
-
-			const loginComponent = findComponentsWithType(container, 'LoginForm');
-			expect(loginComponent.length).toBe(1);
-			done();
-		});
+		return renderLocation('/login', stateAnonymous)
+			.then(container => {
+				const loginComponent = TestUtils.scryRenderedComponentsWithType(container, LoginForm);
+				expect(loginComponent.length).toBe(1);
+			});
 	});
 
-	it('renders a log out `Button` when logged in', function(done) {
-		const location = '/login';
+	it('renders a log out `Button` when logged in', function() {
 		const self = {
 			type: 'member',
 			value: {
@@ -42,19 +30,11 @@ describe('LoginContainer', () => {
 			}
 		};
 		const stateAuthenticated = { ...MOCK_APP_STATE, self };
-		const store = createFakeStore(stateAuthenticated);
 
-		match({location, routes}, (err, redirectLocation, renderProps) => {
-			const container = intlRender(
-				<Provider store={store}>
-					<RouterContext {...renderProps} />
-				</Provider>
-			);
-
-			const buttonComponent = findComponentsWithType(container, 'Button');
-			expect(buttonComponent.length).toBe(1);
-			done();
-		});
-
+		return renderLocation('/login', stateAuthenticated)
+			.then(container => {
+				const buttonComponent = TestUtils.scryRenderedComponentsWithType(container, Button);
+				expect(buttonComponent.length).toBe(1);
+			});
 	});
 });

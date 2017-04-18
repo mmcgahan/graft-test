@@ -69,6 +69,8 @@ continue to work, it should not be used.
   and `OAUTH_ACCESS_URL`, but you will need to ensure that your devbox is up and
   running with a recent build of Meetup classic.
 
+6. Add `.mupweb.config` to your shell config file
+
   To automatically add these env variables into your terminal session,
   `source` the config file in your `.bashrc` or `.zshrc`:
 
@@ -89,8 +91,12 @@ Travis CI using a Docker container.
 
 ## Quick start
 
+0. Add this mapping to your `/etc/hosts/` file:
+```
+127.0.0.1	 beta2.dev.meetup.com
+```
 1. Start dev app and asset servers with `yarn run start` - URL will be shown in the
-terminal once the servers are running ([http://localhost:8000](http://localhost:8000))
+terminal once the servers are running ([http://http://beta2.dev.meetup.com:8000/](http://beta2.dev.meetup.com:8000/))
 2. Run `yarn run tail` to view logs.
 3. In a separate screen, run `yarn run generate` if you wish to start on a new feature.
 4. When you make code changes you will need run `yarn start` again to bounce the
@@ -227,6 +233,20 @@ run on Hapi, but technically any NodeJS server can be used.
 
 **The `meetup-web-platform` library attempts to help with 2 through 4, but largely
 leaves 1 to app developers.**
+
+## Additional features
+
+1. Components Library: We have an extensive and growing library of components that
+are used across `*-web` sites. This library also contains many foundational layout
+components that are used to build pages within `mup-web`. Refer to
+[`meetup-web-components`](https://github.com/meetup/meetup-web-components) for additional docs
+
+2. Design: We also heavily rely on [`swarm-sasstools`](https://meetup.github.io/swarm-sasstools/)
+to provide styles Sass tools (mixins, functions, placeholders, vars, and utility classes) for
+Swarm Design System used in mup-web
+
+3. Icons Library: mup-web integrates the [`swarm-icons`](https://github.com/meetup/swarm-icons) 
+library for any svg icons used within the site
 
 ### Application source
 

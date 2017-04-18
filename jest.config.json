@@ -9,7 +9,8 @@
     "<rootDir>/util/jestSystemShim.js"
   ],
   "moduleNameMapper": {
-    "^(file-loader[!?].+|trns$|raw-loader[!?].+)": "EmptyModule"
+    "^(file-loader[!?].+|raw-loader[!?].+|base64-image-loader[!?].+)": "<rootDir>/__mocks__/emptyString.js",
+    "^src(.*)": "<rootDir>/src$1"
   },
   "moduleFileExtensions": [
     "js",
