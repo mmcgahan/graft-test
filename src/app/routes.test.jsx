@@ -1,8 +1,10 @@
 import routes from './routes';
+import TestUtils from 'react-addons-test-utils';
 
+import PageWrap from '../components/PageWrap';
+import LoginContainer from '../app/login/LoginContainer';
 import {
 	routeRenderer,
-	findComponentsWithType,
 } from '../util/testUtils';
 
 describe('base routes', () => {
@@ -10,7 +12,7 @@ describe('base routes', () => {
 	it('renders an Index page at `/`', function() {
 		return renderLocation('/')
 			.then(app => {
-				const indexComponent = findComponentsWithType(app, 'PageWrap');
+				const indexComponent = TestUtils.scryRenderedComponentsWithType(app, PageWrap);
 				expect(indexComponent.length).toBe(1);
 			});
 	});
@@ -18,7 +20,7 @@ describe('base routes', () => {
 	it('renders a Login page at `/login`', function() {
 		return renderLocation('/login')
 			.then(app => {
-				const indexComponent = findComponentsWithType(app, 'Login');
+				const indexComponent = TestUtils.scryRenderedComponentsWithType(app, LoginContainer);
 				expect(indexComponent.length).toBe(1);
 			});
 	});

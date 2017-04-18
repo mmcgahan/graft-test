@@ -66,9 +66,10 @@ continue to work, it should not be used.
   ```
 
   **Note**: you _can_ use `dev.meetup.com` URLs for `API_HOST`, `OAUTH_AUTH_URL`,
-  and `OAUTH_ACCESS_URL`, but you will need to ensure that your devbox is up and running with a recent build of Meetup classic.
+  and `OAUTH_ACCESS_URL`, but you will need to ensure that your devbox is up and
+  running with a recent build of Meetup classic.
 
-6. Add `.mupweb.config` to your bash file
+6. Add `.mupweb.config` to your shell config file
 
   To automatically add these env variables into your terminal session,
   `source` the config file in your `.bashrc` or `.zshrc`:

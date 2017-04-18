@@ -38,17 +38,11 @@ export const intlRender = (component, state=MOCK_APP_STATE) => {
 	);
 };
 
-export const findComponentsWithType = (tree, typeString) =>
-	TestUtils.findAllInRenderedTree(
-		tree,
-		(component) => component && component.constructor.name === typeString
-	);
-
 /**
  * Curry a function that takes a React Router route config and a location to
  * render, and return a Promise that resolves with the rendered React app
  *
- * @param {Array} route React Router v4 route config
+ * @param {Object} route React Router v4 route config
  * @return {Promise} Promiese that resolves all matched routes for the app
  *
  * @example
