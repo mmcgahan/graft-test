@@ -6,7 +6,7 @@ import {
 } from '../util/testUtils';
 
 describe('base routes', () => {
-	const renderLocation = routeRenderer(routes);
+	const renderLocation = routeRenderer(routes[0]);
 	it('renders an Index page at `/`', function() {
 		return renderLocation('/')
 			.then(app => {

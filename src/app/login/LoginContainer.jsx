@@ -1,6 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import LoginForm from 'meetup-web-components/src/LoginForm';
+import LoginForm from 'meetup-web-components/lib/LoginForm';
 import LogoutLink from 'meetup-web-platform/lib/components/LogoutLink';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';

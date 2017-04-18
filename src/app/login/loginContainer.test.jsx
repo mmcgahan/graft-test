@@ -1,22 +1,22 @@
+import TestUtils from 'react-addons-test-utils';
+
+import Button from 'meetup-web-components/lib/forms/Button';
+import LoginForm from 'meetup-web-components/lib/LoginForm';
+
 import { MOCK_APP_STATE } from 'meetup-web-mocks/lib/app';
+import { routeRenderer } from 'src/util/testUtils';
 
-import loginRoute from './loginRoute';
-
-import {
-	routeRenderer,
-	findComponentsWithType,
-} from '../../util/testUtils';
-
+import route from './loginRoute';
 
 describe('LoginContainer', () => {
-	const renderLocation = routeRenderer([loginRoute]);
+	const renderLocation = routeRenderer(route);
 
 	it('renders a `LoginForm` when logged out', function () {
 		const stateAnonymous = { ...MOCK_APP_STATE };
 
 		return renderLocation('/login', stateAnonymous)
 			.then(container => {
-				const loginComponent = findComponentsWithType(container, 'LoginForm');
+				const loginComponent = TestUtils.scryRenderedComponentsWithType(container, LoginForm);
 				expect(loginComponent.length).toBe(1);
 			});
 	});
@@ -33,7 +33,7 @@ describe('LoginContainer', () => {
 
 		return renderLocation('/login', stateAuthenticated)
 			.then(container => {
-				const buttonComponent = findComponentsWithType(container, 'Button');
+				const buttonComponent = TestUtils.scryRenderedComponentsWithType(container, Button);
 				expect(buttonComponent.length).toBe(1);
 			});
 	});
