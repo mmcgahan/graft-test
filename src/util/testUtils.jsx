@@ -6,6 +6,12 @@ import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import { MOCK_APP_STATE } from 'meetup-web-mocks/lib/app';
 
+/**
+ * Given an app state object, return a redux store object
+ *
+ * @param {Object} fakeData App state data
+ * @return {Object} A Redux Store object
+ */
 export const createFakeStore = fakeData => ({
 	getState() {
 		return fakeData;
@@ -20,6 +26,14 @@ const intlRenderBase = (component, context={}) => (
 	</IntlProvider>
 );
 
+/**
+ * Render a React component within a detached DOM node
+ * and provide both a Redux Store and Intl Wrapper that defaults to 'en-US'
+ *
+ * @param {ReactEl} component React component to render
+ * @param {Object} state Optional data to render within a fake redux store
+ * @return {DOM} detached DOM node with component rendered within
+ */
 export const intlRender = (component, state=MOCK_APP_STATE) => {
 	const FAKE_STORE = createFakeStore(state);
 	const context = {};
