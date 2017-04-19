@@ -1,4 +1,4 @@
-FROM node:7.8
+FROM node:7.9.0
 
 RUN useradd --user-group --create-home --shell /bin/false mup
 
