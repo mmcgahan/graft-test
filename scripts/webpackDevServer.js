@@ -13,6 +13,10 @@ const compiler = webpack(configs);
 const options = {
 	hot: true,
 	publicPath : `http://${DEV_HOST}:${ASSET_SERVER_PORT}/static/`,
+	disableHostCheck: true,  // can be accessed by any network request
+	headers: {
+		'Access-Control-Allow-Origin': '*',  // will respond to any host
+	},
 };
 if (configs.length === 1) {
 	// WDS won't respect config's publicPath when only 1 config is set
