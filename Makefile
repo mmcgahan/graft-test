@@ -62,7 +62,7 @@ coveralls:
 		yarn run coveralls
 
 run-flow:
-	docker run -it -v $(CI_WORKDIR):/app meetup/node-flow:0.39.0
+	docker run -it -v $(CI_WORKDIR):/app meetup/node-flow:0.44.2-0.0.38
 
 # called by Travis and prod build
 package: prepackage __package __package-asset __package-test postpackage
