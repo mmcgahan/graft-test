@@ -36,8 +36,11 @@ function getConfig(localeCode, browserAppFilename) {
 
 				{
 					test: /\.css$/,
-					loader: 'style-loader!css-loader',
-					include: [settings.cssPath]
+					include: [settings.cssPath],
+					use: [
+						'style-loader',
+						'css-loader',
+					],
 				},
 			]
 		},
@@ -68,8 +71,12 @@ function getConfig(localeCode, browserAppFilename) {
 		},
 
 		resolve: {
+			modules: [
+				__dirname, // look for module relative to package root
+				'node_modules',
+			],
 			// module name extensions
-			extensions: ['.js', '.jsx']
+			extensions: ['.js', '.jsx', '.json']
 		}
 	};
 	if (!settings.isDev) {

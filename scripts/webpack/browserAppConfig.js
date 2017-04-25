@@ -17,10 +17,20 @@ function injectHotReloadConfig(config) {
 	const DEV_HOST = '0.0.0.0';
 
 	config.entry.app.unshift(
-		`webpack-dev-server/client?http://${DEV_HOST}:${ASSET_SERVER_PORT}/`,
-		'webpack/hot/dev-server'
+		'react-hot-loader/patch',  // logic for hot-reloading react components
+		`webpack-dev-server/client?http://${DEV_HOST}:${ASSET_SERVER_PORT}/`, // connect to HMR websocket
+		'webpack/hot/dev-server'  // run the dev server
 	);
-	config.plugins.push(new webpack.HotModuleReplacementPlugin());
+
+	// plugins
+	config.plugins.push(new webpack.HotModuleReplacementPlugin());  // enable module.hot
+	config.plugins.push(new webpack.NamedModulesPlugin());  // show HMR module filenames
+
+	// inject code hooks into react-hot-loader/patch
+	const jsLoader = config.module.rules
+		.filter(rule => (rule.loaders || []).includes('babel-loader'));
+	jsLoader.unshift('react-hot-loader/webpack');
+
 	return config;
 }
 
@@ -33,7 +43,9 @@ function getConfig(localeCode) {
 
 		output: {
 			path: path.resolve(settings.browserAppOutputPath, localeCode),
-			filename: '[name].[hash].js',
+			filename: settings.isDev ?
+				'[name].js' :  // in dev, keep the filename consistent to make reloading easier
+				'[name].[hash].js',  // in prod, add hash to enable long-term caching
 			// publicPath is set at **runtime** using __webpack_public_path__
 			// in the browserApp entry script
 		},
@@ -55,29 +67,15 @@ function getConfig(localeCode) {
 						settings.appPath,
 						settings.webComponentsSrcPath,
 					],
-					loader: 'babel-loader',
-					options: settings.enableHMR ? {
-						plugins: [['react-transform', {
-							transforms: [{
-								transform: 'react-transform-hmr',
-								imports: ['react'],
-								locals: ['module']
-							}]
-						}]]
-					} : undefined
+					loaders: ['babel-loader'],
 				},
 				{
 					test: /\.css$/,
 					include: [settings.cssPath],
-					loader: 'style-loader!css-loader'
-				},
-				{
-					test: /\.json$/,
-					include: [
-						settings.appPath,
-						settings.webComponentsSrcPath
+					use: [
+						'style-loader',
+						'css-loader',
 					],
-					loader: 'json-loader'
 				},
 			]
 		},
@@ -89,20 +87,15 @@ function getConfig(localeCode) {
 		},
 
 		resolve: {
-			alias: {
-				trns: path.resolve(settings.trnsPath, `${localeCode}.po`)
-			},
-
-			// module name extensions
-			extensions: ['.js', '.jsx', '.po'],
+			modules: [
+				__dirname, // look for module relative to package root
+				'node_modules',
+			],
+			// module name extensions that Webpack will try if no extension provided
+			extensions: ['.js', '.jsx', '.json'],
 		},
 
-		plugins: [
-			new webpack.DefinePlugin({
-				IS_DEV: settings.isDev,
-				'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-			}),
-		]
+		plugins: []
 	};
 
 	if (settings.enableHMR) {
