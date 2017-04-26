@@ -87,10 +87,9 @@ function getConfig(localeCode) {
 		},
 
 		resolve: {
-			modules: [
-				__dirname, // look for module relative to package root
-				'node_modules',
-			],
+			alias: {
+				src: settings.appPath,
+			},
 			// module name extensions that Webpack will try if no extension provided
 			extensions: ['.js', '.jsx', '.json'],
 		},

@@ -71,10 +71,9 @@ function getConfig(localeCode, browserAppFilename) {
 		},
 
 		resolve: {
-			modules: [
-				__dirname, // look for module relative to package root
-				'node_modules',
-			],
+			alias: {
+				src: settings.appPath,
+			},
 			// module name extensions
 			extensions: ['.js', '.jsx', '.json']
 		}
