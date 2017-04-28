@@ -61,7 +61,6 @@ function getConfig(localeCode) {
 					exclude: settings.assetPath,
 					enforce: 'pre',
 					options: {
-						fix: true,
 						cache: true,
 					}
 				},
