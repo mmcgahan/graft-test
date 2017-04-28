@@ -19,15 +19,10 @@ class AppContainer extends React.Component {
 	 * @return {React.element} the app-wrapping component
 	 */
 	render() {
-		const {
-			self,
-			children,
-		} = this.props;
+		const { self, children } = this.props;
 
 		return (
-			<PageWrap
-				self={self}
-			>
+			<PageWrap self={self}>
 				{children}
 			</PageWrap>
 		);

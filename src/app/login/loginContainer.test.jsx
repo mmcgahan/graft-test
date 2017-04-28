@@ -11,14 +11,16 @@ import route from './loginRoute';
 describe('LoginContainer', () => {
 	const renderLocation = routeRenderer(route);
 
-	it('renders a `LoginForm` when logged out', function () {
+	it('renders a `LoginForm` when logged out', function() {
 		const stateAnonymous = { ...MOCK_APP_STATE };
 
-		return renderLocation('/login', stateAnonymous)
-			.then(container => {
-				const loginComponent = TestUtils.scryRenderedComponentsWithType(container, LoginForm);
-				expect(loginComponent.length).toBe(1);
-			});
+		return renderLocation('/login', stateAnonymous).then(container => {
+			const loginComponent = TestUtils.scryRenderedComponentsWithType(
+				container,
+				LoginForm
+			);
+			expect(loginComponent.length).toBe(1);
+		});
 	});
 
 	it('renders a log out `Button` when logged in', function() {
@@ -27,14 +29,16 @@ describe('LoginContainer', () => {
 			value: {
 				id: 1234,
 				status: 'active',
-			}
+			},
 		};
 		const stateAuthenticated = { ...MOCK_APP_STATE, self };
 
-		return renderLocation('/login', stateAuthenticated)
-			.then(container => {
-				const buttonComponent = TestUtils.scryRenderedComponentsWithType(container, Button);
-				expect(buttonComponent.length).toBe(1);
-			});
+		return renderLocation('/login', stateAuthenticated).then(container => {
+			const buttonComponent = TestUtils.scryRenderedComponentsWithType(
+				container,
+				Button
+			);
+			expect(buttonComponent.length).toBe(1);
+		});
 	});
 });
