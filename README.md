@@ -280,3 +280,19 @@ The configuration for the Webpack builds are created by node-runnable scripts in
 and produce a corresponding Webpack configuration object. Hot module reloading
 in development is provided by the Webpack dev server, which is run from its
 Node API in `webpack/webpackDevServer.js`.
+
+## Code style
+
+We use a combination of [Prettier](https://github.com/prettier/prettier) and
+[ESLint](http://eslint.org/) to enforce code style. Prettier will automatically
+re-format your code on commit, and ESLint will provide any remaining code style
+warnings and errors that have no been autoformatted.
+
+It is _strongly recommended_ to integrate both tools into your editor so that
+the changes are applied on save and lint errors show up before running tests.
+
+- [Editor integration for
+  Prettier](https://github.com/prettier/prettier#editor-integration)
+- [Editor integration for
+  eslint\_d](https://github.com/mantoni/eslint_d.js#editor-integration)
+

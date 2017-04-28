@@ -9,7 +9,7 @@ import { SELF_REF } from '../root/appQuery';
 
 import {
 	loginPost,
-	logoutRequest
+	logoutRequest,
 } from 'meetup-web-platform/lib/actions/authActionCreators';
 
 const PAGE_TITLE = 'Login';
@@ -23,10 +23,13 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	// bind action creators so that they can be passed as event handlers
 	return {
-		handlers: bindActionCreators({
-			loginPost,
-			logoutRequest
-		}, dispatch)
+		handlers: bindActionCreators(
+			{
+				loginPost,
+				logoutRequest,
+			},
+			dispatch
+		),
 	};
 }
 
@@ -38,29 +41,27 @@ export class Login extends React.Component {
 	 * @return {React.element} the app-wrapping component
 	 */
 	render() {
-		const {
-			self,
-			handlers,
-		} = this.props;
+		const { self, handlers } = this.props;
 
 		const isLoggedOut = self.status === 'prereg' || !self.name;
-		return(
+		return (
 			<div>
 				<Helmet>
 					<title>{PAGE_TITLE}</title>
 				</Helmet>
 
-				<div className='bounds align--center'>
-					<h1 className='text--display1'>{ isLoggedOut ? 'Log in' : 'Log out' }</h1>
-					{ isLoggedOut ?
-						<LoginForm
-							errors={self.errors}
-							loginAction={handlers.loginPost}
-						/> :
-						<LogoutLink>
-							{`Logout ${self.name}`}
-						</LogoutLink>
-					}
+				<div className="bounds align--center">
+					<h1 className="text--display1">
+						{isLoggedOut ? 'Log in' : 'Log out'}
+					</h1>
+					{isLoggedOut
+						? <LoginForm
+								errors={self.errors}
+								loginAction={handlers.loginPost}
+							/>
+						: <LogoutLink>
+								{`Logout ${self.name}`}
+							</LogoutLink>}
 				</div>
 			</div>
 		);

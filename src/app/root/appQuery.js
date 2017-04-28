@@ -19,4 +19,3 @@ export function selfQuery({ location, params }) {
 		ref: SELF_REF,
 	};
 }
-

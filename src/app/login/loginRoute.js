@@ -2,7 +2,7 @@ import Login from './LoginContainer';
 
 const route = {
 	path: '/login',
-	component: Login
+	component: Login,
 };
 
 export default route;
