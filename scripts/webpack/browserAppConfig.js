@@ -56,10 +56,14 @@ function getConfig(localeCode) {
 			rules: [
 				{
 					test: /\.jsx?$/,
-					loader: 'eslint-loader?{fix:true}',
+					loader: 'eslint-loader',
 					include: [settings.appPath],
 					exclude: settings.assetPath,
 					enforce: 'pre',
+					options: {
+						fix: true,
+						cache: true,
+					}
 				},
 				{
 					test: /\.jsx?$/,
