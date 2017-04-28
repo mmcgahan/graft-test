@@ -294,5 +294,5 @@ the changes are applied on save and lint errors show up before running tests.
 - [Editor integration for
   Prettier](https://github.com/prettier/prettier#editor-integration)
 - [Editor integration for
-  eslint\_d](https://www.npmjs.com/package/eslint_d#editor-integration)
+  eslint\_d](https://github.com/mantoni/eslint_d.js#editor-integration)
 
