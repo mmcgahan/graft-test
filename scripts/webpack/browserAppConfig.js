@@ -5,7 +5,6 @@ const webpack = require('webpack');
 // Build settings
 const settings = require('./settings.js');
 
-
 /**
  * When in dev, we need to manually inject some configuration to enable HMR
  *
@@ -17,19 +16,20 @@ function injectHotReloadConfig(config) {
 	const DEV_HOST = '0.0.0.0';
 
 	config.entry.app.unshift(
-		'react-hot-loader/patch',  // logic for hot-reloading react components
+		'react-hot-loader/patch', // logic for hot-reloading react components
 		`webpack-dev-server/client?http://${DEV_HOST}:${ASSET_SERVER_PORT}/`, // connect to HMR websocket
-		'webpack/hot/dev-server'  // run the dev server
+		'webpack/hot/dev-server' // run the dev server
 	);
 
 	// plugins
-	config.plugins.push(new webpack.HotModuleReplacementPlugin());  // enable module.hot
-	config.plugins.push(new webpack.NamedModulesPlugin());  // show HMR module filenames
+	config.plugins.push(new webpack.HotModuleReplacementPlugin()); // enable module.hot
+	config.plugins.push(new webpack.NamedModulesPlugin()); // show HMR module filenames
 
 	// inject code hooks into react-hot-loader/patch
-	const jsLoader = config.module.rules
-		.filter(rule => (rule.loaders || []).includes('babel-loader'));
-	jsLoader.unshift('react-hot-loader/webpack');
+	const jsRule = config.module.rules.find(rule =>
+		(rule.use || []).find(use => use.loader === 'babel-loader')
+	);
+	jsRule.use.unshift('react-hot-loader/webpack');
 
 	return config;
 }
@@ -38,14 +38,14 @@ function injectHotReloadConfig(config) {
 function getConfig(localeCode) {
 	const config = {
 		entry: {
-			app: [settings.browserAppEntryPath]
+			app: [settings.browserAppEntryPath],
 		},
 
 		output: {
 			path: path.resolve(settings.browserAppOutputPath, localeCode),
-			filename: settings.isDev ?
-				'[name].js' :  // in dev, keep the filename consistent to make reloading easier
-				'[name].[hash].js',  // in prod, add hash to enable long-term caching
+			filename: settings.isDev
+				? '[name].js' // in dev, keep the filename consistent to make reloading easier
+				: '[name].[hash].js', // in prod, add hash to enable long-term caching
 			// publicPath is set at **runtime** using __webpack_public_path__
 			// in the browserApp entry script
 		},
@@ -63,30 +63,28 @@ function getConfig(localeCode) {
 				},
 				{
 					test: /\.jsx?$/,
-					include: [
-						settings.appPath,
-						settings.webComponentsSrcPath,
+					include: [settings.appPath, settings.webComponentsSrcPath],
+					use: [
+						{
+							loader: 'babel-loader',
+							options: {
+								cacheDirectory: true,
+							},
+						},
 					],
-					loader: 'babel-loader',
-					options: {
-						cacheDirectory: true
-					},
 				},
 				{
 					test: /\.css$/,
 					include: [settings.cssPath],
-					use: [
-						'style-loader',
-						'css-loader',
-					],
+					use: ['style-loader', 'css-loader'],
 				},
-			]
+			],
 		},
 
 		resolveLoader: {
 			alias: {
-				'require-loader': path.resolve(settings.utilsPath, 'require-loader.js')
-			}
+				'require-loader': path.resolve(settings.utilsPath, 'require-loader.js'),
+			},
 		},
 
 		resolve: {
@@ -97,7 +95,7 @@ function getConfig(localeCode) {
 			extensions: ['.js', '.jsx', '.json'],
 		},
 
-		plugins: []
+		plugins: [],
 	};
 
 	if (settings.enableHMR) {

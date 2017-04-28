@@ -4204,9 +4204,9 @@ meetup-web-mocks@1.0.183:
   dependencies:
     rxjs "5.3.0"
 
-meetup-web-platform@2.4.1234:
-  version "2.4.1234"
-  resolved "https://registry.yarnpkg.com/meetup-web-platform/-/meetup-web-platform-2.4.1234.tgz#8ab50c9949e16589d43e32761c79a6aa610459a3"
+meetup-web-platform@2.4.1261:
+  version "2.4.1261"
+  resolved "https://registry.yarnpkg.com/meetup-web-platform/-/meetup-web-platform-2.4.1261.tgz#18b76524c01b70c115c66959e9c868f732fafe1f"
   dependencies:
     "@alrra/travis-scripts" "3.0.1"
     accepts "1.3.3"
