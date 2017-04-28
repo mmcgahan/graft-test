@@ -67,7 +67,10 @@ function getConfig(localeCode) {
 						settings.appPath,
 						settings.webComponentsSrcPath,
 					],
-					loaders: ['babel-loader'],
+					loader: 'babel-loader',
+					options: {
+						cacheDirectory: true
+					},
 				},
 				{
 					test: /\.css$/,

@@ -32,6 +32,9 @@ function getConfig(localeCode, browserAppFilename) {
 						settings.webComponentsSrcPath,
 					],
 					loader: 'babel-loader',
+					options: {
+						cacheDirectory: true
+					},
 				},
 
 				{
@@ -86,4 +89,3 @@ function getConfig(localeCode, browserAppFilename) {
 
 // export the config-building function for programmatic consumption
 module.exports = getConfig;
-

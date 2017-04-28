@@ -32,6 +32,9 @@ function getConfig(localeCode, assets, hash) {
 						settings.appPath,
 					],
 					loader: 'babel-loader',
+					options: {
+						cacheDirectory: true
+					},
 				},
 			]
 		},
@@ -58,4 +61,3 @@ function getConfig(localeCode, assets, hash) {
 
 // export the config-building function for programmatic consumption
 module.exports = getConfig;
-
