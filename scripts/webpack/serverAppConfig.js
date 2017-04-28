@@ -48,7 +48,7 @@ function getConfig(localeCode, browserAppFilename) {
 				// - inject it as a 'global variable' here
 				WEBPACK_BROWSER_APP_FILENAME: JSON.stringify(browserAppFilename),
 				WEBPACK_BASE_URL: JSON.stringify(
-					localeCode === 'en-US' ? '' : `/${localeCode}/`
+					localeCode === 'en-US' ? '' : `/${localeCode}`
 				),
 				WEBPACK_ASSET_PUBLIC_PATH: JSON.stringify(publicPath),
 			}),
