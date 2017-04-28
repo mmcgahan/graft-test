@@ -95,7 +95,11 @@ function getConfig(localeCode) {
 			extensions: ['.js', '.jsx', '.json'],
 		},
 
-		plugins: [],
+		plugins: [
+			new webpack.EnvironmentPlugin([
+				'NODE_ENV', // required for prod build of React
+			]),
+		],
 	};
 
 	if (settings.enableHMR) {
