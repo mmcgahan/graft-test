@@ -8,6 +8,7 @@
   "scripts": {
     "build:clean": "rm -rf build/",
     "build:locales": "node scripts/build-server-app",
+    "build:prod": "NODE_ENV=production yarn run package",
     "build:server": "node scripts/build-server",
     "clean": "yarn run build:clean && rm *.log || true",
     "coverage": "yarn run test:unit -- --coverage",
