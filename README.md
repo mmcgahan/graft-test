@@ -281,6 +281,10 @@ and produce a corresponding Webpack configuration object. Hot module reloading
 in development is provided by the Webpack dev server, which is run from its
 Node API in `webpack/webpackDevServer.js`.
 
+`stats.json` files are output along with the bundles and can be analyzed with
+various tools. Summary of webpack build analyzers - https://survivejs.com/webpack/optimizing/analyzing-build-statistics/
+
+
 ## Code style
 
 We use a combination of [Prettier](https://github.com/prettier/prettier) and
