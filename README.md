@@ -2,6 +2,7 @@
 
 ## Docs
 
+- [Build/bundling the app](docs/build.md)
 - [Forking a platform application repo](docs/forking.md)
 - [Production server management with Kubernetes](docs/kubernetes.md)
 - [Load testing](docs/loadTesting.md)
@@ -269,17 +270,6 @@ tools that are used during development
 1. Jest for unit testing
 2. Babel for transpiling ES6
 3. ESLint to keep code style consistent
-
-## Asset bundling
-
-We are using [Webpack](https://webpack.github.io/) to bundle
-our Javascript modules.
-
-The configuration for the Webpack builds are created by node-runnable scripts in the
-`scripts/webpack/` directory. The modules export functions that take a `localeCode`
-and produce a corresponding Webpack configuration object. Hot module reloading
-in development is provided by the Webpack dev server, which is run from its
-Node API in `webpack/webpackDevServer.js`.
 
 ## Code style
 
