@@ -92,14 +92,16 @@ Travis CI using a Docker container.
 
 ## Quick start
 
-Add this mapping to your `/etc/hosts/` file:
-
+0. Add this mapping to your `/etc/hosts/` file:
 ```
 127.0.0.1	 beta2.dev.meetup.com
 ```
-
-Start dev app and asset servers with `yarn start:dev` - URL will be shown in the
+1. Start dev app and asset servers with `yarn run start` - URL will be shown in the
 terminal once the servers are running ([http://http://beta2.dev.meetup.com:8000/](http://beta2.dev.meetup.com:8000/))
+2. Run `yarn run tail` to view logs.
+3. In a separate screen, run `yarn run generate` if you wish to start on a new feature.
+4. When you make code changes you will need run `yarn start` again to bounce the
+server
 
 > Want to run multiple instances of mup-web on the same machine? Make another
 > clone of the repo and set the `DEV_SERVER_PORT` inline with the `yarn run start`
@@ -153,9 +155,10 @@ bundles created by `build:locales`
 
 ### Start commands
 
-- `yarn start:dev`: Build `en-US` server and client bundles and start up the app
+- `yarn run start`: Build en-US server and client bundles and start up the app
 and dev asset server.
-- `yarn run start:prod`: Start the bundled app server directly
+- `yarn run start:prod`: Start the bundled app server (used in production - in general you
+should use `yarn start` or `yarn run start:app` in development)
 - `yarn run start:all`: Same as `yarn start`, but builds all locales.
   Optionally, you can optionally pass localeCodes as CLI arguments
   to build/run a subset of locales.
@@ -164,7 +167,10 @@ and dev asset server.
 	yarn run start:all -- en-US es  # build only US English and Spanish
 	```
 
+- `yarn run start:app`: Start the dev app server as a background process
+- `yarn run start:asset`: Start the dev asset server as a background process
   - accepts localeCode arguments, e.g. `yarn run start:asset -- en-US es`
+- `yarn run stop`: Stop all app and asset servers started by `yarn run start:all`
 
 ### Generating code with `yarn run generate`
 
