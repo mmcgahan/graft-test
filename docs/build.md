@@ -66,6 +66,8 @@ _\*: **Child process**_
    ManifestPlugin)
 3. You will not be adding new translations (not relevant to the starter kit, but
    we'll need to account for it in mup-web - shouldn't be too difficult)
+4. You don't want to build the service worker script (fine for now, and
+   relatively easy to enable in the future)
 
 ### References
 
