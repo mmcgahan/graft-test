@@ -10,6 +10,7 @@
 .*/node_modules/jest-validate/*
 .*/node_modules/meetup-web-platform/*
 .*/node_modules/react-side-effect/*
+../*
 
 [include]
 

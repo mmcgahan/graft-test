@@ -6,6 +6,8 @@ const webpack = require('webpack');
 const getServerAppConfig = require('./webpack/serverAppConfig');
 const appServerConfig = require('./webpack/appServerConfig.js');
 
+const SERVER_APP_LANG = 'en-US';
+const SERVER_APP_PATH = '../build/server-app/en-US/server-app';
 const ready = {
 	serverApp: false,
 	appServer: false,
@@ -17,20 +19,26 @@ let appServerProcess;
  */
 fork(path.resolve(__dirname, 'webpackDevServer'));
 
-const newServerProcess = () => {
-	if (ready.serverApp) {
-		appServerProcess = fork(path.resolve(__dirname, './_start-dev-server'), [
-			'--en-US=../build/server-app/en-US/server-app',
-		]);
-		ready.appServer = true;
-	}
-};
+/*
+ * Start a new server child process
+ *
+ * This function assumes that the server app corresponding to
+ * SERVER_APP_LANG will be available at SERVER_APP_PATH when
+ * `reader.serverApp` is true
+ */
 const startServer = () => {
 	if (appServerProcess) {
 		appServerProcess.kill();
 		ready.appServer = false;
 	}
-	newServerProcess();
+	// Ignore the call if the serverApp is not ready
+	if (!ready.serverApp) {
+		return;
+	}
+	appServerProcess = fork(path.resolve(__dirname, './_start-dev-server'), [
+		`--${SERVER_APP_LANG}=${SERVER_APP_PATH}`,
+	]);
+	ready.appServer = true;
 };
 
 const getCompileLogger = type => (err, stats) => {
@@ -39,6 +47,10 @@ const getCompileLogger = type => (err, stats) => {
 
 /*
  * 2. Start the Webpack watch-mode compiler for the Server application
+ *
+ * no need to check for errors/warnings in the stats because this build
+ * parallels the one done in the Webpack Dev Server, and WDS will print
+ * error messages whenever there is something wrong.
  */
 const serverAppCompileLogger = getCompileLogger('server app');
 const serverAppCompiler = webpack(getServerAppConfig('en-US', 'app.js'));
