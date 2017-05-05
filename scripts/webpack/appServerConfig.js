@@ -2,6 +2,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const envConfig = require('../../src/util/config');
 
 // Build settings
 const settings = require('./settings.js');
@@ -9,7 +10,7 @@ const settings = require('./settings.js');
 // Webpack config
 module.exports = {
 	entry: {
-		'app-server': [settings.serverEntryPath]
+		'app-server': [settings.serverEntryPath],
 	},
 
 	output: {
@@ -21,55 +22,51 @@ module.exports = {
 	},
 
 	// using eval until this is fixed - https://bugs.chromium.org/p/chromium/issues/detail?id=658438
-	// devtool: settings.isDev ? 'eval' : 'eval',
 	devtool: 'eval',
 
 	module: {
 		rules: [
 			{
 				test: /\.jsx?$/,
-				include: [
-					settings.appPath,
-					settings.webComponentsSrcPath,
-				],
+				include: [settings.appPath, settings.webComponentsSrcPath],
 				loader: 'babel-loader',
 				options: {
-					cacheDirectory: true
+					cacheDirectory: true,
 				},
 			},
 
 			{
 				test: /\.css$/,
 				loader: 'style-loader!css-loader',
-				include: [settings.cssPath]
+				include: [settings.cssPath],
 			},
-		]
+		],
 	},
 
 	target: 'node',
 
 	plugins: [
 		new webpack.DefinePlugin({
-			IS_DEV: settings.isDev,
+			IS_DEV: envConfig.isDev,
 		}),
 	],
 
 	externals: [
 		nodeExternals({
-			modulesDir : process.env.NODE_PATH ? process.env.NODE_PATH : null,
+			modulesDir: process.env.NODE_PATH ? process.env.NODE_PATH : null,
 			whitelist: [/^meetup-web-components/],
 		}),
-		/.*?build\//
+		/.*?build\//,
 	],
 
 	resolveLoader: {
 		alias: {
-			'require-loader': path.resolve(settings.utilsPath, 'require-loader.js')
-		}
+			'require-loader': path.resolve(settings.utilsPath, 'require-loader.js'),
+		},
 	},
 
 	resolve: {
 		// module name extensions
-		extensions: ['.js', '.jsx']
-	}
+		extensions: ['.js', '.jsx'],
+	},
 };

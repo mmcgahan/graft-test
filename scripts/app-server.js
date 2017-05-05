@@ -91,7 +91,7 @@ function getRoutes() {
 	const routes = [getFaviconRoute(), getServiceWorkerRoute(assetPublicPath)];
 
 	// this is only used when the webpackDevServer isn't being used
-	if (settings.isDev) {
+	if (envConfig.isDev) {
 		routes.push(getDevStaticRoute(ASSET_PATH));
 	}
 

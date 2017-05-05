@@ -2,6 +2,7 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
+const envConfig = require('../../src/util/config');
 
 // Build settings
 const settings = require('./settings.js');
@@ -77,9 +78,11 @@ function getConfig(localeCode, browserAppFilename) {
 			extensions: ['.js', '.jsx', '.json'],
 		},
 	};
-	if (!settings.isDev) {
+
+	if (envConfig.isProd) {
 		config.plugins = config.plugins.concat(settings.prodPlugins);
 	}
+
 	return config;
 }
 

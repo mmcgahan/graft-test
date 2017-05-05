@@ -45,14 +45,14 @@ function getConfig(localeCode) {
 
 		output: {
 			path: path.resolve(settings.browserAppOutputPath, localeCode),
-			filename: settings.isDev
+			filename: envConfig.isDev
 				? '[name].js' // in dev, keep the filename consistent to make reloading easier
 				: '[name].[hash].js', // in prod, add hash to enable long-term caching
 			// publicPath is set at **runtime** using __webpack_public_path__
 			// in the browserApp entry script
 		},
 
-		devtool: settings.isDev ? 'eval' : 'source-map',
+		devtool: envConfig.isDev ? 'eval' : 'source-map',
 
 		module: {
 			rules: [
@@ -107,12 +107,15 @@ function getConfig(localeCode) {
 		],
 	};
 
-	if (settings.enableHMR) {
+	// enable HMR on dev
+	if (envConfig.isDev && !envConfig.disable_hmr) {
 		injectHotReloadConfig(config);
 	}
-	if (!settings.isDev) {
+
+	if (envConfig.isProd) {
 		config.plugins = config.plugins.concat(settings.prodPlugins);
 	}
+
 	return config;
 }
 

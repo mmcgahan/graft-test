@@ -40,7 +40,7 @@ function getConfig(localeCode, assets, hash) {
 			new webpack.DefinePlugin({
 				WEBPACK_BROWSER_BUILD_HASH: JSON.stringify(hash),
 				WEBPACK_BROWSER_ASSET_PATHS: JSON.stringify(assetFilePaths),
-				IS_DEV: settings.isDev,
+				IS_DEV: envConfig.isDev,
 				'process.env.NODE_ENV': JSON.stringify(envConfig.env),
 			}),
 		],
@@ -50,9 +50,11 @@ function getConfig(localeCode, assets, hash) {
 			extensions: ['.js', '.jsx'],
 		},
 	};
-	if (!settings.isDev) {
+
+	if (envConfig.isProd) {
 		config.plugins = config.plugins.concat(settings.prodPlugins);
 	}
+
 	return config;
 }
 
