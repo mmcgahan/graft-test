@@ -62,7 +62,7 @@ function getConfig(localeCode) {
 					enforce: 'pre',
 					options: {
 						cache: true,
-					}
+					},
 				},
 				{
 					test: /\.jsx?$/,

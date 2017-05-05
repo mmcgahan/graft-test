@@ -1,14 +1,18 @@
 const config = require('./mockConfig');
 const nodeFetch = require('node-fetch');
-const fetchResponse = (mockResponseValue={}, headers={}, delay=0) =>
+const fetchResponse = (mockResponseValue = {}, headers = {}, delay = 0) =>
 	new Promise((resolve, reject) =>
-		setTimeout(() => resolve({
-			text: () => Promise.resolve(JSON.stringify(mockResponseValue)),
-			json: () => Promise.resolve(mockResponseValue),
-			headers: {
-				get: key => headers[key],
-			},
-		}), delay)
+		setTimeout(
+			() =>
+				resolve({
+					text: () => Promise.resolve(JSON.stringify(mockResponseValue)),
+					json: () => Promise.resolve(mockResponseValue),
+					headers: {
+						get: key => headers[key],
+					},
+				}),
+			delay
+		)
 	);
 
 /**
@@ -29,7 +33,11 @@ const mockFetch = (url, options) => {
 	// oauth access endpoint
 	if (url.startsWith(process.env.OAUTH_ACCESS_URL)) {
 		console.warn('MOCK fetch access_token');
-		return fetchResponse({ access_token: 'access_bar' }, {}, config.OAUTH_ACCESS_DELAY);
+		return fetchResponse(
+			{ access_token: 'access_bar' },
+			{},
+			config.OAUTH_ACCESS_DELAY
+		);
 	}
 	// internal route
 	if (url.startsWith('http://beta2.dev')) {
@@ -41,4 +49,3 @@ const mockFetch = (url, options) => {
 };
 
 module.exports = mockFetch;
-
