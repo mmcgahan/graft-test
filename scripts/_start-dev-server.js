@@ -2,7 +2,15 @@ const minimist = require('minimist');
 const runServer = require('../build/app-server').default;
 
 /*
- * Start a dev server using server app bundles specified by command line args
+ * This script should generally _NOT_ be run directly - it is intended to run
+ * as a child process of scripts/start-dev.js
+ *
+ * Start a dev server using server app bundles specified by command line args,
+ * e.g.
+ *
+ * ```
+ * $ node scripts/_start-dev-server.js --en-US=../build/server-app/en-US/server-app.js
+ * ```
  */
 function startDevServer() {
 	const argv = minimist(process.argv.slice(2));
