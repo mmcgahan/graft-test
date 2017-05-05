@@ -110,8 +110,9 @@ function getRoutes() {
  */
 export default function main(appMap) {
 	if (!appMap) {
-		appMap = require('../build/server-app/serverAppMap').default;
+		appMap = require('../build/server-app/serverAppMap');
 	}
+	console.warn(appMap);
 	const plugins = [Inert]; // for serving the favicon
 	const routes = getRoutes();
 
