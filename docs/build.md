@@ -59,10 +59,11 @@ This script manages all aspects of the dev server:
 
 _\*: **Child process**_
 
-### Assumptionso
+### Assumptions
 
 1. You only want to build a single language (This could probably be enabled)
-2. The bundle filenames are not hashed (This might be allowable if we work our ManifestPlugin)
+2. The bundle filenames are not hashed (This might be allowable if we work out
+   ManifestPlugin)
 3. You will not be adding new translations (not relevant to the starter kit, but
    we'll need to account for it in mup-web - shouldn't be too difficult)
 
