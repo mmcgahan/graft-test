@@ -24,6 +24,8 @@ This command clears the `build/` directory, and starts the dev servers, logging
 all output to a single terminal window. Killing the process also stops the
 servers.
 
+![Dev build diagram](https://cloud.githubusercontent.com/assets/1885153/25732785/3d4d6dc8-31a7-11e7-89f3-5820d5e1a439.png)
+
 ### Description
 
 The complete application requires 3 bundles:
