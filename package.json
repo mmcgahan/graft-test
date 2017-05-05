@@ -29,6 +29,7 @@
     "start:mock": "yarn stop && node --inspect tests/runServer-mockExternal.js",
     "start:mockApi": "node tests/mockApiServer.js",
     "start:prod": "node scripts/runServer.js",
+    "stop": "forever stopall",
     "tail": "tail -f ./*.log",
     "test": "npm-run-all --parallel lint:base test:unit",
     "test:coverage": "yarn run test:unit -- --coverage --runInBand",
