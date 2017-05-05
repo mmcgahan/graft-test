@@ -133,13 +133,9 @@ for local debugging
 
 ## Available `yarn` commands
 
-In general, you should just use `yarn run start` to get everything built
+In general, you should just use `yarn start:dev` to get everything built
 and running in development - it will coordinate all of the build + start tasks
 in an optimal order.
-
-The app server needs to `build:locales` + `build:server` + `start:app`.
-
-The asset server needs to `build:locales` + `start:asset`.
 
 **Important** you can run `start:all` with CLI arguments for each localeCode
 you want to build - by default, it will build all supported locales, which is
