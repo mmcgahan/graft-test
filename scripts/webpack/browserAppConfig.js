@@ -1,6 +1,7 @@
 // Require modules
 const path = require('path');
 const webpack = require('webpack');
+const envConfig = require('../../src/util/config');
 
 // Build settings
 const settings = require('./settings.js');
@@ -12,12 +13,13 @@ const settings = require('./settings.js');
  * @returns {Object} HMR-ified config
  */
 function injectHotReloadConfig(config) {
-	const ASSET_SERVER_PORT = process.env.ASSET_SERVER_PORT || 8001;
-	const DEV_HOST = '0.0.0.0';
+	const ASSET_SERVER_PROTOCOL = envConfig.asset_server.protocol;
+	const ASSET_SERVER_HOST = envConfig.asset_server.host;
+	const ASSET_SERVER_PORT = envConfig.asset_server.port;
 
 	config.entry.app.unshift(
 		'react-hot-loader/patch', // logic for hot-reloading react components
-		`webpack-dev-server/client?http://${DEV_HOST}:${ASSET_SERVER_PORT}/`, // connect to HMR websocket
+		`webpack-dev-server/client?${ASSET_SERVER_PROTOCOL}${ASSET_SERVER_HOST}:${ASSET_SERVER_PORT}/`, // connect to HMR websocket
 		'webpack/hot/dev-server' // run the dev server
 	);
 
@@ -62,7 +64,7 @@ function getConfig(localeCode) {
 					enforce: 'pre',
 					options: {
 						cache: true,
-					}
+					},
 				},
 				{
 					test: /\.jsx?$/,

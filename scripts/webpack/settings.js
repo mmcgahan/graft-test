@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const envConfig = require('../../src/util/config');
 
 const repoRoot = path.resolve(__dirname, '..', '..');
 const appPath = path.resolve(repoRoot, 'src');
@@ -24,28 +25,25 @@ module.exports = {
 	serviceWorkerOutputPath: path.resolve(outPath, 'sw'),
 	trnsPath: path.resolve(appPath, 'trns'),
 	utilsPath: path.resolve(repoRoot, 'util'),
-
-	isDev: process.env.NODE_ENV !== 'production',
-	enableHMR: process.env.NODE_ENV !== 'production' && !process.env.DISABLE_HMR,
+	isDev: envConfig.isDev,
+	enableHMR: envConfig.isDev && !envConfig.disable_hmr,
 	prodPlugins: [
 		// Tells loaders to optimize what they can since in minimize mode
 		new webpack.LoaderOptionsPlugin({
 			minimize: true,
 			debug: false,
-			quiet: true
+			quiet: true,
 		}),
 
 		new webpack.optimize.UglifyJsPlugin({
 			compress: {
-				warnings: false
+				warnings: false,
 			},
 			output: {
-				comments: false
-			}
+				comments: false,
+			},
 		}),
 	],
 
-	localeCodes: [
-		'en-US',
-	]
+	localeCodes: ['en-US'],
 };

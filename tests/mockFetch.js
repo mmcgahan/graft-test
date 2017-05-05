@@ -1,14 +1,20 @@
 const config = require('./mockConfig');
 const nodeFetch = require('node-fetch');
-const fetchResponse = (mockResponseValue={}, headers={}, delay=0) =>
+const platformConfig = require('meetup-web-platform/lib/util/config').default;
+
+const fetchResponse = (mockResponseValue = {}, headers = {}, delay = 0) =>
 	new Promise((resolve, reject) =>
-		setTimeout(() => resolve({
-			text: () => Promise.resolve(JSON.stringify(mockResponseValue)),
-			json: () => Promise.resolve(mockResponseValue),
-			headers: {
-				get: key => headers[key],
-			},
-		}), delay)
+		setTimeout(
+			() =>
+				resolve({
+					text: () => Promise.resolve(JSON.stringify(mockResponseValue)),
+					json: () => Promise.resolve(mockResponseValue),
+					headers: {
+						get: key => headers[key],
+					},
+				}),
+			delay
+		)
 	);
 
 /**
@@ -22,14 +28,18 @@ const fetchResponse = (mockResponseValue={}, headers={}, delay=0) =>
  */
 const mockFetch = (url, options) => {
 	// oauth auth endpoint
-	if (url.startsWith(process.env.OAUTH_AUTH_URL)) {
+	if (url.startsWith(platformConfig.oauth.auth_url)) {
 		console.warn('MOCK fetch auth code');
 		return fetchResponse({ code: 'code_foo' }, {}, config.OAUTH_AUTH_DELAY);
 	}
 	// oauth access endpoint
-	if (url.startsWith(process.env.OAUTH_ACCESS_URL)) {
+	if (url.startsWith(platformConfig.oauth.access_url)) {
 		console.warn('MOCK fetch access_token');
-		return fetchResponse({ access_token: 'access_bar' }, {}, config.OAUTH_ACCESS_DELAY);
+		return fetchResponse(
+			{ access_token: 'access_bar' },
+			{},
+			config.OAUTH_ACCESS_DELAY
+		);
 	}
 	// internal route
 	if (url.startsWith('http://beta2.dev')) {
@@ -41,4 +51,3 @@ const mockFetch = (url, options) => {
 };
 
 module.exports = mockFetch;
-
