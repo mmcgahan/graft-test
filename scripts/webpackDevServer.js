@@ -11,11 +11,14 @@ const localeCodes = getLocaleArgs(settings.localeCodes);
 const configs = localeCodes.map(getBrowserAppConfig);
 const compiler = webpack(configs);
 const options = {
-	hot: true,
-	publicPath : `http://${DEV_HOST}:${ASSET_SERVER_PORT}/static/`,
-	disableHostCheck: true,  // can be accessed by any network request
+	noInfo: true, // don't show build info in console log
+	overlay: true, // show errors in the browser window
+	hot: true, // enable module.hot
+	stats: 'minimal',
+	publicPath: `http://${DEV_HOST}:${ASSET_SERVER_PORT}/static/`,
+	disableHostCheck: true, // can be accessed by any network request
 	headers: {
-		'Access-Control-Allow-Origin': '*',  // will respond to any host
+		'Access-Control-Allow-Origin': '*', // will respond to any host
 	},
 };
 if (configs.length === 1) {
@@ -24,13 +27,6 @@ if (configs.length === 1) {
 	options.publicPath = `/static/${localeCodes[0]}/`;
 }
 
-const server = new WebpackDevServer(
-	compiler,
-	options
-);
+const server = new WebpackDevServer(compiler, options);
 
-server.listen(
-	ASSET_SERVER_PORT,
-	DEV_HOST
-);
-
+server.listen(ASSET_SERVER_PORT, DEV_HOST);

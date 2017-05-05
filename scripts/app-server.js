@@ -2,7 +2,6 @@ import fs from 'fs';
 import Inert from 'inert';
 import { startServer } from 'meetup-web-platform';
 import settings from './webpack/settings.js';
-import serverAppMap from '../build/server-app/serverAppMap';
 
 /**
  * Route for service worker script at top-level path
@@ -20,7 +19,7 @@ import serverAppMap from '../build/server-app/serverAppMap';
  */
 function getServiceWorkerRoute(
 	assetPublicPath,
-	swTemplatePath=`${settings.serviceWorkerOutputPath.substr(1)}/sw.js`  // build/sw/sw.js
+	swTemplatePath = `${settings.serviceWorkerOutputPath.substr(1)}/sw.js` // build/sw/sw.js
 ) {
 	const swTemplate = fs.readFileSync(swTemplatePath).toString();
 	const swScript = swTemplate.replace(
@@ -29,11 +28,11 @@ function getServiceWorkerRoute(
 	);
 	return {
 		method: 'GET',
-		path: '/sw.js',  // must match client `serviceWorker.register` call
+		path: '/sw.js', // must match client `serviceWorker.register` call
 		config: {
 			auth: false,
 		},
-		handler: (request, reply) => reply(swScript).type('application/javascript')
+		handler: (request, reply) => reply(swScript).type('application/javascript'),
 	};
 }
 
@@ -47,7 +46,7 @@ function getServiceWorkerRoute(
  * @param {String} serverOutputPath the file path to the server build
  * @return {Object} the route for the favicon
  */
-function getFaviconRoute(serverOutputPath=settings.serverOutputPath) {
+function getFaviconRoute(serverOutputPath = settings.serverOutputPath) {
 	const faviconFilename = require('file-loader?name=[hash].[ext]!../src/assets/favicon.ico');
 	const faviconPath = `${serverOutputPath.substr(1)}/${faviconFilename}`;
 
@@ -58,8 +57,8 @@ function getFaviconRoute(serverOutputPath=settings.serverOutputPath) {
 			auth: false,
 		},
 		handler: {
-			file: faviconPath
-		}
+			file: faviconPath,
+		},
 	};
 }
 
@@ -73,23 +72,27 @@ function getDevStaticRoute(assetPath) {
 		handler: {
 			directory: {
 				path: 'build/browser-app/',
-				listing: false
-			}
-		}
+				listing: false,
+			},
+		},
 	};
 }
 
 function getRoutes() {
 	// read runtime values
 	const assetHost = process.env.ASSET_SERVER_HOST || '0.0.0.0';
-	const assetPort = process.env.ASSET_SERVER_PORT ? `:${process.env.ASSET_SERVER_PORT}` : '';
-	const assetPath = process.env.ASSET_PATH ? `/${process.env.ASSET_PATH}` : '/static';
+	const assetPort = process.env.ASSET_SERVER_PORT
+		? `:${process.env.ASSET_SERVER_PORT}`
+		: '';
+	const assetPath = process.env.ASSET_PATH
+		? `/${process.env.ASSET_PATH}`
+		: '/static';
 	const assetPublicPath = `//${assetHost}${assetPort}${assetPath}`;
 
-	const routes = [
-		getFaviconRoute(),
-		getServiceWorkerRoute(assetPublicPath)
-	];
+	const routes = [getFaviconRoute()];
+	if (settings.serviceWorkerEnabled) {
+		routes.push(getServiceWorkerRoute(assetPublicPath));
+	}
 
 	// this is only used when the webpackDevServer isn't being used
 	if (settings.isDev) {
@@ -102,16 +105,18 @@ function getRoutes() {
 /**
  * The actual configure-and-start function
  *
- * @param {Function} getConfig a function that returns a config object in a Promise
+ * @param {Object} appMap a map of locale codes to server rendering observables
  * @return {Promise} a Promise that returns the started server
  */
-export default function main(getConfig) {
-	const plugins = [Inert];  // for serving the favicon
+export default function main(appMap) {
+	if (!appMap) {
+		appMap = require('../build/server-app/serverAppMap').default;
+	}
+	const plugins = [Inert]; // for serving the favicon
 	const routes = getRoutes();
 
-	return startServer(serverAppMap, { routes, plugins }, getConfig)
-		.catch(err => {  // catch because otherwise Node swallows errors in Promises
-			throw err;
-		});
+	return startServer(appMap, { routes, plugins }).catch(err => {
+		// catch because otherwise Node swallows errors in Promises
+		throw err;
+	});
 }
-
