@@ -7,13 +7,11 @@ const settings = require('./settings.js');
 // Webpack config
 function getConfig(localeCode, assets, hash) {
 	const publicPath = `/${localeCode}/`;
-	const assetFilePaths = assets.map(({ name }) =>
-		`${publicPath}${name}`
-	);
+	const assetFilePaths = assets.map(({ name }) => `${publicPath}${name}`);
 
 	const config = {
 		entry: {
-			sw: [settings.serviceWorkerEntryPath]
+			sw: [settings.serviceWorkerEntryPath],
 		},
 
 		output: {
@@ -28,15 +26,13 @@ function getConfig(localeCode, assets, hash) {
 			loaders: [
 				{
 					test: /\.jsx?$/,
-					include: [
-						settings.appPath,
-					],
+					include: [settings.appPath],
 					loader: 'babel-loader',
 					options: {
-						cacheDirectory: true
+						cacheDirectory: true,
 					},
 				},
-			]
+			],
 		},
 
 		plugins: [
@@ -44,14 +40,16 @@ function getConfig(localeCode, assets, hash) {
 				WEBPACK_BROWSER_BUILD_HASH: JSON.stringify(hash),
 				WEBPACK_BROWSER_ASSET_PATHS: JSON.stringify(assetFilePaths),
 				IS_DEV: settings.isDev,
-				'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+				'process.env.NODE_ENV': JSON.stringify(
+					process.env.NODE_ENV || 'development'
+				),
 			}),
 		],
 
 		resolve: {
 			// module name extensions
-			extensions: ['.js', '.jsx']
-		}
+			extensions: ['.js', '.jsx'],
+		},
 	};
 	if (!settings.isDev) {
 		config.plugins = config.plugins.concat(settings.prodPlugins);
