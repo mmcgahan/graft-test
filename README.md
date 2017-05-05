@@ -165,7 +165,6 @@ and dev asset server.
 	```
 
   - accepts localeCode arguments, e.g. `yarn run start:asset -- en-US es`
-  - `yarn run stop`: Stop all app and asset servers started by `yarn run start:all`
 
 ### Generating code with `yarn run generate`
 
