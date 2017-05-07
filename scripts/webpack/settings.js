@@ -32,20 +32,18 @@ module.exports = {
 		new webpack.LoaderOptionsPlugin({
 			minimize: true,
 			debug: false,
-			quiet: true
+			quiet: true,
 		}),
 
 		new webpack.optimize.UglifyJsPlugin({
 			compress: {
-				warnings: false
+				warnings: false,
 			},
 			output: {
-				comments: false
-			}
+				comments: false,
+			},
 		}),
 	],
 
-	localeCodes: [
-		'en-US',
-	]
+	localeCodes: ['en-US'],
 };

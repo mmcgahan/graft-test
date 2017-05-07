@@ -20,9 +20,13 @@ const child_process$ = (cmd, args) => {
 		child.stdout.on('data', data => {
 			obs.next(data.toString());
 		});
-		child.on('close', code => {
+		child.on('close', (code, signal) => {
 			if (code !== 0) {
-				obs.error(new Error(`child process "${arguments}" exited with code ${code}`));
+				obs.error(
+					new Error(
+						`child process "${cmd} ${args.join(' ')}" exited with code ${code}, signal ${signal}`
+					)
+				);
 			}
 			obs.complete();
 		});
@@ -41,15 +45,13 @@ const getLocaleArgs = validLocaleCodes => {
 	const argv = minimist(process.argv.slice(2));
 
 	// this script can also be passed an array of locales to build
-	const argLocaleCodes = argv._.filter(
-		argCode => validLocaleCodes.some(lc => lc === argCode)
+	const argLocaleCodes = argv._.filter(argCode =>
+		validLocaleCodes.some(lc => lc === argCode)
 	);
 	return argLocaleCodes.length ? argLocaleCodes : validLocaleCodes;
 };
 
-
 module.exports = {
 	child_process$,
-	getLocaleArgs
+	getLocaleArgs,
 };
-
