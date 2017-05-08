@@ -1,5 +1,6 @@
 // Require modules
 const webpack = require('webpack');
+const StatsPlugin = require('stats-webpack-plugin');
 
 // Build settings
 const settings = require('./settings.js');
@@ -44,6 +45,7 @@ function getConfig(localeCode, assets, hash) {
 					process.env.NODE_ENV || 'development'
 				),
 			}),
+			new StatsPlugin('stats.json', 'verbose'),
 		],
 
 		resolve: {

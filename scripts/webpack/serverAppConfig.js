@@ -2,6 +2,7 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
+const StatsPlugin = require('stats-webpack-plugin');
 
 // Build settings
 const settings = require('./settings.js');
@@ -52,6 +53,7 @@ function getConfig(localeCode, browserAppFilename) {
 				),
 				WEBPACK_ASSET_PUBLIC_PATH: JSON.stringify(publicPath),
 			}),
+			new StatsPlugin('stats.json', 'verbose'),
 		],
 
 		target: 'node',

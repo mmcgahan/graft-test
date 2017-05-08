@@ -3,6 +3,7 @@ import makeRootReducer from 'meetup-web-platform/lib/reducers/platform';
 
 // this variable must be injected by webpack using DefinePlugin
 const browserAppFilename = WEBPACK_BROWSER_APP_FILENAME; // eslint-disable-line no-undef
+
 const assetHost = process.env.ASSET_SERVER_HOST || '0.0.0.0';
 const assetPort = process.env.ASSET_SERVER_PORT
 	? `:${process.env.ASSET_SERVER_PORT}`

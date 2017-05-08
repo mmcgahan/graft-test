@@ -77,4 +77,16 @@ _\*: **Child process**_
 - Configuring watch mode behavior: https://webpack.js.org/configuration/watch/#watchoptions
 - Webpack Dev Server: https://webpack.js.org/configuration/dev-server/
 
+## Analyzing the bundle
+
+Webpack is configured to write its
+[build stats](https://webpack.js.org/api/node/#stats-object) to a file
+alongside each bundle. These stats JSON files can be analyzed with
+various tools.
+
+### References
+
+- Webpack stats config docs: https://webpack.js.org/api/cli/#common-options
+- Summary of webpack build analyzers:
+  https://survivejs.com/webpack/optimizing/analyzing-build-statistics/
 
