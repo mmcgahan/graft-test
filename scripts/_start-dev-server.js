@@ -15,7 +15,7 @@ const runServer = require('../build/app-server').default;
 function startDevServer() {
 	const argv = minimist(process.argv.slice(2));
 	const serverAppMap = Object.keys(argv)
-		.filter(a => a !== '_')
+		.filter(a => a !== '_') // this is minimist's arg catch-all key - not needed
 		.reduce((map, localeCode) => {
 			const importPath = argv[localeCode];
 			map[localeCode] = require(importPath).default;

@@ -5,9 +5,10 @@ const chalk = require('chalk');
 const webpack = require('webpack');
 const getServerAppConfig = require('./webpack/serverAppConfig');
 const appServerConfig = require('./webpack/appServerConfig.js');
+const settings = require('./webpack/settings');
 
-const SERVER_APP_LANG = 'en-US';
-const SERVER_APP_PATH = '../build/server-app/en-US/server-app';
+const serverAppLang = settings.localeCodes[0]; // top of the preferred lang list
+const serverAppPath = `../build/server-app/${serverAppLang}/server-app`;
 const ready = {
 	serverApp: false,
 	appServer: false,
@@ -23,7 +24,7 @@ fork(path.resolve(__dirname, 'webpackDevServer'));
  * Start a new server child process
  *
  * This function assumes that the server app corresponding to
- * SERVER_APP_LANG will be available at SERVER_APP_PATH when
+ * serverAppLang will be available at serverAppPath when
  * `reader.serverApp` is true
  */
 const startServer = () => {
@@ -36,7 +37,7 @@ const startServer = () => {
 		return;
 	}
 	appServerProcess = fork(path.resolve(__dirname, './_start-dev-server'), [
-		`--${SERVER_APP_LANG}=${SERVER_APP_PATH}`,
+		`--${serverAppLang}=${serverAppPath}`,
 	]);
 	ready.appServer = true;
 };
