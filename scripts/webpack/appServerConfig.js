@@ -53,7 +53,7 @@ module.exports = {
 			whitelist: [
 				// modules that should _not_ be treated as `externals` - will be bundled + watched for changes in dev
 				/^meetup-web-components/,
-				'meetup-web-platform', // watch the MWP code used to start the server to auto-rebuild+restart
+				'meetup-web-platform', // watch the MWP code used to start the server in order to auto-rebuild+restart
 			],
 		}),
 		/.*?build\//,
