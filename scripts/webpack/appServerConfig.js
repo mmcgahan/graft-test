@@ -2,6 +2,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const StatsPlugin = require('stats-webpack-plugin');
 
 // Build settings
 const settings = require('./settings.js');
@@ -34,12 +35,6 @@ module.exports = {
 					cacheDirectory: true,
 				},
 			},
-
-			{
-				test: /\.css$/,
-				loader: 'style-loader!css-loader',
-				include: [settings.cssPath],
-			},
 		],
 	},
 
@@ -49,6 +44,7 @@ module.exports = {
 		new webpack.DefinePlugin({
 			IS_DEV: settings.isDev,
 		}),
+		new StatsPlugin('stats.json', 'verbose'),
 	],
 
 	externals: [

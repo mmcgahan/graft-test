@@ -1,6 +1,5 @@
 const path = require('path');
 const Rx = require('rxjs');
-const fs = require('fs');
 
 const { compile$ } = require('../util/buildUtils.js');
 const settings = require('./webpack/settings.js');
@@ -21,18 +20,20 @@ const getBrowserAppConfig = require('./webpack/browserAppConfig.js');
  * @return {Observable} emits the (successful) build stats
  */
 const writeBrowserAppBundle$ = localeCode =>
-	Rx.Observable.of(localeCode)
+	Rx.Observable
+		.of(localeCode)
 		.do(localeCode => console.log('building browser app'))
-		.map(getBrowserAppConfig)  // map the localeCodes onto locale-specific webpack configs
-		.flatMap(compile$)     // run webpack with each locale-specific config - see `getBrowserAppConfig` for details
+		.map(getBrowserAppConfig) // map the localeCodes onto locale-specific webpack configs
+		.flatMap(compile$) // run webpack with each locale-specific config - see `getBrowserAppConfig` for details
 		.do(stats => {
-			const filename = stats.toJson().assetsByChunkName.app;  // filename determined by webpack output.filename
-			const fullPath = path.resolve(settings.browserAppOutputPath, localeCode, filename);  // reference the full build path
-			const statsPath = path.resolve(settings.browserAppOutputPath, localeCode,'stats.json');
-			fs.writeFileSync(statsPath, JSON.stringify(stats.toJson({chunkModules:true})));
-			const relativeBundlePath = path.relative(settings.outPath, fullPath);  // just the path relative to the build dir
+			const filename = stats.toJson().assetsByChunkName.app; // filename determined by webpack output.filename
+			const fullPath = path.resolve(
+				settings.browserAppOutputPath,
+				localeCode,
+				filename
+			); // reference the full build path
+			const relativeBundlePath = path.relative(settings.outPath, fullPath); // just the path relative to the build dir
 			console.log(`built ${relativeBundlePath}`);
 		});
 
 module.exports = writeBrowserAppBundle$;
-
