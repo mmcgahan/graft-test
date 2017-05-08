@@ -11,7 +11,9 @@ const localeCodes = getLocaleArgs(settings.localeCodes);
 const configs = localeCodes.map(getBrowserAppConfig);
 const compiler = webpack(configs);
 const options = {
-	hot: true,
+	overlay: true, // show errors in the browser window
+	hot: true, // enable module.hot
+	stats: 'minimal', // only log errors/warnings/completion
 	publicPath: `http://${DEV_HOST}:${ASSET_SERVER_PORT}/static/`,
 	disableHostCheck: true, // can be accessed by any network request
 	headers: {

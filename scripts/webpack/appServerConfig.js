@@ -50,7 +50,11 @@ module.exports = {
 	externals: [
 		nodeExternals({
 			modulesDir: process.env.NODE_PATH ? process.env.NODE_PATH : null,
-			whitelist: [/^meetup-web-components/],
+			whitelist: [
+				// modules that should _not_ be treated as `externals` - will be bundled + watched for changes in dev
+				/^meetup-web-components/,
+				'meetup-web-platform', // watch the MWP code used to start the server in order to auto-rebuild+restart
+			],
 		}),
 		/.*?build\//,
 	],
