@@ -18,7 +18,7 @@ let appServerProcess;
 /*
  * 1. Start the Webpack Dev Server for the Browser application bundle
  */
-fork(path.resolve(__dirname, 'webpackDevServer'));
+fork(path.resolve(__dirname, 'webpackDevServer'), [serverAppLang]);
 
 /*
  * Start a new server child process
