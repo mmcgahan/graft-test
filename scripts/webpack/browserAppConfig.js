@@ -1,10 +1,13 @@
 // Require modules
 const path = require('path');
 const webpack = require('webpack');
-const envConfig = require('../../src/util/config');
 
 // Build settings
 const settings = require('./settings.js');
+
+// Env config
+const buildConfig = require('meetup-web-platform/lib/util/config/build')
+	.default;
 
 /**
  * When in dev, we need to manually inject some configuration to enable HMR
@@ -13,13 +16,9 @@ const settings = require('./settings.js');
  * @returns {Object} HMR-ified config
  */
 function injectHotReloadConfig(config) {
-	const ASSET_SERVER_PROTOCOL = envConfig.asset_server.protocol;
-	const ASSET_SERVER_HOST = envConfig.asset_server.host;
-	const ASSET_SERVER_PORT = envConfig.asset_server.port;
-
 	config.entry.app.unshift(
 		'react-hot-loader/patch', // logic for hot-reloading react components
-		`webpack-dev-server/client?${ASSET_SERVER_PROTOCOL}${ASSET_SERVER_HOST}:${ASSET_SERVER_PORT}/`, // connect to HMR websocket
+		`webpack-dev-server/client?http://${buildConfig.asset_server.host}:${buildConfig.asset_server.port}/`, // connect to HMR websocket
 		'webpack/hot/dev-server' // run the dev server
 	);
 
@@ -45,14 +44,14 @@ function getConfig(localeCode) {
 
 		output: {
 			path: path.resolve(settings.browserAppOutputPath, localeCode),
-			filename: envConfig.isDev
+			filename: buildConfig.isDev
 				? '[name].js' // in dev, keep the filename consistent to make reloading easier
 				: '[name].[hash].js', // in prod, add hash to enable long-term caching
 			// publicPath is set at **runtime** using __webpack_public_path__
 			// in the browserApp entry script
 		},
 
-		devtool: envConfig.isDev ? 'eval' : 'source-map',
+		devtool: buildConfig.isDev ? 'eval' : 'source-map',
 
 		module: {
 			rules: [
@@ -101,21 +100,18 @@ function getConfig(localeCode) {
 		},
 
 		plugins: [
-			new webpack.EnvironmentPlugin([
-				'NODE_ENV', // required for prod build of React
-			]),
+			new webpack.EnvironmentPlugin({
+				NODE_ENV: 'development', // required for prod build of React
+			}),
 		],
 	};
 
-	// enable HMR on dev
-	if (envConfig.isDev && !envConfig.disable_hmr) {
+	if (settings.enableHMR) {
 		injectHotReloadConfig(config);
 	}
-
-	if (envConfig.isProd) {
+	if (buildConfig.isProd) {
 		config.plugins = config.plugins.concat(settings.prodPlugins);
 	}
-
 	return config;
 }
 

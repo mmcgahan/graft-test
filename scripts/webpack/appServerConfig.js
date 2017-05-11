@@ -1,8 +1,6 @@
 // Require modules
-const webpack = require('webpack');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
-const envConfig = require('../../src/util/config');
 
 // Build settings
 const settings = require('./settings.js');
@@ -45,11 +43,7 @@ module.exports = {
 
 	target: 'node',
 
-	plugins: [
-		new webpack.DefinePlugin({
-			IS_DEV: envConfig.isDev,
-		}),
-	],
+	plugins: [],
 
 	externals: [
 		nodeExternals({
