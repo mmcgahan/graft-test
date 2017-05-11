@@ -1,6 +1,7 @@
 // Require modules
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const StatsPlugin = require('stats-webpack-plugin');
 
 // Build settings
 const settings = require('./settings.js');
@@ -32,23 +33,21 @@ module.exports = {
 					cacheDirectory: true,
 				},
 			},
-
-			{
-				test: /\.css$/,
-				loader: 'style-loader!css-loader',
-				include: [settings.cssPath],
-			},
 		],
 	},
 
 	target: 'node',
 
-	plugins: [],
+	plugins: [new StatsPlugin('stats.json', 'verbose')],
 
 	externals: [
 		nodeExternals({
 			modulesDir: process.env.NODE_PATH ? process.env.NODE_PATH : null,
-			whitelist: [/^meetup-web-components/],
+			whitelist: [
+				// modules that should _not_ be treated as `externals` - will be bundled + watched for changes in dev
+				/^meetup-web-components/,
+				'meetup-web-platform', // watch the MWP code used to start the server in order to auto-rebuild+restart
+			],
 		}),
 		/.*?build\//,
 	],

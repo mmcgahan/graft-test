@@ -8,6 +8,7 @@
   "scripts": {
     "build:clean": "rm -rf build/",
     "build:locales": "node scripts/build-server-app",
+    "build:prod": "NODE_ENV=production yarn run package",
     "build:server": "node scripts/build-server",
     "clean": "yarn run build:clean && rm *.log || true",
     "coverage": "yarn run test:unit -- --coverage",
@@ -23,6 +24,7 @@
     "postcheckout": "yarn install",
     "postmerge": "yarn install",
     "start": "rm -f *.log && yarn run start:all -- en-US",
+    "start:dev": "yarn build:clean && node scripts/start-dev",
     "start:all": "npm-run-all stop build:clean --parallel \"build:locales -- {@}\" \"start:asset -- {@}\" --serial build:server start:app --",
     "start:app": "forever start scripts/forever/app-server.json && yarn run start:info",
     "start:asset": "node scripts/forever/asset-server.js",
@@ -102,6 +104,7 @@
     "react-addons-test-utils": "15.5.1",
     "react-dom": "15.5.4",
     "sass-loader": "6.0.3",
+    "stats-webpack-plugin": "0.6.0",
     "style-loader": "0.16.1",
     "swarm-sasstools": "1.2.11",
     "webpack": "2.4.1",

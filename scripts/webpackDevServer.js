@@ -10,7 +10,9 @@ const localeCodes = getLocaleArgs(settings.localeCodes);
 const configs = localeCodes.map(getBrowserAppConfig);
 const compiler = webpack(configs);
 const options = {
+	overlay: true, // show errors in the browser window
 	hot: true,
+	stats: 'minimal', // only log errors/warnings/completion
 	publicPath: `http://${buildConfig.asset_server.host}:${buildConfig.asset_server.port}${buildConfig.asset_server.path}/`,
 	disableHostCheck: true, // can be accessed by any network request
 	headers: {

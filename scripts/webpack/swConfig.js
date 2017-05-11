@@ -1,6 +1,8 @@
 // Require modules
 const webpack = require('webpack');
-const envConfig = require('../../src/util/config');
+const buildConfig = require('meetup-web-platform/lib/util/config/build')
+	.default;
+const StatsPlugin = require('stats-webpack-plugin');
 
 // Build settings
 const settings = require('./settings.js');
@@ -37,12 +39,14 @@ function getConfig(localeCode, assets, hash) {
 		},
 
 		plugins: [
+			new webpack.EnvironmentPlugin({
+				NODE_ENV: 'development', // required for prod build of React (specify default)
+			}),
 			new webpack.DefinePlugin({
 				WEBPACK_BROWSER_BUILD_HASH: JSON.stringify(hash),
 				WEBPACK_BROWSER_ASSET_PATHS: JSON.stringify(assetFilePaths),
-				IS_DEV: envConfig.isDev,
-				'process.env.NODE_ENV': JSON.stringify(envConfig.env),
 			}),
+			new StatsPlugin('stats.json', 'verbose'),
 		],
 
 		resolve: {
@@ -51,7 +55,7 @@ function getConfig(localeCode, assets, hash) {
 		},
 	};
 
-	if (envConfig.isProd) {
+	if (buildConfig.isProd) {
 		config.plugins = config.plugins.concat(settings.prodPlugins);
 	}
 

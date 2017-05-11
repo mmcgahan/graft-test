@@ -42,5 +42,5 @@ module.exports = {
 		}),
 	],
 
-	localeCodes: ['en-US'],
+	localeCodes: ['en-US'], // always list _in order of priority_, default lang first
 };

@@ -1,6 +1,7 @@
 // Require modules
 const path = require('path');
 const webpack = require('webpack');
+const StatsPlugin = require('stats-webpack-plugin');
 
 // Build settings
 const settings = require('./settings.js');
@@ -101,8 +102,9 @@ function getConfig(localeCode) {
 
 		plugins: [
 			new webpack.EnvironmentPlugin({
-				NODE_ENV: 'development', // required for prod build of React
+				NODE_ENV: 'development', // required for prod build of React (specify default)
 			}),
+			new StatsPlugin('stats.json', 'verbose'),
 		],
 	};
 
