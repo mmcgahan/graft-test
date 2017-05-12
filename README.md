@@ -51,24 +51,10 @@ continue to work, it should not be used.
   `$HOME/.mupweb.config`) in the following format:
 
   ```
-  API_HOST=api.meetup.com
-  API_PROTOCOL=https
-  ASSET_SERVER_HOST=0.0.0.0
-  ASSET_SERVER_PORT=8001
-  DEV_SERVER_HOST=0.0.0.0
-  DEV_SERVER_PORT=8000
-  OAUTH_AUTH_URL=https://secure.meetup.com/oauth2/authorize
-  OAUTH_ACCESS_URL=https://secure.meetup.com/oauth2/access
   MUPWEB_OAUTH_KEY=<check with an admin>
   MUPWEB_OAUTH_SECRET=<check with an admin>
   PHOTO_SCALER_SALT='<check with admin>'  # single quotes are required
-  CSRF_SECRET='<any random string over 32 characters long>'
-  COOKIE_ENCRYPT_SECRET='<any random string over 32 characters long>'
   ```
-
-  **Note**: you _can_ use `dev.meetup.com` URLs for `API_HOST`, `OAUTH_AUTH_URL`,
-  and `OAUTH_ACCESS_URL`, but you will need to ensure that your devbox is up and
-  running with a recent build of Meetup classic.
 
 6. Add `.mupweb.config` to your shell config file
 
