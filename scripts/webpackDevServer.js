@@ -28,4 +28,4 @@ if (configs.length === 1) {
 
 const server = new WebpackDevServer(compiler, options);
 
-server.listen(buildConfig.asset_server.port, '0.0.0.0'); // always start dev server on open IP
+server.listen(buildConfig.asset_server.port, buildConfig.asset_server.host);

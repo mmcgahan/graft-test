@@ -48,12 +48,11 @@
   "dependencies": {
     "chalk": "1.1.3",
     "classnames": "2.2.5",
-    "convict": "3.0.0",
     "flatpickr": "2.5.8",
     "html-entities": "1.2.1",
     "inert": "4.2.0",
     "meetup-web-components": "1.0.860",
-    "meetup-web-platform": "2.5.1321-beta",
+    "meetup-web-platform": "3.2.1361",
     "node-fetch": "1.6.3",
     "react": "15.5.4",
     "react-helmet": "5.0.3",
