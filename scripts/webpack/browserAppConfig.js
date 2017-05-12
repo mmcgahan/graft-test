@@ -108,7 +108,7 @@ function getConfig(localeCode) {
 		],
 	};
 
-	if (settings.enableHMR) {
+	if (buildConfig.isDev && !buildConfig.disable_hmr) {
 		injectHotReloadConfig(config);
 	}
 	if (buildConfig.isProd) {
