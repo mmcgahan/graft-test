@@ -1,9 +1,7 @@
 const chalk = require('chalk');
 const platformConfig = require('meetup-web-platform/lib/util/config').default;
 
-const protocol = platformConfig.app_server.protocol;
-const host = platformConfig.app_server.host;
-const port = platformConfig.app_server.port;
+const { protocol, host, port } = platformConfig.app_server;
 
 console.log(`\n${chalk.blue('yarn run tail')} to tail the logs`);
 console.log(`${chalk.blue('yarn run start:all')} to bounce`);
