@@ -1,5 +1,4 @@
 // Require modules
-const webpack = require('webpack');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const StatsPlugin = require('stats-webpack-plugin');
@@ -22,7 +21,6 @@ module.exports = {
 	},
 
 	// using eval until this is fixed - https://bugs.chromium.org/p/chromium/issues/detail?id=658438
-	// devtool: settings.isDev ? 'eval' : 'eval',
 	devtool: 'eval',
 
 	module: {
@@ -40,12 +38,7 @@ module.exports = {
 
 	target: 'node',
 
-	plugins: [
-		new webpack.DefinePlugin({
-			IS_DEV: settings.isDev,
-		}),
-		new StatsPlugin('stats.json', 'verbose'),
-	],
+	plugins: [new StatsPlugin('stats.json', 'verbose')],
 
 	externals: [
 		nodeExternals({

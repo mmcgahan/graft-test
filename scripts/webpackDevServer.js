@@ -1,31 +1,31 @@
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
+const buildConfig = require('meetup-web-platform/lib/util/config/build')
+	.default;
 const settings = require('./webpack/settings.js');
 const getBrowserAppConfig = require('./webpack/browserAppConfig.js');
 const { getLocaleArgs } = require('../util/nodeUtils.js');
-
-const ASSET_SERVER_PORT = process.env.ASSET_SERVER_PORT || 8001;
-const DEV_HOST = '0.0.0.0';
 
 const localeCodes = getLocaleArgs(settings.localeCodes);
 const configs = localeCodes.map(getBrowserAppConfig);
 const compiler = webpack(configs);
 const options = {
 	overlay: true, // show errors in the browser window
-	hot: true, // enable module.hot
+	hot: true,
 	stats: 'minimal', // only log errors/warnings/completion
-	publicPath: `http://${DEV_HOST}:${ASSET_SERVER_PORT}/static/`,
+	publicPath: `http://${buildConfig.asset_server.host}:${buildConfig.asset_server.port}${buildConfig.asset_server.path}/`,
 	disableHostCheck: true, // can be accessed by any network request
 	headers: {
 		'Access-Control-Allow-Origin': '*', // will respond to any host
 	},
 };
+
 if (configs.length === 1) {
 	// WDS won't respect config's publicPath when only 1 config is set
 	// so we need to force it in the `options`
-	options.publicPath = `/static/${localeCodes[0]}/`;
+	options.publicPath = `${buildConfig.asset_server.path}/${localeCodes[0]}/`;
 }
 
 const server = new WebpackDevServer(compiler, options);
 
-server.listen(ASSET_SERVER_PORT, DEV_HOST);
+server.listen(buildConfig.asset_server.port, buildConfig.asset_server.host);

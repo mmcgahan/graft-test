@@ -6,6 +6,10 @@ const StatsPlugin = require('stats-webpack-plugin');
 // Build settings
 const settings = require('./settings.js');
 
+// Env config
+const buildConfig = require('meetup-web-platform/lib/util/config/build')
+	.default;
+
 /**
  * When in dev, we need to manually inject some configuration to enable HMR
  *
@@ -13,12 +17,9 @@ const settings = require('./settings.js');
  * @returns {Object} HMR-ified config
  */
 function injectHotReloadConfig(config) {
-	const ASSET_SERVER_PORT = process.env.ASSET_SERVER_PORT || 8001;
-	const DEV_HOST = '0.0.0.0';
-
 	config.entry.app.unshift(
 		'react-hot-loader/patch', // logic for hot-reloading react components
-		`webpack-dev-server/client?http://${DEV_HOST}:${ASSET_SERVER_PORT}/`, // connect to HMR websocket
+		`webpack-dev-server/client?http://${buildConfig.asset_server.host}:${buildConfig.asset_server.port}/`, // connect to HMR websocket
 		'webpack/hot/dev-server' // run the dev server
 	);
 
@@ -44,14 +45,14 @@ function getConfig(localeCode) {
 
 		output: {
 			path: path.resolve(settings.browserAppOutputPath, localeCode),
-			filename: settings.isDev
+			filename: buildConfig.isDev
 				? '[name].js' // in dev, keep the filename consistent to make reloading easier
 				: '[name].[hash].js', // in prod, add hash to enable long-term caching
 			// publicPath is set at **runtime** using __webpack_public_path__
 			// in the browserApp entry script
 		},
 
-		devtool: settings.isDev ? 'eval' : 'source-map',
+		devtool: buildConfig.isDev ? 'eval' : 'source-map',
 
 		module: {
 			rules: [
@@ -100,17 +101,17 @@ function getConfig(localeCode) {
 		},
 
 		plugins: [
-			new webpack.EnvironmentPlugin([
-				'NODE_ENV', // required for prod build of React
-			]),
+			new webpack.EnvironmentPlugin({
+				NODE_ENV: 'development', // required for prod build of React (specify default)
+			}),
 			new StatsPlugin('stats.json', 'verbose'),
 		],
 	};
 
-	if (settings.enableHMR) {
+	if (buildConfig.isDev && !buildConfig.disable_hmr) {
 		injectHotReloadConfig(config);
 	}
-	if (!settings.isDev) {
+	if (buildConfig.isProd) {
 		config.plugins = config.plugins.concat(settings.prodPlugins);
 	}
 	return config;

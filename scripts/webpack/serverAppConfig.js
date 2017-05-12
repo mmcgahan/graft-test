@@ -2,6 +2,8 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
+const buildConfig = require('meetup-web-platform/lib/util/config/build')
+	.default;
 const StatsPlugin = require('stats-webpack-plugin');
 
 // Build settings
@@ -34,7 +36,6 @@ function getConfig(localeCode, browserAppFilename) {
 						cacheDirectory: true,
 					},
 				},
-
 				{
 					test: /\.css$/,
 					include: [settings.cssPath],
@@ -44,6 +45,9 @@ function getConfig(localeCode, browserAppFilename) {
 		},
 
 		plugins: [
+			new webpack.EnvironmentPlugin({
+				NODE_ENV: 'development', // required for prod build of React
+			}),
 			new webpack.DefinePlugin({
 				// server bundles must reference _browser_ bundle public path
 				// - inject it as a 'global variable' here
@@ -75,11 +79,11 @@ function getConfig(localeCode, browserAppFilename) {
 			alias: {
 				src: settings.appPath,
 			},
-			// module name extensions
+			// module name extensions that Webpack will try if no extension provided
 			extensions: ['.js', '.jsx', '.json'],
 		},
 	};
-	if (!settings.isDev) {
+	if (buildConfig.isProd) {
 		config.plugins = config.plugins.concat(settings.prodPlugins);
 	}
 	return config;

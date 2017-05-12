@@ -1,6 +1,9 @@
 import fs from 'fs';
 import Inert from 'inert';
+import appConfig from 'meetup-web-platform/lib/util/config';
+
 import { startServer } from 'meetup-web-platform';
+
 import settings from './webpack/settings.js';
 
 /**
@@ -19,7 +22,7 @@ import settings from './webpack/settings.js';
  */
 function getServiceWorkerRoute(
 	assetPublicPath,
-	swTemplatePath = `${settings.serviceWorkerOutputPath.substr(1)}/sw.js` // build/sw/sw.js
+	swTemplatePath = `${settings.serviceWorkerOutputPath.substr(1)}/sw.js`
 ) {
 	const swTemplate = fs.readFileSync(swTemplatePath).toString();
 	const swScript = swTemplate.replace(
@@ -62,10 +65,10 @@ function getFaviconRoute(serverOutputPath = settings.serverOutputPath) {
 	};
 }
 
-function getDevStaticRoute(assetPath) {
+function getStaticRoute() {
 	return {
 		method: 'GET',
-		path: `${assetPath}/{param*}`,
+		path: `${appConfig.asset_server.path}/{param*}`,
 		config: {
 			auth: false,
 		},
@@ -78,25 +81,27 @@ function getDevStaticRoute(assetPath) {
 	};
 }
 
+// simple 200 response for all lifecycle requests
+// https://cloud.google.com/appengine/docs/flexible/python/how-instances-are-managed#health_checking
+function getAppEngineLifecycleRoutes() {
+	return {
+		method: 'GET',
+		path: '/_ah/{param*}',
+		config: { auth: false },
+		handler: (request, reply) => reply('OK'),
+	};
+}
+
 function getRoutes() {
-	// read runtime values
-	const assetHost = process.env.ASSET_SERVER_HOST || '0.0.0.0';
-	const assetPort = process.env.ASSET_SERVER_PORT
-		? `:${process.env.ASSET_SERVER_PORT}`
-		: '';
-	const assetPath = process.env.ASSET_PATH
-		? `/${process.env.ASSET_PATH}`
-		: '/static';
-	const assetPublicPath = `//${assetHost}${assetPort}${assetPath}`;
+	const routes = [
+		getFaviconRoute(),
+		getStaticRoute(),
+		getAppEngineLifecycleRoutes(),
+	];
 
-	const routes = [getFaviconRoute()];
 	if (settings.serviceWorkerEnabled) {
+		const assetPublicPath = `//${appConfig.asset_server.host}:${appConfig.asset_server.port}${appConfig.asset_server.path}`;
 		routes.push(getServiceWorkerRoute(assetPublicPath));
-	}
-
-	// this is only used when the webpackDevServer isn't being used
-	if (settings.isDev) {
-		routes.push(getDevStaticRoute(assetPath));
 	}
 
 	return routes;
@@ -116,7 +121,6 @@ export default function main(appMap) {
 	if (!appMap) {
 		appMap = require('../build/server-app/serverAppMap');
 	}
-	console.warn(appMap);
 	const plugins = [Inert]; // for serving the favicon
 	const routes = getRoutes();
 

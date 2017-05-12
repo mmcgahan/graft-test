@@ -24,9 +24,6 @@ module.exports = {
 	serviceWorkerOutputPath: path.resolve(outPath, 'sw'),
 	trnsPath: path.resolve(appPath, 'trns'),
 	utilsPath: path.resolve(repoRoot, 'util'),
-
-	isDev: process.env.NODE_ENV !== 'production',
-	enableHMR: process.env.NODE_ENV !== 'production' && !process.env.DISABLE_HMR,
 	prodPlugins: [
 		// Tells loaders to optimize what they can since in minimize mode
 		new webpack.LoaderOptionsPlugin({
