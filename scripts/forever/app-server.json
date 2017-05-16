@@ -1,9 +1,0 @@
-// this file is run in the package root context
-{
-  "uid": "app-server",
-  "append": true,
-  "outFile": "./app-server.log",
-  "errFile": "./app-server.log",
-  "script": "./scripts/runServer.js"
-}
-

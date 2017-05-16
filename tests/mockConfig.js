@@ -1,7 +1,0 @@
-module.exports = {
-	API_PORT: 8001,
-	API_DELAY: 200,
-	OAUTH_AUTH_DELAY: 10,
-	OAUTH_ACCESS_DELAY: 10,
-};
-

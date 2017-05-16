@@ -1,5 +1,0 @@
-{
-  "testEnvironment": "node",
-  "testRegex": "tests\/integration\/.+\\.int\\.jsx?$"
-}
-
